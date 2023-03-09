@@ -43,6 +43,7 @@ Traditional IRA
 
 Other Notes
 * penalties for early withdrawals
+* Basic tax brackets based on income
 
 
 ## To-Do List for Visualizations
