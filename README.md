@@ -7,6 +7,10 @@ Date: XX/XX/XXXX
 
 ## Notes
 
+Branch Naming convention: ClownName-feature
+Merge to dev
+PR to main eventually
+
 ## To-Do List for Calculations
 * 401K - Luke
 * Roth IRA - Connie
