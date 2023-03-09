@@ -43,7 +43,7 @@ Traditional IRA
 
 Other Notes
 * penalties for early withdrawals
-* Basic tax brackets based on income
+* Basic tax brackets based on income - Amy
 
 
 ## To-Do List for Visualizations
@@ -51,6 +51,12 @@ Other Notes
   * inputs: title, list of sliders
 * function for making sliders
   * inputs: min, max, suggested
+
+
+## CLOWN PATROL
+* Amy - Savings calc, CD calc, taxes
+* Clownie - IRA, div function, slider function
+* Luke - SP 500, 401k
 
 
 ## Included files
