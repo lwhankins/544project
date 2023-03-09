@@ -54,9 +54,9 @@ Other Notes
 
 
 ## CLOWN PATROL
-* Amy - Savings calc, CD calc, taxes
+* Doink Pollo - Savings calc, CD calc, taxes
 * Clownie - IRA, div function, slider function
-* Luke - SP 500, 401k
+* Loofie - SP 500, 401k
 
 
 ## Included files
