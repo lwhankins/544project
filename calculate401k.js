@@ -36,19 +36,3 @@ function calculate401k() {
 }
 
 calculate401k();
-
-function calculateIRA() {
-
-}
-
-function calculateSP() {
-
-}
-
-function calculateCD() {
-
-}
-
-function calculateSavings() {
-
-}
