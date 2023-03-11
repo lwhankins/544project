@@ -1,18 +1,16 @@
 
 
 /*
- * Global variables, will be taken from sliders/input. Set here for testing.
+ * 401k-specific variables, will be taken from sliders/input. Set here for testing.
 */
-let salary = 40000;
-let portionOfSalaryToContribute = .1; 
-let annualSalaryIncrease = 0;
-let currentAge = 30;
-let ageOfRetirement = 65;
-let current401kBalance = 1000;
-let annualRateOfReturn = .07;
 
-let employerMatchAmount = .5;
-let employerMaxMatch = .06;
+let portionOfSalaryToContribute401k = .1; 
+let current401kBalance = 30000;
+let annualRateOfReturn401k = .06;
+let employerMatchAmount401k = .5;
+let employerMaxMatch401k = .03;
+let maxAllowedIndividualContribution401k = 22500;
+let roughAverageContributionIncreasePerYear401k = 450;
 
 /**
  * Calculate 401k total value given user input.
@@ -21,18 +19,23 @@ let employerMaxMatch = .06;
 function calculate401k() {
     let total = current401kBalance;
     let currentSalary = salary;
-    let amountEmployerWillMatch = portionOfSalaryToContribute;
-    if (employerMaxMatch < portionOfSalaryToContribute) {
-        amountEmployerWillMatch = employerMaxMatch;
-    }
-    let amountContributedByMe = 0;
     for  (let i = 0; i < (ageOfRetirement - currentAge); i++) {
-        let amountInvestedThisYear = currentSalary*(portionOfSalaryToContribute + (amountEmployerWillMatch*employerMatchAmount));
-        let returnOnTotal = total * annualRateOfReturn;
-        total = total + amountInvestedThisYear + returnOnTotal;
+        let amountInvestedThisYearByMe = currentSalary*portionOfSalaryToContribute401k;
+        if (amountInvestedThisYearByMe > maxAllowedIndividualContribution401k) { // cap at max contribution
+            amountInvestedThisYearByMe = maxAllowedIndividualContribution401k;
+        }
+        let portionOfSalaryAllowedToContribute = amountInvestedThisYearByMe / currentSalary; // see what percentage of salary you contributed after capping
+        let amountEmployerWillMatch = portionOfSalaryAllowedToContribute;
+        if (employerMaxMatch401k < portionOfSalaryAllowedToContribute) { // employer will match this up to a certain amount
+            amountEmployerWillMatch = employerMaxMatch401k; // cap their contribution as well
+        }
+        let amountInvestedThisYearByEmployer = currentSalary*(amountEmployerWillMatch*employerMatchAmount401k);
+        let returnOnTotal = total * annualRateOfReturn401k;
+        total = total + amountInvestedThisYearByMe + amountInvestedThisYearByEmployer + returnOnTotal;
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
+        maxAllowedIndividualContribution401k += roughAverageContributionIncreasePerYear401k;
     }
-    console.log(total);
+    //console.log(total);
 }
 
 calculate401k();
