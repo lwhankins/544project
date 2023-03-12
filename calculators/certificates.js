@@ -9,7 +9,6 @@ function calculateCD() {
     let total = currentCDBalance;
     let currentSalary = salary;
 
-    let amountContributed = 0;
     for  (let i = 0; i < (ageOfRetirement - currentAge); i++) {
         let amountAddedThisYear = currentSalary * portionOfSalaryToContribute;
         let returnOnTotal = total * cdAPY;
