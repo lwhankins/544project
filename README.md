@@ -58,7 +58,7 @@ Other Notes
 
 
 ## CLOWN PATROL
-* Doink Pollo - Savings calc, CD calc, taxes
+* Doink Pollo - Savings calc (Done), CD calc (done), taxes
 * Clownie - IRA, div function, slider function
 * Loofie - SP 500, 401k
 
