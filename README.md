@@ -36,14 +36,14 @@ global variables
 ** Notes: need to cap the contribution to a max amount
 
 Roth IRA
-* yearly contribution: 0 - 6500, suggested 6500
+* yearly contribution: 0 - 6500, suggested $6500
 * annual rate of return: 1 - 15%, suggested 7%
+* catch-up contribution: 0 - 1000, suggested $1000
 
 ** Notes: need to cap contribution based on salary
 
 Traditional IRA
-* yearly contribution: min - max, suggested $
-* annual rate of return: min - max, suggested %
+* same as Roth
 
 Other Notes
 * penalties for early withdrawals
