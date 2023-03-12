@@ -8,9 +8,9 @@ let portionOfSalaryToContribute = .1;
 let annualSalaryIncrease = 0;
 let currentAge = 30;
 let ageOfRetirement = 65;
+
 let current401kBalance = 1000;
 let annualRateOfReturn = .07;
-
 let employerMatchAmount = .5;
 let employerMaxMatch = .06;
 
