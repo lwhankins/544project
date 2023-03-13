@@ -1,0 +1,30 @@
+label {
+    display: block;
+    font-family: sans-serif;
+    height: 100px;
+    width: 400px;
+    padding: 30px;
+}
+
+input {
+    height: 2em;
+}
+
+.param {
+    position: relative;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+.param-input {
+    position: absolute;
+    top: 60px;
+    width: 50px;
+}
+
+.param-slider {
+    position: absolute;
+    top: 30px;
+    left: 120px;
+    padding: 10px;
+}
