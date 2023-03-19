@@ -36,6 +36,7 @@ PR to main eventually
 * div for total $$$ cash money $$$ / month in retirement -- Amy, by 3/28
 * div for breakdown bar chart -- whoever, make progress if possible
 * div for comparison bar chart -- whoever, make progress if possible
+* Calculate taxes at end -- add up annual amounts (not roths), then run taxesPerYear, then divide by months to get cash $$/month; Amy by 3/28
 
 ### Latex Milestone Project Update: deadline 3/29
 Meet 3/27 to divvy this up
