@@ -39,3 +39,10 @@ function calculate401k() {
 }
 
 calculate401k();
+
+function calculateTraditional401k(){
+    let total = calculate401k();
+    let retirementTaxAmount = taxesPerYear(total / yearsInRetirement);
+    total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
+    return total; // total after taxes
+}

@@ -50,3 +50,16 @@ let group2 = d3.select("#calcs")
                 .attr("class", "param")
                 .attr("id", "rothContributions")
 makeInputSlider(group2, "Roth Contribution", 0, 7000, 6500, step=100)
+
+let group3 = d3.select('#calcs')
+                .append("g")
+                .attr("class", "param")
+                .attr("id", "cdContributions");
+makeInputSlider(group3, "CD Contributions", 0, 7000, 6500, step=100);
+
+let group4 = d3.select("#calcs")
+                .append("g")
+                .attr("class", "param")
+                .attr("id", "savingsContributions");
+makeInputSlider(group4, "Savings Contributions", 0, 7000, 6500, step=100);
+
