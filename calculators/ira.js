@@ -18,12 +18,11 @@ function calculateRothIRA(curBal, annCont, annRet, catchupCont){
     return total;
 }
 
-// TODO: replace with tax info from taxes.js
-let retirementTaxRate = .15;
 // Verified with https://www.dinkytown.net/java/traditional-ira-calculator.html
 function calculateTraditionalIRA(curBal, annCont, annRet, catchupCont){
     let total = calculateRothIRA(curBal, annCont, annRet, catchupCont);
-    total *= 1 - retirementTaxRate;
+    let retirementTaxAmount = taxesPerYear(total / yearsInRetirement);
+    total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
     return total; // total after taxes
 }
 
