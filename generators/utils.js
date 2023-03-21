@@ -2,7 +2,7 @@ let padding = 30;
 let width = 800;
 let height = 400;
 // use d3-simple-slider from https://github.com/johnwalley/d3-simple-slider
-function makeInputSlider(parent, name, min, max, suggested, step=1, format=","){
+function makeInputSlider(parent, name, min, max, suggested, step=1, format=",", setGlob){
     let label = parent.append("label")
                       .text(name);
     let input = label.append("div")
@@ -30,11 +30,13 @@ function makeInputSlider(parent, name, min, max, suggested, step=1, format=","){
                     .value(suggested)
                     .on("onchange", (val) => {
                         input.attr("value", val);
+                        setGlob(val);
                     });
     // TODO: onchange, determine what else to recalculate/update
     svg.call(slider);
     input.on('change', function() {
         slider.value(this.value);
+        setGlob(this.value);
     });
 }
 
