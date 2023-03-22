@@ -21,9 +21,9 @@ PR to main eventually
 * basic information div (holds global variables) -- Luke, by 3/22
   * call `makeInputSlider()` for each global var
 * function for making divs, `makeAccountDiv()` -- Connie
-  * title
+  * ~~title~~
   * $ amount per month from this account
-  * list of sliders to construct inside the div
+  * ~~sliders to construct inside the div~~
   * dropdown toggle to show div
   * dropdown toggle to show additional info
 * each retirement account div using `makeAccountDiv()` -- Connie
