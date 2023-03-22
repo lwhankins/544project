@@ -3,12 +3,16 @@ body {
     font-family: sans-serif;
 }
 
+#motivation {
+    width: 800px;
+}
+
 label {
     display: block;
     font-family: sans-serif;
     height: 100px;
     width: 400px;
-    padding: 30px;
+    padding: 10px;
 }
 
 input {
@@ -17,13 +21,11 @@ input {
 
 .param {
     position: relative;
-    margin-top: 3em;
-    margin-bottom: 3em;
 }
 
 .param-input {
     position: absolute;
-    top: 60px;
+    top: 40px;
     width: 50px;
 }
 
@@ -33,3 +35,47 @@ input {
     left: 120px;
     padding: 10px;
 }
+
+/* begin styling for account divs (toggle panels) */
+.container {
+    margin-top: 20px;
+    width: 600px;
+}
+
+.panel-header {
+    background: lightgreen;
+    height: 30px;
+    width: 600px;
+    display: table;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 20px;
+}
+
+.header-title, .header-amount, .toggle {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.header-title {
+    float: left;
+}
+
+.header-amount {
+    float: right;
+}
+
+.toggle {
+    float: right;
+    width: 30px;
+    height: 20px;
+}
+
+.panel {
+    margin-left: 20px;
+    /* delete borders later */
+    border-style: dashed;
+    border-color: lightgray;
+}
+
+/* end styling for account divs (toggle panels) */

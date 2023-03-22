@@ -1,13 +1,17 @@
 const catchupAge = 50;
+let rothCurBal = 0;
+let rothAnnCont = 6000;
+let rothAnnRet = 0.07;
+let rothCatchupCont = 1000;
 // Formula from https://www.wallstreetmojo.com/roth-ira-calculator/
 // Verified with https://www.dinkytown.net/java/roth-ira-calculator.html
-function calculateRothIRA(curBal, annCont, annRet, catchupCont){
-    let total = curBal;
-    let compoundMult = 1 + annRet;
+function calculateRothIRA(){
+    let total = rothCurBal;
+    let compoundMult = 1 + rothAnnRet;
     for (let i = currentAge; i < ageOfRetirement; i++) {
-        total = total * compoundMult + annCont * compoundMult;
+        total = total * compoundMult + rothAnnCont * compoundMult;
         if (i >= catchupAge) {
-            total += catchupCont * compoundMult;
+            total += rothCatchupCont * compoundMult;
         }
     }
     // formula without loop
@@ -19,12 +23,28 @@ function calculateRothIRA(curBal, annCont, annRet, catchupCont){
 }
 
 // Verified with https://www.dinkytown.net/java/traditional-ira-calculator.html
-function calculateTraditionalIRA(curBal, annCont, annRet, catchupCont){
-    let total = calculateRothIRA(curBal, annCont, annRet, catchupCont);
+function calculateTraditionalIRA(){
+    let total = calculateRothIRA();
     let retirementTaxAmount = taxesPerYear(total / yearsInRetirement);
     total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
     return total; // total after taxes
 }
 
-console.log("Roth IRA $" + Math.round(calculateRothIRA(13000, 6500, .06, 1000)));
-console.log("Traditional IRA $" + Math.round(calculateTraditionalIRA(13000, 6500, .06, 1000)));
+console.log(calculateTraditionalIRA());
+
+function setRothCurBal(bal) {
+    rothCurBal = parseInt(bal);
+}
+
+function setRothAnnCont(cont) {
+    rothAnnCont = parseInt(cont);
+}
+
+function setRothAnnRet(ret) {
+    rothAnnRet = parseFloat(ret);
+}
+
+function setRothCatchupCont(cont){
+    rothCatchupCont = parseInt(cont);
+}
+
