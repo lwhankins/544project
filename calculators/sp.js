@@ -1,8 +1,10 @@
 /*
  * S&P500-specific variables, will be taken from sliders/input. Set here for testing.
 */
-let portionOfSalaryToContributeSP = .1; 
-let expectedAnnualReturnSP = .04;
+
+let currentAmountInvestedSP = 0;
+let portionOfSalaryToContributeSP = .05; 
+let expectedAnnualReturnSP = .07;
 
 
 /**
@@ -10,7 +12,7 @@ let expectedAnnualReturnSP = .04;
  * Assumes return is compounded annually, deposits made monthly
  */
 function calculateSP() {
-    let total = 0;
+    let total = currentAmountInvestedSP;
     let currentSalary = salary;
     for  (let i = 0; i < (ageOfRetirement - currentAge); i++) {
         let amountInvestedThisYearByMe = currentSalary*portionOfSalaryToContributeSP; 
@@ -18,8 +20,15 @@ function calculateSP() {
         total = total + amountInvestedThisYearByMe + returnOnTotal;
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
     }
-    console.log(total);
+    return total;
 }
 
-calculateSP();
-
+function setCurrentAmountInvestedSP(stonks) {
+    currentAmountInvestedSP = parseInt(stonks);
+}
+function setPortionOfSalaryToContributeSP(portion) {
+    portionOfSalaryToContributeSP = parseFloat(portion);
+}
+function setExpectedReturnSP(rate) {
+    expectedAnnualReturnSP =  parseFloat(rate);
+}
