@@ -4,11 +4,11 @@
  * 401k-specific variables, will be taken from sliders/input. Set here for testing.
 */
 
-let portionOfSalaryToContribute401k = .1; 
-let current401kBalance = 30000;
-let annualRateOfReturn401k = .06;
+let portionOfSalaryToContribute401k = .06; 
+let current401kBalance = 0;
+let annualRateOfReturn401k = .07;
 let employerMatchAmount401k = .5;
-let employerMaxMatch401k = .03;
+let employerMaxMatch401k = .06;
 let maxAllowedIndividualContribution401k = 22500;
 let roughAverageContributionIncreasePerYear401k = 450;
 
@@ -35,10 +35,24 @@ function calculate401k() {
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
         maxAllowedIndividualContribution401k += roughAverageContributionIncreasePerYear401k;
     }
-    //console.log(total);
+    return total;
 }
 
-calculate401k();
+function set401kSalaryPortionContribution(portion) {
+    portionOfSalaryToContribute401k = parseFloat(portion);
+}
+function setCurrent401kBalance(balance) {
+    current401kBalance = parseInt(balance);
+}
+function setAnnualRateOfReturn401k(rate) {
+    annualRateOfReturn401k = parseFloat(rate);
+}
+function setEmployerMatchAmount401k(matchAmount) {  
+    employerMatchAmount401k = parseFloat(matchAmount);
+}
+function setEmployerMaxMatch401k(maxMatch) {
+    employerMaxMatch401k = parseFloat(maxMatch);
+}
 
 function calculateTraditional401k(){
     let total = calculate401k();
@@ -46,3 +60,64 @@ function calculateTraditional401k(){
     total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
     return total; // total after taxes
 }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+ * Roth 401k-specific variables, will be taken from sliders/input. Set here for testing.
+*/
+
+let portionOfSalaryToContributeRoth401k = .06; 
+let currentRoth401kBalance = 0;
+let annualRateOfReturnRoth401k = .07;
+let employerMatchAmountRoth401k = .5;
+let employerMaxMatchRoth401k = .06;
+let maxAllowedIndividualContributionRoth401k = 20500;
+let roughAverageContributionIncreasePerYearRoth401k = 450;
+
+/**
+ * Calculate Roth Roth 401k total value given user input.
+ * Assumes return is compounded annually, deposits made monthly
+ */
+function calculateRoth401k() {
+    let total = currentRoth401kBalance;
+    let currentSalary = salary;
+    for  (let i = 0; i < (ageOfRetirement - currentAge); i++) {
+        let amountInvestedThisYearByMe = currentSalary*portionOfSalaryToContributeRoth401k;
+        if (amountInvestedThisYearByMe > maxAllowedIndividualContributionRoth401k) { // cap at max contribution
+            amountInvestedThisYearByMe = maxAllowedIndividualContributionRoth401k;
+        }
+        let portionOfSalaryAllowedToContribute = amountInvestedThisYearByMe / currentSalary; // see what percentage of salary you contributed after capping
+        let amountEmployerWillMatch = portionOfSalaryAllowedToContribute;
+        if (employerMaxMatchRoth401k < portionOfSalaryAllowedToContribute) { // employer will match this up to a certain amount
+            amountEmployerWillMatch = employerMaxMatchRoth401k; // cap their contribution as well
+        }
+        let amountInvestedThisYearByEmployer = currentSalary*(amountEmployerWillMatch*employerMatchAmountRoth401k);
+        let returnOnTotal = total * annualRateOfReturnRoth401k;
+        total = total + amountInvestedThisYearByMe + amountInvestedThisYearByEmployer + returnOnTotal;
+        currentSalary = currentSalary*(1 + annualSalaryIncrease);
+        maxAllowedIndividualContributionRoth401k += roughAverageContributionIncreasePerYearRoth401k;
+    }
+    return total;
+}
+
+function setRoth401kSalaryPortionContribution(portion) {
+    portionOfSalaryToContributeRoth401k = parseFloat(portion);
+}
+function setCurrentRoth401kBalance(balance) {
+    currentRoth401kBalance = parseInt(balance);
+}
+function setAnnualRateOfReturnRoth401k(rate) {
+    annualRateOfReturnRoth401k = parseFloat(rate);
+}
+function setEmployerMatchAmountRoth401k(matchAmount) {  
+    employerMatchAmountRoth401k = parseFloat(matchAmount);
+}
+function setEmployerMaxMatchRoth401k(maxMatch) {
+    employerMaxMatchRoth401k = parseFloat(maxMatch);
+}
+
+
+
