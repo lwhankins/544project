@@ -23,3 +23,18 @@ function setSalary(sal) {
 function setSalaryIncrease(salaryIncrease) {
     annualSalaryIncrease = parseFloat(salaryIncrease);
 }
+
+// These functions will probably change form once variables get changed around
+function preTaxTotal() {
+    return calculate401k() + calculateCD() + calculateSP() + calculateSavings() + calculateTraditionalIRA(0,0,0,0);
+}
+
+function overallTotal() {
+    return preTaxTotal() + calculate401k() + calculateRothIRA(0,0,0,0);
+}
+
+function moneyPerYear() {
+    let preTax = preTaxTotal() / yearsInRetirement;
+    let taxes = taxesPerYear(preTax);
+    return overallTotal() - taxes;
+}

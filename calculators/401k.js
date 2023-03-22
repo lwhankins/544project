@@ -35,14 +35,16 @@ function calculate401k() {
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
         maxAllowedIndividualContribution401k += roughAverageContributionIncreasePerYear401k;
     }
+
+    return total;
     //console.log(total);
 }
 
 calculate401k();
 
-function calculateTraditional401k(){
-    let total = calculate401k();
-    let retirementTaxAmount = taxesPerYear(total / yearsInRetirement);
-    total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
-    return total; // total after taxes
-}
+// function calculateTraditional401k(){
+//     let total = calculate401k();
+//     let retirementTaxAmount = taxesPerYear(total / yearsInRetirement);
+//     total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
+//     return total; // total after taxes
+// }
