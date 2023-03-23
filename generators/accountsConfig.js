@@ -53,7 +53,7 @@ accountsConfig = {
     "suggested": .06,
     "step": .01,
     "format": ".1%",
-    "setGlob": setRothIra401kSalaryPortionContribution},
+    "setGlob": setRoth401kSalaryPortionContribution},
 
     {"name": "Annual Rate of Return",
     "min": .01,

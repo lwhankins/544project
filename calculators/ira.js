@@ -33,7 +33,7 @@ function calculateRothIra(){
 
 // Verified with https://www.dinkytown.net/java/traditional-ira-calculator.html
 function calculateTraditionalIra(){
-    let total = calculateIraHelper(tradIraCurBal, tradIraAnnCont, tradIraAnnRet, tradIraCathcupCont);
+    let total = calculateIraHelper(tradIraCurBal, tradIraAnnCont, tradIraAnnRet, tradIraCatchupCont);
     let retirementTaxAmount = taxesPerYear(total / yearsInRetirement);
     total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
     return total; // total after taxes
