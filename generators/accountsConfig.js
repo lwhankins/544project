@@ -79,7 +79,39 @@ accountsConfig = {
     "format": ".1%",
     "setGlob": setEmployerMaxMatchRoth401k}],
 
-    "Traditional IRA" : [],
+    "Traditional IRA" : [
+        {"name": "Current Balance",
+        "min": 0,
+        "max": 100000,
+        "suggested": 0,
+        "step": 100,
+        "format": ",",
+        "setGlob": setTradIraCurBal},
+
+        {"name": "Annual Contribution",
+        "min": 0,
+        "max": 6500,
+        "suggested": 6500,
+        "step": 100,
+        "format": ",",
+        "setGlob": setTradIraAnnCont},
+
+        {"name": "Annual Rate of Return",
+        "min": .01,
+        "max": .15,
+        "suggested": .07,
+        "step": .005,
+        "format": ".1%",
+        "setGlob": setTradIraAnnRet},
+
+        {"name": "Catchup Contribution",
+        "min": 0,
+        "max": 1000,
+        "suggested": 1000,
+        "step": 100,
+        "format": ",",
+        "setGlob": setTradIraCatchupCont}
+    ],
 
     "Roth IRA" : [
         {"name": "Current Balance",
@@ -88,7 +120,7 @@ accountsConfig = {
         "suggested": 0,
         "step": 100,
         "format": ",",
-        "setGlob": setRothCurBal},
+        "setGlob": setRothIraCurBal},
 
         {"name": "Annual Contribution",
         "min": 0,
@@ -96,7 +128,7 @@ accountsConfig = {
         "suggested": 6500,
         "step": 100,
         "format": ",",
-        "setGlob": setRothAnnCont},
+        "setGlob": setRothIraAnnCont},
 
         {"name": "Annual Rate of Return",
         "min": .01,
@@ -104,7 +136,7 @@ accountsConfig = {
         "suggested": .07,
         "step": .005,
         "format": ".1%",
-        "setGlob": setRothAnnRet},
+        "setGlob": setRothIraAnnRet},
 
         {"name": "Catchup Contribution",
         "min": 0,
@@ -112,7 +144,7 @@ accountsConfig = {
         "suggested": 1000,
         "step": 100,
         "format": ",",
-        "setGlob": setRothCatchupCont}],
+        "setGlob": setRothIraCatchupCont}],
 
     "High-Yield Savings Account" : [],
 
