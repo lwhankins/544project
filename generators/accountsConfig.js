@@ -146,9 +146,65 @@ accountsConfig = {
         "format": ",",
         "setGlob": setRothIraCatchupCont}],
 
-    "High-Yield Savings Account" : [],
+    "High-Yield Savings Account" : [
+        {
+            "name": "Annual Percent (%) Yield",
+            "min": 0,
+            "max": 10,
+            "suggested": 3,
+            "step":.01,
+            "format": ".2%",
+            "setGlob": setHYSavingsAPY
+        },
+        {
+            "name": "Current Savings Balance",
+            "min": 0,
+            "max": 100000,
+            "suggested": 1000,
+            "step": 100,
+            "format": ",",
+            "setGlob": setCurrentSavingsBalance
+        },
+        {
+            "name": "Percent (%) Salary to Contribute",
+            "min": 0,
+            "max": 25,
+            "suggested": 10,
+            "step": .01,
+            "format": ".2%",
+            "setGlob": setSavingsPortionContribution
+        }
+    ],
 
-    "Certificates of Deposit" : [],
+    "Certificates of Deposit" : [
+        {
+            "name": "Annual Percent (%) Yield",
+            "min": 0,
+            "max": 10,
+            "suggested": 4.5,
+            "step": .01,
+            "format": ".2%",
+            "setGlob": setCdAPY
+        },
+        {
+            "name": "Current Balance",
+            "min": 0,
+            "max": 100000,
+            "suggested": 1000,
+            "step": 100,
+            "format": ",",
+            "setGlob": setCurrentCDBalance
+        },
+        {
+            "name": "Percent (%) Salary to Contribute",
+            "min": 0,
+            "max": 25,
+            "suggested": 10,
+            "step": .01,
+            "format": ".2%",
+            "setGlob": setCDSalaryPortionContibution
+        }
+    ],
 
     "S&P Index" : [{"name": "Current Balance",
     "min": 0,

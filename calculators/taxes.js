@@ -11,7 +11,7 @@ let filer = 0; // From dropdown, one of filertype
 function taxesPerYear(salary) {
     brackets = [];
     switch (filer) {
-        case 0:
+        case filerTypes.Single:
             brackets.push({top: 11000, amount: (s) => 0.1 * s});
             brackets.push({top: 44725, amount: (s) => 1100 + 0.12 * (s - 11000)});
             brackets.push({top: 95375, amount: (s) => 5147 + 0.22 * (s - 44725)});
@@ -20,7 +20,7 @@ function taxesPerYear(salary) {
             brackets.push({top: 578125, amount: (s) => 52832 + 0.35 * (s - 231250)});
             brackets.push({top: Infinity, amount: (s) => 174238.25 + 0.37 * (s - 578125)});
             break;
-        case 1:
+        case filerTypes.MarriedSeparate:
             brackets.push({top: 11000, amount: (s) => 0.1 * s});
             brackets.push({top: 44725, amount: (s) => 1100 + 0.12 * (s - 11000)});
             brackets.push({top: 95375, amount: (s) => 5147 + 0.22 * (s - 44725)});
@@ -29,7 +29,7 @@ function taxesPerYear(salary) {
             brackets.push({top: 346875, amount: (s) => 52832 + 0.35 * (s - 231250)});
             brackets.push({top: Infinity, amount: (s) => 93300.75 + 0.37 * (s - 346875)});    
             break;
-        case 2: 
+        case filerTypes.MarriedJoint: 
             brackets.push({top: 22000, amount: (s) => 0.1 * s});
             brackets.push({top: 89450, amount: (s) => 0.12 * (s - 22000)});
             brackets.push({top: 190750, amount: 10294 + 0.22 * (s - 89450)});
@@ -38,7 +38,7 @@ function taxesPerYear(salary) {
             brackets.push({top: 693750, amount: (s) => 105664 + 0.35 * (s - 462500)});
             brackets.push({top: Infinity, amount: (s) => 186601.50 + 0.37 * (s - 693.750)});
             break;
-        case 3:
+        case filerTypes.HeadOfHousehold:
             brackets.push({top: 15700, amount: (s) => 0.1 * s});
             brackets.push({top: 59850, amount: (s) => 1570 + 0.12 * (s - 15700)});
             brackets.push({top: 95350, amount: 6868 + 0.22 * (s - 59850)});
@@ -61,4 +61,8 @@ function taxesPerYear(salary) {
     }
 
     return taxAmount;
+}
+
+function setFilerType(type) {
+    filer = parseInt(type);
 }
