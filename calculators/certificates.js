@@ -15,7 +15,18 @@ function calculateCD() {
         total = total + amountAddedThisYear + returnOnTotal;
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
     }
-    console.log(total);
+    
+    return total;
 }
 
-calculateCD();
+function setCdAPY(apy) {
+    cdAPY = parseFloat(apy / 100);
+}
+
+function setCurrentCDBalance(currentBalance) {
+    currentCDBalance = parseInt(currentBalance);
+}
+
+function setCDSalaryPortionContibution(contribution) {
+    portionOfSalaryToContributeCDs = parseFloat(contribution / 100);
+}
