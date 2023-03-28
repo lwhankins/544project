@@ -33,10 +33,15 @@
 
 // set up basic info with global configs
 let basicInfoDiv = d3.select("#basic_info");
+let accountTitles = Object.keys(accountCalculators);
+let ids = [];
+for (let i=0; i<accountTitles.length;i++) {
+    ids.push(getIdFromTitle(accountTitles[i]));
+}
 for (let i=0; i<globalsConfig.length; i++) {
-    addParam(basicInfoDiv, globalsConfig[i]);
+    addParam(basicInfoDiv, globalsConfig[i], Object.values(accountCalculators), ids);
 }
 // set up account parameter info with accounts configs
 for (const account in accountsConfig) {
-    makeAccountDiv(account, accountsConfig[account]);
+    makeAccountDiv(account, accountsConfig[account], [accountCalculators[account]]);
 }
