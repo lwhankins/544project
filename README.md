@@ -22,12 +22,12 @@ PR to main eventually
   * call `makeInputSlider()` for each global var
 * function for making divs, `makeAccountDiv()` -- Connie
   * ~~title~~
-  * $ amount per month from this account
+  * ~~$ amount per month from this account~~
   * ~~sliders to construct inside the div~~
   * dropdown toggle to show div
   * dropdown toggle to show additional info
-* each retirement account div using `makeAccountDiv()` -- Connie
-  * inputs: local variables for each retirement account
+* ~~each retirement account div using `makeAccountDiv()` -- Connie~~
+  * ~~inputs: local variables for each retirement account~~
 * ~~function for making sliders~~
   * ~~inputs: min, max, suggested~~
 * ~~placeholder div for citations and additional info~~
