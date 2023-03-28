@@ -102,6 +102,24 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     return accountDiv;
 }
 
+function makeSidebarDiv(div) {
+    div.attr("class", "panel-side");
+    let header = div.append("div")
+        .append("h3")
+        .text(() => "You will have");
+    
+    header.append("h3")
+        .attr("class", "sidebar-money")
+        .text(() => `${moneyFormat.format(moneyPerMonth)}`);
+    
+    header.append("h3")
+        .text(() => "per month in retirement");
+
+    let breakdown = div.append("div"); // Bar chart per type (contributions)
+
+    let comp = div.append("div"); // Bar chart by average (averageAmts)
+}
+
 function runCalculators(calculators, ids) {
     for (var i=0; i<calculators.length; i++) {
         let amount = calculators[i]();

@@ -76,6 +76,17 @@ input {
     /* delete borders later */
     border-style: dashed;
     border-color: lightgray;
+    
 }
 
 /* end styling for account divs (toggle panels) */
+
+/* Sidebar styling */
+.panel-side {
+    margin-left: 75%;
+    /* make better borders later */
+    border-style: dashed;
+    border-color: lightgray;
+    position: fixed;
+    margin-top: 30px;
+}

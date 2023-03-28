@@ -45,3 +45,6 @@ for (let i=0; i<globalsConfig.length; i++) {
 for (const account in accountsConfig) {
     makeAccountDiv(account, accountsConfig[account], [accountCalculators[account]]);
 }
+
+let sidebarDiv = d3.select("#sidebar");
+makeSidebarDiv(sidebarDiv);
