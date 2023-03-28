@@ -45,6 +45,9 @@ Meet 3/27 to divvy this up
 * update research plan section
 * update impacts section
 
+## TODO PO3 Milestone:
+* Update introductory message with a little background information to the effect of "a common misconception is that putting all your money into one account yields the best benefits. This is not always the case. For example <provide an example where using 2+ accounts yields more than just 1>"
+
 ## ~~To-Do List for Calculations~~
 * 401K - Luke
 * Roth IRA - Connie
