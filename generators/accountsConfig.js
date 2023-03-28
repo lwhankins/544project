@@ -244,5 +244,5 @@ accountCalculators = {
     "Roth IRA": calculateRothIra,
     "High-Yield Savings Account": calculateHYSavings,
     "Certificates of Deposit": calculateCD,
-    "S&P": calculateSP
+    "S&P Index": calculateSP
 }
