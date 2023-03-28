@@ -105,8 +105,8 @@ function makeSidebarDiv(div) {
     header.append("h3")
         .text(() => "per month in retirement");
 
-    let breakdown = div.append("div"); // Bar chart per type
+    let breakdown = div.append("div"); // Bar chart per type (contributions)
 
-    let comp = div.append("div"); // Bar chart by average
+    let comp = div.append("div"); // Bar chart by average (averageAmts)
 }
 
