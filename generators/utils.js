@@ -127,7 +127,7 @@ function getIdFromTitle(title) {
  *          - span (slider), for styling
  *      - header amount (h3), displays data amount 
  */
-function makeHeader(header, calculators, id) {
+function makeHeader(header, title, calculators, id) {
     header.append("h3")
         .attr("class", "header-title")
         .text(title);
@@ -173,7 +173,7 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     let header = accountDiv.append("div")
         .attr("class", "panel-header")
         .attr("data-amount", 0);
-    makeHeader(header, calculators, id);
+    makeHeader(header, title, calculators, id);
     // container holds div for panel, which is shown if toggle is on
     let panel = accountDiv.append("div")
         .attr("class", "panel");
