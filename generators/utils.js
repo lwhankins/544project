@@ -1,6 +1,31 @@
 let padding = 10;
 let width = 600;
 let height = 100;
+
+/*
+ * Make a label with text, numerical input, and slider for a parameter. Structure:
+ *
+ *  - parent (group)
+ *      - label (label), top level holder with name
+ *          - inputDiv (div), holds the input field
+ *              - input (input)
+ *          - sliderDiv (div), holds the slider svg
+ *              - sliderSvg (svg), calls the slider
+ *                  - slider (d3.sliderBottom)
+ *
+ * The input and slider are connected to each other (should have same value);
+ * on change, run all the calculators that this slider is connected to (i.e.,
+ * all accounts if global, one account if local).
+ * 
+ * params:
+ *      parent: holder for the entire label
+ *      name: name of the parameter, e.g., Annual Contribution
+ *      min, max, suggested: values of the param, w/ suggested as default
+ *      step: step size for the param (in input and slider), e.g., 1,000
+ *      format: how to format numerical value, e.g., ".1%"
+ *      setGlob: global setter function for this parameter
+ *      calculators, ids: list of calculators and ids to connect to
+ */
 // use d3-simple-slider from https://github.com/johnwalley/d3-simple-slider
 function makeInputSlider(parent, name, min, max, suggested, step, format, setGlob, calculators, ids){
     // label is the top level holder
@@ -36,7 +61,6 @@ function makeInputSlider(parent, name, min, max, suggested, step, format, setGlo
                         setGlob(val);
                         runCalculators(calculators, ids);
                     });
-    // TODO: onchange, determine what else to recalculate/update
     svg.call(slider);
     input.on('change', function() {
         slider.value(this.value);
@@ -45,10 +69,28 @@ function makeInputSlider(parent, name, min, max, suggested, step, format, setGlo
     });
 }
 
-function togglePanel(checkbox){
-    console.log(checkbox.property("checked"))
+/* 
+ * Callback for toggling account panel on and off. Uses the checkbox
+ * to determine if the panel is on (run calculators, show panel) or
+ * off (hide panel, reset data-amount and text)
+ */
+function togglePanel(checkbox, calculators, id){
+    if (checkbox.property("checked")) {
+        runCalculators(calculators, [id]);
+    }
+    else {
+        let header = d3.select(`#${id}`)
+                    .select(".panel-header");
+        header.attr("data-amount", 0);
+        header.select(".header-amount")
+            .text("—");
+    }
 }
 
+/* 
+ * Add a parameter to its parent div using config; connect calculators and
+ *  account divs (via id). Called for both global and account-specific params
+ */
 function addParam(parentDiv, config, calculators, ids) {
     let g = parentDiv.append("g")
         .attr("class", "param"); // add id as well?
@@ -57,12 +99,68 @@ function addParam(parentDiv, config, calculators, ids) {
                     config.step, config.format, config.setGlob, calculators, ids);
 }
 
+/* 
+ * Using the name of an account, get its global id, used to id the
+ * top-level container in makeAccountDiv(). Remove special characters,
+ * replace whitespace with dash, and transform to lowercase.
+ * 
+ *      Ex: Traditional 401k -> account-traditional-401k
+ * 
+ * params:
+ *      title: account name to transform into id
+ */
 function getIdFromTitle(title) {
     let newId = title.replace(/[^\w\s]/gi, '')
     return "account-" + newId.replace(/\s+/g, '-').toLowerCase();
 }
 
+/*
+ * Creates the structure of the header for each account div. The header
+ * should always be shown and is interactive. It contains the title of
+ * the account and its monthly contribution (if on). The user toggles an
+ * account on/off using the header's toggle. Each header has the structure:
+ * 
+ *  - header (div)
+ *      - header title (h3), displays account name
+ *      - toggle label (label), holds checkbox
+ *          - checkbox (input), toggles panel on/off
+ *          - span (slider), for styling
+ *      - header amount (h3), displays data amount 
+ */
+function makeHeader(header, title, calculators, id) {
+    header.append("h3")
+        .attr("class", "header-title")
+        .text(title);
+    // toggle is a label holding the checkbox
+    let toggleLabel = header.append("label")
+        .attr("class", "toggle");
+    let checkbox = toggleLabel.append("input")
+        .attr("type", "checkbox")
+        .attr("class", "checkbox");
+    checkbox.on("change", () => togglePanel(checkbox, calculators, id));
+    toggleLabel.append("span") // TODO: styling
+        .attr("class", "slider");
+    header.append("h3")
+        .attr("class", "header-amount")
+        .text("—");
+}
+
 let accountsDiv = d3.select("#accounts"); // matches index.html
+/*
+ * Make a div for an account type (e.g., Traditional 401k), with a
+ * container as the top level holder. Each container has the structure:
+ * 
+ *  - container (div), top-level container
+ *      - header (div), holds data-amount, title, toggle, monthly $
+ *      - panel (div), holds parameters and input/sliders
+ * 
+ * params:
+ *      title: name of the account, e.g., Traditional 401k
+ *      paramConfigs: list of configurations for each parameter to be included
+ *          in the account, defined in accountsConfig.js
+ *      calculators: list of calculator functions, e.g., calculateTraditional401k,
+ *          defined in accountCalculators of accountsConfig.js
+ */
 function makeAccountDiv(title, paramConfigs, calculators) {
     let id = getIdFromTitle(title);
 
@@ -73,35 +171,35 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     // container holds div for panel header, which is always shown
     // panel header contains account name, money contributed, and toggle
     let header = accountDiv.append("div")
-        .attr("class", "panel-header");
-    header.append("h3")
-        .attr("class", "header-title")
-        .text(title);
-    
-    // toggle is a label holding the checkbox
-    let toggleLabel = header.append("label")
-        .attr("class", "toggle");
-    let checkbox = toggleLabel.append("input")
-        .attr("type", "checkbox");
-    checkbox.on("change", () => togglePanel(checkbox));
-    toggleLabel.append("span") // TODO: styling
-        .attr("class", "slider");
-    
-    header.append("h3")
-        .attr("class", "header-amount")
-        .text("$");
-    
+        .attr("class", "panel-header")
+        .attr("data-amount", 0);
+    makeHeader(header, title, calculators, id);
     // container holds div for panel, which is shown if toggle is on
     let panel = accountDiv.append("div")
         .attr("class", "panel");
-
-    
+    // add each parameter using its config
     for (let i = 0; i < paramConfigs.length; i++) {
         addParam(panel, paramConfigs[i], calculators, [id]);
     }
     return accountDiv;
 }
 
+/*
+ * Create sidebar displaying total $ per month in retirement
+ * 
+ * Note for Doinko: You can retrieve the data amounts for each of
+    the account divs by iterating through all of the divs
+    and retrieving data-amount in the header. Code:
+
+        Object.keys(accountCalculators).forEach( key => {
+            let amount = d3.select(`#${getIdFromTitle(key)}`)
+                        .select(".panel-header")
+                        .attr("data-amount");
+            console.log(amount)
+        });
+    
+    Honk, honk. - Clownie
+ */
 function makeSidebarDiv(div) {
     div.attr("class", "panel-side");
     let header = div.append("div")
@@ -120,12 +218,28 @@ function makeSidebarDiv(div) {
     let comp = div.append("div"); // Bar chart by average (averageAmts)
 }
 
+/*
+ * Run all of the account calculators in the list of calculators, with container
+ * ids in a one-to-one matching list to select the correct container
+ * Check that the account is currently "checked", then update the amount
+ * 
+ * params:
+ *      calculators: list of calculator functions, e.g., calculateTraditional401k,
+ *          defined in accountCalculators of accountsConfig.js
+ *      ids: list of container ids, e.g., account-401k, which are constructed from
+ *          getIdFromTitle() and set for each container in makeAccountDiv()
+ */
 function runCalculators(calculators, ids) {
     for (var i=0; i<calculators.length; i++) {
-        let amount = calculators[i]();
-        d3.select(`#${ids[i]}`)
-            .select(".panel-header")
-            .select(".header-amount")
-            .text("$" + d3.format(",.0f")(amount));
+        let header = d3.select(`#${ids[i]}`)
+                        .select(".panel-header");
+        let checkbox = header.select(".toggle")
+                            .select(".checkbox");
+        if (checkbox.property("checked")) {
+            let amount = calculators[i]();
+            header.attr("data-amount", amount);
+            header.select(".header-amount")
+                .text("$" + d3.format(",.0f")(amount));
+        }
     }
 }

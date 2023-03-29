@@ -20,7 +20,7 @@ function calculateSP() {
         total = total + amountInvestedThisYearByMe + returnOnTotal;
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
     }
-    return total;
+    return total / (yearsInRetirement * 12); // add taxes?
 }
 
 function setCurrentAmountInvestedSP(stonks) {

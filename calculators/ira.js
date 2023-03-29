@@ -28,7 +28,8 @@ function calculateIraHelper(curBal, annCont, annRet, catchupCont) {
     return total;
 }
 function calculateRothIra(){
-    return calculateIraHelper(rothIraCurBal, rothIraAnnCont, rothIraAnnRet, rothIraCatchupCont);
+    let total = calculateIraHelper(rothIraCurBal, rothIraAnnCont, rothIraAnnRet, rothIraCatchupCont)
+    return total / (yearsInRetirement * 12);
 }
 
 // Verified with https://www.dinkytown.net/java/traditional-ira-calculator.html
@@ -36,7 +37,7 @@ function calculateTraditionalIra(){
     let total = calculateIraHelper(tradIraCurBal, tradIraAnnCont, tradIraAnnRet, tradIraCatchupCont);
     let retirementTaxAmount = taxesPerYear(total / yearsInRetirement);
     total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
-    return total; // total after taxes
+    return total / (yearsInRetirement * 12); // total after taxes
 }
 
 console.log(calculateTraditionalIra());

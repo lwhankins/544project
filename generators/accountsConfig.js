@@ -1,5 +1,5 @@
 accountsConfig = {
-    "401K" : [
+    "Traditional 401K" : [
         {"name": "Current Balance",
         "min": 0,
         "max": 100000,
@@ -238,7 +238,7 @@ accountsConfig = {
 }
 
 accountCalculators = {
-    "401K": calculate401k,
+    "Traditional 401K": calculateTraditional401k,
     "Roth 401K": calculateRoth401k,
     "Traditional IRA": calculateTraditionalIra,
     "Roth IRA": calculateRothIra,
