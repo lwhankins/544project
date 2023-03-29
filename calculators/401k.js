@@ -58,7 +58,7 @@ function calculateTraditional401k(){
     let total = calculate401k();
     let retirementTaxAmount = taxesPerYear(total / yearsInRetirement);
     total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
-    return total; // total after taxes
+    return total / (yearsInRetirement * 12); // total after taxes
 }
 
 
@@ -100,7 +100,7 @@ function calculateRoth401k() {
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
         maxAllowedIndividualContributionRoth401k += roughAverageContributionIncreasePerYearRoth401k;
     }
-    return total;
+    return total / (yearsInRetirement * 12);
 }
 
 function setRoth401kSalaryPortionContribution(portion) {

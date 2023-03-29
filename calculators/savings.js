@@ -15,7 +15,7 @@ function calculateSavings() {
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
     }
     
-    return total;
+    return total / (yearsInRetirement * 12); // add taxes?
 }
 
 function calculateHYSavings() {
