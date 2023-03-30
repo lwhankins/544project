@@ -218,6 +218,7 @@ function makeSidebarDiv(div) {
         .text(() => "per month in retirement");
 
     let breakdown = div.append("div"); // Bar chart per type (contributions)
+    makeBarChart(contributions, )
 
     let comp = div.append("div"); // Bar chart by average (averageAmts)
 }
@@ -226,6 +227,10 @@ function updateSidebar() {
     let div = d3.select("#sidebar");
     div.select(".sidebar-money")
         .text(() => `${moneyFormat.format(getTotalMoney())}`);
+}
+
+function makeBarChart(data, div) {
+
 }
 
 /*
@@ -237,6 +242,7 @@ function getTotalMoney() {
         let amount = d3.select(`#${getIdFromTitle(key)}`)
                     .select(".panel-header")
                     .attr("data-amount");
+        contributions[key] = parseFloat(amount);
         total += parseFloat(amount);
     });
     return total;
