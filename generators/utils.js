@@ -205,6 +205,7 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     Honk, honk. - Clownie
  */
 function makeSidebarDiv(div) {
+    let money = getTotalMoney()
     div.attr("class", "panel-side");
     let header = div.append("div")
         .append("h3")
@@ -212,15 +213,17 @@ function makeSidebarDiv(div) {
     
     header.append("h3")
         .attr("class", "sidebar-money")
-        .text(() => `${moneyFormat.format(getTotalMoney())}`);
+        .text(() => `${moneyFormat.format(money)}`);
     
     header.append("h3")
         .text(() => "per month in retirement");
 
     let breakdown = div.append("div"); // Bar chart per type (contributions)
-    makeBarChart(contributions, )
+    makeBarChart(contributions, breakdown);
 
     let comp = div.append("div"); // Bar chart by average (averageAmts)
+    averageAmts = {"You": money, "Average American": averageAmericanTotal / (yearsInRetirement * 12)};
+    makeBarChart(averageAmts, comp);
 }
 
 function updateSidebar() {
@@ -230,7 +233,7 @@ function updateSidebar() {
 }
 
 function makeBarChart(data, div) {
-
+    
 }
 
 /*
