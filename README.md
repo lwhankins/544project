@@ -17,14 +17,14 @@ PR to main eventually
 
 ## To-Do List for Visualizations
 ### Left Side: deadline 3/25
-* webpage title and motivation paragraph -- Luke
-* basic information div (holds global variables) -- Luke, by 3/22
-  * call `makeInputSlider()` for each global var
+* ~~webpage title and motivation paragraph -- Luke~~
+* ~~basic information div (holds global variables) -- Luke, by 3/22~~
+  * ~~call `makeInputSlider()` for each global var~~
 * function for making divs, `makeAccountDiv()` -- Connie
   * ~~title~~
   * ~~$ amount per month from this account~~
   * ~~sliders to construct inside the div~~
-  * dropdown toggle to show div
+  * ~~dropdown toggle to show div~~
   * dropdown toggle to show additional info
 * ~~each retirement account div using `makeAccountDiv()` -- Connie~~
   * ~~inputs: local variables for each retirement account~~
@@ -33,12 +33,12 @@ PR to main eventually
 * ~~placeholder div for citations and additional info~~
 
 ### Right Side: deadline 3/28
-* div for total $$$ cash money $$$ / month in retirement -- Amy, by 3/28
+* ~~div for total $$$ cash money $$$ / month in retirement -- Amy, by 3/28~~
 * div for breakdown bar chart -- whoever, make progress if possible
 * div for comparison bar chart -- whoever, make progress if possible
 * Calculate taxes at end -- add up annual amounts (not roths), then run taxesPerYear, then divide by months to get cash $$/month; Amy by 3/28
 
-### Latex Milestone Project Update: deadline 3/29
+### ~~Latex Milestone Project Update: deadline 3/29~~
 Meet 3/27 to divvy this up
 * update introduction, background, related work
 * preliminary results

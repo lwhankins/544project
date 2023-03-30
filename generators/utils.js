@@ -1,6 +1,6 @@
 let padding = 10;
-let width = 600;
-let height = 100;
+let width = 500;
+let height = 50;
 
 /*
  * Make a label with text, numerical input, and slider for a parameter. Structure:
@@ -132,19 +132,22 @@ function getIdFromTitle(title) {
  *      - header amount (h3), displays data amount 
  */
 function makeHeader(header, title, calculators, id) {
-    header.append("h3")
+    header.append("h4")
         .attr("class", "header-title")
         .text(title);
     // toggle is a label holding the checkbox
     let toggleLabel = header.append("label")
-        .attr("class", "toggle");
+        .attr("class", "toggle form-check form-switch");
     let checkbox = toggleLabel.append("input")
         .attr("type", "checkbox")
-        .attr("class", "checkbox");
+        .attr("class", "form-check-input collapsed")
+        .attr("role", "switch")
+        .attr("data-bs-toggle", "collapse")
+        .attr("data-bs-target", `#${id}-panel`)
+        .attr("aria-expanded", "false")
+        .attr("aria-controls", `${id}-panel`);
     checkbox.on("change", () => togglePanel(checkbox, calculators, id));
-    toggleLabel.append("span") // TODO: styling
-        .attr("class", "slider");
-    header.append("h3")
+    header.append("h4")
         .attr("class", "header-amount")
         .text("—");
 }
@@ -170,17 +173,20 @@ function makeAccountDiv(title, paramConfigs, calculators) {
 
     // each account div is a container, the top level holder
     let accountDiv = accountsDiv.append("div")
-        .attr("class", "container")
+        .attr("class", "container accordion-item")
         .attr("id", id);
     // container holds div for panel header, which is always shown
     // panel header contains account name, money contributed, and toggle
     let header = accountDiv.append("div")
-        .attr("class", "panel-header")
+        .attr("class", "panel-header accordion-header")
+        .attr("id", `${id}-header`)
         .attr("data-amount", 0);
     makeHeader(header, title, calculators, id);
     // container holds div for panel, which is shown if toggle is on
     let panel = accountDiv.append("div")
-        .attr("class", "panel");
+        .attr("class", "panel accordion-collapse collapse")
+        .attr("id", `${id}-panel`)
+        .attr("aria-labelledby", `${id}-header`)
     // add each parameter using its config
     for (let i = 0; i < paramConfigs.length; i++) {
         addParam(panel, paramConfigs[i], calculators, [id]);
@@ -267,7 +273,7 @@ function runCalculators(calculators, ids) {
         let header = d3.select(`#${ids[i]}`)
                         .select(".panel-header");
         let checkbox = header.select(".toggle")
-                            .select(".checkbox");
+                            .select(".form-check-input");
         if (checkbox.property("checked")) {
             let amount = calculators[i]();
             header.attr("data-amount", amount);
