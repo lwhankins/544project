@@ -60,12 +60,14 @@ function makeInputSlider(parent, name, min, max, suggested, step, format, setGlo
                         input.attr("value", val);
                         setGlob(val);
                         runCalculators(calculators, ids);
+                        updateSidebar();
                     });
     svg.call(slider);
     input.on('change', function() {
         slider.value(this.value);
         setGlob(this.value);
         runCalculators(calculators, ids);
+        updateSidebar();
     });
 }
 
@@ -77,6 +79,7 @@ function makeInputSlider(parent, name, min, max, suggested, step, format, setGlo
 function togglePanel(checkbox, calculators, id){
     if (checkbox.property("checked")) {
         runCalculators(calculators, [id]);
+        updateSidebar();
     }
     else {
         let header = d3.select(`#${id}`)
@@ -84,6 +87,7 @@ function togglePanel(checkbox, calculators, id){
         header.attr("data-amount", 0);
         header.select(".header-amount")
             .text("—");
+        updateSidebar();
     }
 }
 
@@ -208,7 +212,7 @@ function makeSidebarDiv(div) {
     
     header.append("h3")
         .attr("class", "sidebar-money")
-        .text(() => `${moneyFormat.format(moneyPerMonth)}`);
+        .text(() => `${moneyFormat.format(getTotalMoney())}`);
     
     header.append("h3")
         .text(() => "per month in retirement");
@@ -216,6 +220,26 @@ function makeSidebarDiv(div) {
     let breakdown = div.append("div"); // Bar chart per type (contributions)
 
     let comp = div.append("div"); // Bar chart by average (averageAmts)
+}
+
+function updateSidebar() {
+    let div = d3.select("#sidebar");
+    div.select(".sidebar-money")
+        .text(() => `${moneyFormat.format(getTotalMoney())}`);
+}
+
+/*
+    Get the total amount of money per month.
+*/
+function getTotalMoney() {
+    let total = 0;
+    Object.keys(accountCalculators).forEach( key => {
+        let amount = d3.select(`#${getIdFromTitle(key)}`)
+                    .select(".panel-header")
+                    .attr("data-amount");
+        total += parseFloat(amount);
+    });
+    return total;
 }
 
 /*

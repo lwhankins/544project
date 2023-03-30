@@ -89,4 +89,13 @@ input {
     border-color: lightgray;
     position: fixed;
     margin-top: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-money {
+    font-family: cursive;
+    font-weight: 1000;
+    font-size: 2rem;
+    color: green;
 }
