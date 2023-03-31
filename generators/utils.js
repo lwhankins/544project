@@ -254,8 +254,8 @@ function makeBarChartX(data, id) {
     let plot = Plot.plot({
         x: { 
             axis: "top",
-            label: "Money by Account",
-            labelAnchor: "center"
+            label: null,
+            labelAnchor: "center",
         },
         y: {
             label: null
@@ -264,7 +264,8 @@ function makeBarChartX(data, id) {
             Plot.barX(data, {x: Object.keys(data[0])[1], y: Object.keys(data[0])[0], fill: "black", fillOpacity: 0.6})
         ],
         style: {
-            overflow: "visible"
+            overflow: "visible",
+            fontSize: 20
         }
     })
 
