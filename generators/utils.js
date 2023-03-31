@@ -26,6 +26,7 @@ let height = 50;
  *      setGlob: global setter function for this parameter
  *      calculators, ids: list of calculators and ids to connect to
  */
+// Can consider bootstrap range component
 // use d3-simple-slider from https://github.com/johnwalley/d3-simple-slider
 function makeInputSlider(parent, name, min, max, suggested, step, format, setGlob, calculators, ids){
     // label is the top level holder
