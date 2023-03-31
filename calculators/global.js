@@ -9,8 +9,9 @@ var yearsInRetirement = 20;
 var salary = 50000;
 var annualSalaryIncrease = .03;
 var moneyPerMonth = 0;
-var contributions = {};
-var averageAmts = {};
+var averageAmericanTotal = 255000;
+var contributions = [];
+var averageAmts = [];
 
 function setAge(age) {
     currentAge = parseInt(age);
