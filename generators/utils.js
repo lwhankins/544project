@@ -1,6 +1,6 @@
 let padding = 10;
-let width = 600;
-let height = 100;
+let width = 500;
+let height = 50;
 
 /*
  * Make a label with text, numerical input, and slider for a parameter. Structure:
@@ -26,6 +26,7 @@ let height = 100;
  *      setGlob: global setter function for this parameter
  *      calculators, ids: list of calculators and ids to connect to
  */
+// Can consider bootstrap range component
 // use d3-simple-slider from https://github.com/johnwalley/d3-simple-slider
 function makeInputSlider(parent, name, min, max, suggested, step, format, setGlob, calculators, ids){
     // label is the top level holder
@@ -60,12 +61,14 @@ function makeInputSlider(parent, name, min, max, suggested, step, format, setGlo
                         input.attr("value", val);
                         setGlob(val);
                         runCalculators(calculators, ids);
+                        updateSidebar();
                     });
     svg.call(slider);
     input.on('change', function() {
         slider.value(this.value);
         setGlob(this.value);
         runCalculators(calculators, ids);
+        updateSidebar();
     });
 }
 
@@ -77,6 +80,7 @@ function makeInputSlider(parent, name, min, max, suggested, step, format, setGlo
 function togglePanel(checkbox, calculators, id){
     if (checkbox.property("checked")) {
         runCalculators(calculators, [id]);
+        updateSidebar();
     }
     else {
         let header = d3.select(`#${id}`)
@@ -84,6 +88,7 @@ function togglePanel(checkbox, calculators, id){
         header.attr("data-amount", 0);
         header.select(".header-amount")
             .text("—");
+        updateSidebar();
     }
 }
 
@@ -128,19 +133,22 @@ function getIdFromTitle(title) {
  *      - header amount (h3), displays data amount 
  */
 function makeHeader(header, title, calculators, id) {
-    header.append("h3")
+    header.append("h4")
         .attr("class", "header-title")
         .text(title);
     // toggle is a label holding the checkbox
     let toggleLabel = header.append("label")
-        .attr("class", "toggle");
+        .attr("class", "toggle form-check form-switch");
     let checkbox = toggleLabel.append("input")
         .attr("type", "checkbox")
-        .attr("class", "checkbox");
+        .attr("class", "form-check-input collapsed")
+        .attr("role", "switch")
+        .attr("data-bs-toggle", "collapse")
+        .attr("data-bs-target", `#${id}-panel`)
+        .attr("aria-expanded", "false")
+        .attr("aria-controls", `${id}-panel`);
     checkbox.on("change", () => togglePanel(checkbox, calculators, id));
-    toggleLabel.append("span") // TODO: styling
-        .attr("class", "slider");
-    header.append("h3")
+    header.append("h4")
         .attr("class", "header-amount")
         .text("—");
 }
@@ -166,17 +174,20 @@ function makeAccountDiv(title, paramConfigs, calculators) {
 
     // each account div is a container, the top level holder
     let accountDiv = accountsDiv.append("div")
-        .attr("class", "container")
+        .attr("class", "container accordion-item")
         .attr("id", id);
     // container holds div for panel header, which is always shown
     // panel header contains account name, money contributed, and toggle
     let header = accountDiv.append("div")
-        .attr("class", "panel-header")
+        .attr("class", "panel-header accordion-header")
+        .attr("id", `${id}-header`)
         .attr("data-amount", 0);
     makeHeader(header, title, calculators, id);
     // container holds div for panel, which is shown if toggle is on
     let panel = accountDiv.append("div")
-        .attr("class", "panel");
+        .attr("class", "panel accordion-collapse collapse")
+        .attr("id", `${id}-panel`)
+        .attr("aria-labelledby", `${id}-header`)
     // add each parameter using its config
     for (let i = 0; i < paramConfigs.length; i++) {
         addParam(panel, paramConfigs[i], calculators, [id]);
@@ -201,21 +212,107 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     Honk, honk. - Clownie
  */
 function makeSidebarDiv(div) {
+    let money = getTotalMoney()
     div.attr("class", "panel-side");
     let header = div.append("div")
         .append("h3")
+        .attr("class", "sidebar-text")
         .text(() => "You will have");
     
-    header.append("h3")
+    div.append("h3")
         .attr("class", "sidebar-money")
-        .text(() => `${moneyFormat.format(moneyPerMonth)}`);
+        .text(() => `${moneyFormat.format(money)}`);
     
-    header.append("h3")
+    div.append("h3")
+        .attr("class", "sidebar-text")
         .text(() => "per month in retirement");
 
-    let breakdown = div.append("div"); // Bar chart per type (contributions)
+    let breakdown = div.append("div") // Bar chart per type (contributions)
+        .attr("id", "breakdown")
+        .attr("class", "bar-chart");
+        console.log(contributions)
 
-    let comp = div.append("div"); // Bar chart by average (averageAmts)
+    let comp = div.append("div") // Bar chart by average (averageAmts)
+        .attr("id", "comparison")
+        .attr("class", "bar-chart");
+    averageAmts = [{entity: "You", amount: money},{entity: "Average American", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    makeBarChartY(averageAmts, "comparison");
+}
+
+function updateSidebar() {
+    let money = getTotalMoney();
+    let div = d3.select("#sidebar");
+    div.select(".sidebar-money")
+        .text(() => `${moneyFormat.format(money)}`);
+
+    makeBarChartX(contributions, "breakdown");
+    averageAmts = [{entity: "You", amount: money},{entity: "Average American", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    makeBarChartY(averageAmts, "comparison");
+}
+
+function makeBarChartX(data, id) {
+    let plot = Plot.plot({
+        x: { 
+            axis: "top",
+            label: null,
+            labelAnchor: "center",
+        },
+        y: {
+            label: null
+        },
+        marks: [
+            Plot.barX(data, {x: Object.keys(data[0])[1], y: Object.keys(data[0])[0], fill: "black", fillOpacity: 0.6})
+        ],
+        style: {
+            overflow: "visible",
+            fontSize: 20
+        }
+    })
+
+    let elem = document.getElementById(id);
+    try {
+        elem.removeChild(elem.lastElementChild);
+    } catch(e) {}
+    
+    elem.append(plot);
+}
+
+function makeBarChartY(data, id) {
+    let plot = Plot.plot({
+        y: {
+          label: ""
+        },
+        x: { label: ""},
+        marks: [
+          Plot.barY(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], fill: "blue", fillOpacity: 0.3})
+        ],
+        style: {
+            fontSize: 30,
+            marginLeft: 15,
+            overflow: "visible"
+        }
+      })
+    let elem = document.getElementById(id);
+    try {
+        elem.removeChild(elem.lastElementChild);
+    } catch(e) {}
+    
+    elem.append(plot);
+}
+
+/*
+    Get the total amount of money per month.
+*/
+function getTotalMoney() {
+    let total = 0;
+    Object.keys(accountCalculators).forEach( key => {
+        let amount = d3.select(`#${getIdFromTitle(key)}`)
+                    .select(".panel-header")
+                    .attr("data-amount");
+        contributions.push({account: barNames[key], money: parseFloat(amount)});
+        total += parseFloat(amount);
+    });
+    return total;
 }
 
 /*
@@ -234,7 +331,7 @@ function runCalculators(calculators, ids) {
         let header = d3.select(`#${ids[i]}`)
                         .select(".panel-header");
         let checkbox = header.select(".toggle")
-                            .select(".checkbox");
+                            .select(".form-check-input");
         if (checkbox.property("checked")) {
             let amount = calculators[i]();
             header.attr("data-amount", amount);

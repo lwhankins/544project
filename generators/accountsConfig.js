@@ -246,3 +246,13 @@ accountCalculators = {
     "Certificates of Deposit": calculateCD,
     "S&P Index": calculateSP
 }
+
+barNames = {
+    "Traditional 401K": "401k",
+    "Roth 401K" : "R401k",
+    "Traditional IRA": "IRA",
+    "Roth IRA": "RIRA",
+    "High-Yield Savings Account": "Savings",
+    "Certificates of Deposit": "CDs",
+    "S&P Index": "S&P"
+}

@@ -1,15 +1,22 @@
 body {
-    margin-left: 50px;
-    font-family: sans-serif;
+    margin-left: 80px;
+}
+
+#page-title, #basic_info, #citations {
+    margin-top: 20px;
+}
+
+#basic_info {
+    max-width: 700px !important;
 }
 
 #motivation {
-    width: 800px;
+    /*width: 800px;*/
+    max-width: 700px !important;
 }
 
 label {
     display: block;
-    font-family: sans-serif;
     height: 100px;
     width: 400px;
     padding: 10px;
@@ -37,24 +44,25 @@ input {
 }
 
 /* begin styling for account divs (toggle panels) */
+.accordion-item {
+    border: 0px;
+}
+
 .container {
-    margin-top: 20px;
-    width: 600px;
+    display: inline;
 }
 
 .panel-header {
     background: lightgreen;
-    height: 30px;
+    height: 40px;
     width: 600px;
     display: table;
     padding-left: 10px;
     padding-right: 10px;
-    margin-bottom: 20px;
 }
 
-.header-title, .header-amount, .toggle {
-    vertical-align: middle;
-    display: inline-block;
+.header-title, .header-amount {
+    margin-top: 5px;
 }
 
 .header-title {
@@ -63,30 +71,68 @@ input {
 
 .header-amount {
     float: right;
+    margin-right: 20px;
 }
 
 .toggle {
     float: right;
-    width: 30px;
+    width: 10px;
     height: 20px;
+    padding-right: 0px;
+}
+
+.form-check-input:checked {
+    background-color: #0c532a;
+    border-color: #0c532a;
+}
+
+.form-check-input:focus {
+    border-color: #59b880;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 253, 113, 0.25);
+}
+
+.form-switch .form-check-input:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%2359b880'/%3e%3c/svg%3e");
+}
+
+.form-switch .form-check-input:checked {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e")
 }
 
 .panel {
     margin-left: 20px;
-    /* delete borders later */
-    border-style: dashed;
-    border-color: lightgray;
-    
+    max-width: 700px !important;
 }
 
 /* end styling for account divs (toggle panels) */
 
 /* Sidebar styling */
 .panel-side {
-    margin-left: 75%;
-    /* make better borders later */
-    border-style: dashed;
-    border-color: lightgray;
+    margin-left: 65%;
     position: fixed;
-    margin-top: 30px;
+    margin-top: 0;
+    justify-content: center;
+    align-items: center;
+    scroll-behavior: auto;
+    background-color: white;
+    z-index: 10;
 }
+
+.sidebar-money {
+    font-weight: 1000;
+    font-size: 2rem;
+    color: green;
+    text-align: center;
+}
+
+.sidebar-text {
+    text-align: center;
+}
+
+.bar-chart {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+/* End sidebar styling */
