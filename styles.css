@@ -6,8 +6,13 @@ body {
     margin-top: 20px;
 }
 
+#basic_info {
+    max-width: 700px !important;
+}
+
 #motivation {
-    width: 800px;
+    /*width: 800px;*/
+    max-width: 700px !important;
 }
 
 label {
@@ -97,24 +102,37 @@ input {
 
 .panel {
     margin-left: 20px;
+    max-width: 700px !important;
 }
 
 /* end styling for account divs (toggle panels) */
 
 /* Sidebar styling */
 .panel-side {
-    margin-left: 75%;
-    /* make better borders later */
-    border-style: dashed;
-    border-color: lightgray;
+    margin-left: 65%;
     position: fixed;
-    margin-top: 30px;
+    margin-top: 0;
     justify-content: center;
     align-items: center;
+    scroll-behavior: auto;
+    background-color: white;
+    z-index: 10;
 }
 
 .sidebar-money {
     font-weight: 1000;
     font-size: 2rem;
     color: green;
+    text-align: center;
 }
+
+.sidebar-text {
+    text-align: center;
+}
+
+.bar-chart {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+/* End sidebar styling */

@@ -216,31 +216,87 @@ function makeSidebarDiv(div) {
     div.attr("class", "panel-side");
     let header = div.append("div")
         .append("h3")
+        .attr("class", "sidebar-text")
         .text(() => "You will have");
     
-    header.append("h3")
+    div.append("h3")
         .attr("class", "sidebar-money")
         .text(() => `${moneyFormat.format(money)}`);
     
-    header.append("h3")
+    div.append("h3")
+        .attr("class", "sidebar-text")
         .text(() => "per month in retirement");
 
-    let breakdown = div.append("div"); // Bar chart per type (contributions)
-    makeBarChart(contributions, breakdown);
+    let breakdown = div.append("div") // Bar chart per type (contributions)
+        .attr("id", "breakdown")
+        .attr("class", "bar-chart");
+        console.log(contributions)
 
-    let comp = div.append("div"); // Bar chart by average (averageAmts)
-    averageAmts = {"You": money, "Average American": averageAmericanTotal / (yearsInRetirement * 12)};
-    makeBarChart(averageAmts, comp);
+    let comp = div.append("div") // Bar chart by average (averageAmts)
+        .attr("id", "comparison")
+        .attr("class", "bar-chart");
+    averageAmts = [{entity: "You", amount: money},{entity: "Average American", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    makeBarChartY(averageAmts, "comparison");
 }
 
 function updateSidebar() {
+    let money = getTotalMoney();
     let div = d3.select("#sidebar");
     div.select(".sidebar-money")
-        .text(() => `${moneyFormat.format(getTotalMoney())}`);
+        .text(() => `${moneyFormat.format(money)}`);
+
+    makeBarChartX(contributions, "breakdown");
+    averageAmts = [{entity: "You", amount: money},{entity: "Average American", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    makeBarChartY(averageAmts, "comparison");
 }
 
-function makeBarChart(data, div) {
+function makeBarChartX(data, id) {
+    let plot = Plot.plot({
+        x: { 
+            axis: "top",
+            label: "Money by Account",
+            labelAnchor: "center"
+        },
+        y: {
+            label: null
+        },
+        marks: [
+            Plot.barX(data, {x: Object.keys(data[0])[1], y: Object.keys(data[0])[0], fill: "black", fillOpacity: 0.6})
+        ],
+        style: {
+            overflow: "visible"
+        }
+    })
+
+    let elem = document.getElementById(id);
+    try {
+        elem.removeChild(elem.lastElementChild);
+    } catch(e) {}
     
+    elem.append(plot);
+}
+
+function makeBarChartY(data, id) {
+    let plot = Plot.plot({
+        y: {
+          label: ""
+        },
+        x: { label: ""},
+        marks: [
+          Plot.barY(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], fill: "blue", fillOpacity: 0.3})
+        ],
+        style: {
+            fontSize: 30,
+            marginLeft: 15,
+            overflow: "visible"
+        }
+      })
+    let elem = document.getElementById(id);
+    try {
+        elem.removeChild(elem.lastElementChild);
+    } catch(e) {}
+    
+    elem.append(plot);
 }
 
 /*
@@ -252,7 +308,7 @@ function getTotalMoney() {
         let amount = d3.select(`#${getIdFromTitle(key)}`)
                     .select(".panel-header")
                     .attr("data-amount");
-        contributions[key] = parseFloat(amount);
+        contributions.push({account: barNames[key], money: parseFloat(amount)});
         total += parseFloat(amount);
     });
     return total;
