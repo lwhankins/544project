@@ -32,7 +32,7 @@ function taxesPerYear(salary) {
         case filerTypes.MarriedJoint: 
             brackets.push({top: 22000, amount: (s) => 0.1 * s});
             brackets.push({top: 89450, amount: (s) => 0.12 * (s - 22000)});
-            brackets.push({top: 190750, amount: 10294 + 0.22 * (s - 89450)});
+            brackets.push({top: 190750, amount: (s) => 10294 + 0.22 * (s - 89450)});
             brackets.push({top: 364200, amount: (s) => 32580 + 0.24 * (s - 190750)});
             brackets.push({top: 462500, amount: (s) => 74208 + 0.32 * (s - 364200)});
             brackets.push({top: 693750, amount: (s) => 105664 + 0.35 * (s - 462500)});
@@ -41,7 +41,7 @@ function taxesPerYear(salary) {
         case filerTypes.HeadOfHousehold:
             brackets.push({top: 15700, amount: (s) => 0.1 * s});
             brackets.push({top: 59850, amount: (s) => 1570 + 0.12 * (s - 15700)});
-            brackets.push({top: 95350, amount: 6868 + 0.22 * (s - 59850)});
+            brackets.push({top: 95350, amount: (s) => 6868 + 0.22 * (s - 59850)});
             brackets.push({top: 182100, amount: (s) => 14678 + 0.24 * (s - 95350)});
             brackets.push({top: 231250, amount: (s) => 35498 + 0.32 * (s - 182100)});
             brackets.push({top: 578100, amount: (s) => 51226 + 0.35 * (s - 231250)});
