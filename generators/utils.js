@@ -31,7 +31,10 @@ let height = 50;
 function makeInputSlider(parent, name, min, max, suggested, step, format, setGlob, calculators, ids){
     // label is the top level holder
     let label = parent.append("label")
-                      .text(name);
+                      .text(name)
+                      .attr("data-bs-toggle", "tooltip")
+                    .attr("data-bs-placement", "top")
+                    .attr("data-bs-title", `Standard: ${suggested}`);
     // label holds a div with the input (field where user inputs the value and presses up/down)
     let input = label.append("div")
                     .attr("class", "param-input")
@@ -41,7 +44,8 @@ function makeInputSlider(parent, name, min, max, suggested, step, format, setGlo
                     .attr("value", suggested)
                     .attr("min", min)
                     .attr("max", max)
-                    .attr("step", step);
+                    .attr("step", step)
+                    ;
     // label holds a div with the slider, contained in an svg
     var svg = label.append("div")
                     .attr("class", "param-slider")
@@ -70,6 +74,33 @@ function makeInputSlider(parent, name, min, max, suggested, step, format, setGlo
         runCalculators(calculators, ids);
         updateSidebar();
     });
+}
+
+function makeRadio(parent, name, options, setGlob, calculators, ids) {
+    let container = parent.append("div").attr("class", "param-radio");
+    let top = container.append("h4")
+                      .text(name);
+    // label holds a div with the buttons
+    for (let i=0; i < options.length; i++) {
+        let top = container.append("div")
+                        .attr("class", "form-check");
+        let input = top.append("input")
+                        .attr("class", "form-check-input")
+                        .attr("type", "radio")
+                        .attr("name", name)
+                        .attr("id", options[i])
+                        .attr("value", i)
+                        .property("checked", () => i==0);
+        let label = top.append("label")
+                        .attr("class", "form-check-label")
+                        .attr("for", options[i])
+                        .text(options[i]);
+        input.on('change', function() {
+            setGlob(this.value);
+            runCalculators(calculators, ids);
+            updateSidebar();
+        });
+    }
 }
 
 /* 

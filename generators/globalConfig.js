@@ -40,3 +40,16 @@ globalsConfig = [
     "format": ".1%",
     "setGlob": setSalaryIncrease}
 ]
+
+radiosConfig = [
+    {
+        "name": "Tax Filing Status",
+        "options": [
+            "Single",
+            "Married, Filing Separately",
+            "Married, Filing Jointly",
+            "Head of Household"
+        ],
+        "setGlob": setTaxStatus
+    }
+]
