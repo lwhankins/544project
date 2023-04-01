@@ -261,7 +261,6 @@ function makeSidebarDiv(div) {
     let breakdown = div.append("div") // Bar chart per type (contributions)
         .attr("id", "breakdown")
         .attr("class", "bar-chart");
-        console.log(contributions)
 
     let comp = div.append("div") // Bar chart by average (averageAmts)
         .attr("id", "comparison")
@@ -276,36 +275,41 @@ function updateSidebar() {
     div.select(".sidebar-money")
         .text(() => `${moneyFormat.format(money)}`);
 
-    makeBarChartX(contributions, "breakdown");
+    makeBarChartX(contributions, "breakdown", money);
     averageAmts = [{entity: "You", amount: money},{entity: "Average American", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
     makeBarChartY(averageAmts, "comparison");
 }
 
-function makeBarChartX(data, id) {
-    let plot = Plot.plot({
-        x: { 
-            axis: "top",
-            label: null,
-            labelAnchor: "center",
-        },
-        y: {
-            label: null
-        },
-        marks: [
-            Plot.barX(data, {x: Object.keys(data[0])[1], y: Object.keys(data[0])[0], fill: "black", fillOpacity: 0.6})
-        ],
-        style: {
-            overflow: "visible",
-            fontSize: 20
-        }
-    })
+function makeBarChartX(data, id, money) {
+    let plot;
+    if (money != 0) {
+        plot = Plot.plot({
+            x: { 
+                axis: "top",
+                label: null,
+                labelAnchor: "center",
+            },
+            y: {
+                label: null
+            },
+            marks: [
+                Plot.barX(data, {x: Object.keys(data[0])[1], y: Object.keys(data[0])[0], fill: "black", fillOpacity: 0.6})
+            ],
+            style: {
+                overflow: "visible",
+                fontSize: 20
+            }
+        })
+    }
 
     let elem = document.getElementById(id);
     try {
         elem.removeChild(elem.lastElementChild);
     } catch(e) {}
     
-    elem.append(plot);
+    if (plot) {
+        elem.append(plot);
+    }
 }
 
 function makeBarChartY(data, id) {
@@ -336,6 +340,7 @@ function makeBarChartY(data, id) {
 */
 function getTotalMoney() {
     let total = 0;
+    contributions = [];
     Object.keys(accountCalculators).forEach( key => {
         let amount = d3.select(`#${getIdFromTitle(key)}`)
                     .select(".panel-header")
