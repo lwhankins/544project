@@ -80,6 +80,10 @@ function makeRadio(parent, name, options, setGlob, calculators, ids) {
     let container = parent.append("div").attr("class", "param-radio");
     let top = container.append("h4")
                       .text(name);
+    container.append("div")
+                      .text(taxCopy);
+    container.append("br");
+
     // label holds a div with the buttons
     for (let i=0; i < options.length; i++) {
         let top = container.append("div")

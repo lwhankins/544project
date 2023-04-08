@@ -154,8 +154,8 @@ accountsConfig = {
         {
             "name": "Annual Percent (%) Yield",
             "min": 0,
-            "max": 10,
-            "suggested": 3,
+            "max": .1,
+            "suggested": .03,
             "step":.01,
             "format": ".2%",
             "setGlob": setHYSavingsAPY
