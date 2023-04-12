@@ -380,3 +380,129 @@ function runCalculators(calculators, ids) {
         }
     }
 }
+
+/*
+ * Make a div for an account type (e.g., Traditional 401k), with a
+ * container as the top level holder. Each container has the structure:
+ * 
+ *  - container (div), top-level container
+ *      - header (div), holds data-amount, title, toggle, monthly $
+ *      - panel (div), holds parameters and input/sliders
+ * 
+ * params:
+ *      title: name of the account, e.g., Traditional 401k
+ *      paramConfigs: list of configurations for each parameter to be included
+ *          in the account, defined in accountsConfig.js
+ *      calculators: list of calculator functions, e.g., calculateTraditional401k,
+ *          defined in accountCalculators of accountsConfig.js
+ */
+function makeComparisonDiv(configs) {
+    // each account div is a container, the top level holder
+    let id = "compare-accounts";
+    let compDiv = accountsDiv.append("div")
+        .attr("class", "container accordion-item")
+        .attr("id", "compare-accounts");
+    // container holds div for panel header, which is always shown
+    // panel header contains account name and toggle
+    let header = compDiv.append("div")
+        .attr("class", "panel-header accordion-header")
+        .attr("id", `compare-accounts-header`)
+    makeCompHeader(header, "Compare Accounts", id);
+    // container holds div for panel, which is shown if toggle is on
+    let panel = compDiv.append("div")
+        .attr("class", "panel accordion-collapse collapse")
+        .attr("id", `${id}-panel`)
+        .attr("aria-labelledby", `${id}-header`)
+    // add carousel
+    let carousel = panel.append("div")
+        .attr("class", "carousel slide")
+        .attr("id", "compCarousel")
+        .attr("data-ride", "carousel")
+    let carouselInner = carousel.append("div");
+    generateTable(carouselInner, configs);
+    //generateCompGraph(carouselInner, configs);
+    // Left control
+    let left = carousel.append("a")
+        .attr("class", "carousel-control-prev")
+        .attr("href", "#compCarousel")
+        .attr("role", "button")
+        .attr("data-slide", "prev");
+    left.append("span")
+        .attr("class", "carousel-control-prev-icon")
+        .attr("aria-hidden", "true");
+    left.append("span")
+        .attr("class", "sr-only")
+        .text("Previous");
+    // Right control
+    let right = carousel.append("a")
+        .attr("class", "carousel-control-next")
+        .attr("href", "#compCarousel")
+        .attr("role", "button")
+        .attr("data-slide", "next");
+    right.append("span")
+        .attr("class", "carousel-control-next-icon")
+        .attr("aria-hidden", "true");
+    right.append("span")
+        .attr("class", "sr-only")
+        .text("Next");
+    return compDiv;
+}
+
+function makeCompHeader(header, title, id) {
+    header.append("h4")
+        .attr("class", "header-title")
+        .text(title);
+    // toggle is a label holding the checkbox
+    let toggleLabel = header.append("label")
+        .attr("class", "toggle form-check form-switch");
+    let checkbox = toggleLabel.append("input")
+        .attr("type", "checkbox")
+        .attr("class", "form-check-input collapsed")
+        .attr("role", "switch")
+        .attr("data-bs-toggle", "collapse")
+        .attr("data-bs-target", `#${id}-panel`)
+        .attr("aria-expanded", "false")
+        .attr("aria-controls", `${id}-panel`);
+    //checkbox.on("change", () => togglePanel(checkbox, [], "compare-accounts"));
+}
+
+function generateIcon(attrib) {
+    if (attrib) {
+        return "\u2705";
+    }
+
+    return "\u274c"
+}
+
+// new function to generate table
+function generateTable(div, configs) {
+    console.log(configs)
+    let item = div.append("div")
+        .attr("class", "carousel-item active");
+    let table = item.append("table");
+    let headerRow = table.append("tr");
+    headerRow.append("th").text("Account Type").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
+    headerRow.append("th").text("Taxed Upon Contribution?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
+    headerRow.append("th").text("Taxed Upon Withdrawal?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
+    headerRow.append("th").text("Risk?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
+    headerRow.append("th").text("Contribution Limit?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
+    headerRow.append("th").text("Average Percent Yield").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
+    headerRow.append("th").text("Anytime No-Penalty Availability?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
+    headerRow.append("th").text("Employer Match?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
+    headerRow.append("th").text("Tied to Employer?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
+    
+    for (let i = 0; i < configs.length; i++) {
+        let accountDetails = configs[i].attribs;
+        console.log(accountDetails)
+        let row = table.append("tr");
+        row.append("td").text(accountDetails.name);
+        row.append("td").text(generateIcon(accountDetails["Taxed Upon Contribution"].value)).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Taxed Upon Contribution"].tooltip);
+        row.append("td").text(generateIcon(accountDetails["Taxed Upon Withdrawal"].value)).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Taxed Upon Withdrawal"].tooltip);
+        row.append("td").text(generateIcon(accountDetails["Risk"].value)).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Risk"].tooltip);
+        row.append("td").text(generateIcon(accountDetails["Contribution Limit"].value)).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Contribution Limit"].tooltip);
+        row.append("td").text(`${accountDetails["Average Percent Yield"].value}%`).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Average Percent Yield"].tooltip);
+        row.append("td").text(generateIcon(accountDetails["Anytime No-Penalty Availability"].value)).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Anytime No-Penalty Availability"].tooltip);
+        row.append("td").text(generateIcon(accountDetails["Employer Match"].value)).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Employer Match"].tooltip);
+        row.append("td").text(generateIcon(accountDetails["Tied to Employer"].value)).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Tied to Employer"].tooltip);
+    }
+}
