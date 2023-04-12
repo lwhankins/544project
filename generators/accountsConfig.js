@@ -256,3 +256,272 @@ barNames = {
     "Certificates of Deposit": "CDs",
     "S&P Index": "S&P"
 }
+
+comparativeConfig = [
+    {
+        "account": "Traditional 401K",
+        "attribs": {
+            "name": "Traditional 401k",
+            "Taxed Upon Contribution": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Taxed Upon Withdrawal": {
+                "value": 1,
+                "tooltip": "This is a thing"
+            },
+            "Risk": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Contribution Limit": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Average Percent Yield": {
+                "value": 7,
+                "tooltip": ""
+            },
+            "Anytime No-Penalty Availability": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Employer Match": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Tied to Employer": {
+                "value": 1,
+                "tooltip": ""
+            },
+        }
+    },
+    {
+        "account": "Roth 401K",
+        "attribs": {
+            "name": "Traditional 401k",
+            "Taxed Upon Contribution": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Taxed Upon Withdrawal": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Risk": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Contribution Limit": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Average Percent Yield": {
+                "value": 7,
+                "tooltip": ""
+            },
+            "Anytime No-Penalty Availability": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Employer Match": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Tied to Employer": {
+                "value": 1,
+                "tooltip": ""
+            },
+        }
+    },
+    {
+        "account": "Traditional IRA",
+        "attribs": {
+            "name": "Traditional IRA",
+            "Taxed Upon Contribution": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Taxed Upon Withdrawal": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Risk": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Contribution Limit": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Average Percent Yield": {
+                "value": 7,
+                "tooltip": ""
+            },
+            "Anytime No-Penalty Availability": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Employer Match": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Tied to Employer": {
+                "value": 0,
+                "tooltip": ""
+            },
+        }
+    },
+    {
+        "account": "Roth IRA",
+        "attribs": {
+            "name": "Roth IRA",
+            "Taxed Upon Contribution": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Taxed Upon Withdrawal": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Risk": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Contribution Limit": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Average Percent Yield": {
+                "value": 7,
+                "tooltip": ""
+            },
+            "Anytime No-Penalty Availability": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Employer Match": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Tied to Employer": {
+                "value": 0,
+                "tooltip": ""
+            },
+        }
+    },
+    {
+        "account": "High-Yield Savings Account",
+        "attribs": {
+            "name": "High-Yield Savings Account",
+            "Taxed Upon Contribution": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Taxed Upon Withdrawal": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Risk": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Contribution Limit": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Average Percent Yield": {
+                "value": 3,
+                "tooltip": ""
+            },
+            "Anytime No-Penalty Availability": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Employer Match": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Tied to Employer": {
+                "value": 0,
+                "tooltip": ""
+            },
+        }
+    },
+    {
+        "account": "Certificates of Deposit",
+        "attribs": {
+            "name": "Certificates of Deposit",
+            "Taxed Upon Contribution": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Taxed Upon Withdrawal": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Risk": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Contribution Limit": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Average Percent Yield": {
+                "value": 4.5,
+                "tooltip": ""
+            },
+            "Anytime No-Penalty Availability": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Employer Match": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Tied to Employer": {
+                "value": 0,
+                "tooltip": ""
+            },
+        }
+    },
+    {
+        "account": "S&P Index",
+        "attribs": {
+            "name": "S&P Index",
+            "Taxed Upon Contribution": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Taxed Upon Withdrawal": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Risk": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Contribution Limit": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Average Percent Yield": {
+                "value": 7,
+                "tooltip": ""
+            },
+            "Anytime No-Penalty Availability": {
+                "value": 1,
+                "tooltip": ""
+            },
+            "Employer Match": {
+                "value": 0,
+                "tooltip": ""
+            },
+            "Tied to Employer": {
+                "value": 0,
+                "tooltip": ""
+            },
+        }
+    }
+]
