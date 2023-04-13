@@ -223,6 +223,18 @@ function makeAccountDiv(title, paramConfigs, calculators) {
         .attr("class", "panel accordion-collapse collapse")
         .attr("id", `${id}-panel`)
         .attr("aria-labelledby", `${id}-header`)
+
+    let copy = accountCopy[title];
+    if (title.includes("IRA")) {
+        copy = accountCopy["IRA"] + "\n\n" + copy + "\n\n" + accountCopy["IRA Ending"];
+    }
+
+    if (title.includes("401")) {
+        copy = accountCopy["401K"] + "\n\n" + copy + "\n\n" + accountCopy["401K Ending"];
+    }
+    panel.append("div")
+        .attr("class", "account-copy")
+        .text(copy)
     // add each parameter using its config
     for (let i = 0; i < paramConfigs.length; i++) {
         addParam(panel, paramConfigs[i], calculators, [id]);

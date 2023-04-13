@@ -110,6 +110,10 @@ input {
     max-width: 700px !important;
 }
 
+.account-copy {
+    white-space: pre-line;
+}
+
 /* end styling for account divs (toggle panels) */
 
 /* Sidebar styling */
