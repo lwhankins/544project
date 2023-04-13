@@ -146,3 +146,24 @@ input {
 .carousel-item {
     margin-right: 0;
 }
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    align-items: center;
+    text-align: center;
+}
+
+table {
+    margin-top: 10px;
+}
+
+table:hover {
+    cursor:default;
+}
+
+th, td {
+    padding: 5px;
+}
+
+/* End table styling */
