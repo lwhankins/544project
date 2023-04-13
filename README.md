@@ -6,7 +6,7 @@ Authors:
 - Clownie Sun [conniesun@arizona.edu](mailto:conniesun@arizona.edu)
 - Luke Hankins [lwhankins@arizona.edu](mailto:lwhankins@arizona.edu)  
 
-Date: 03/18/2023
+Date: 04/01/2023
 
 
 ## Notes
@@ -34,19 +34,28 @@ PR to main eventually
 
 ### Right Side: deadline 3/28
 * ~~div for total $$$ cash money $$$ / month in retirement -- Amy, by 3/28~~
-* div for breakdown bar chart -- whoever, make progress if possible
-* div for comparison bar chart -- whoever, make progress if possible
-* Calculate taxes at end -- add up annual amounts (not roths), then run taxesPerYear, then divide by months to get cash $$/month; Amy by 3/28
+* ~~div for breakdown bar chart -- whoever, make progress if possible~~
+* ~~div for comparison bar chart -- whoever, make progress if possible~~
+* ~~Calculate taxes at end -- add up annual amounts (not roths), then run taxesPerYear, then divide by months to get cash $$/month; Amy by 3/28~~
 
 ### ~~Latex Milestone Project Update: deadline 3/29~~
 Meet 3/27 to divvy this up
-* update introduction, background, related work
-* preliminary results
-* update research plan section
-* update impacts section
+* ~~update introduction, background, related work~~
+* ~~preliminary results~~
+* ~~update research plan section~~
+* ~~update impacts section~~
 
 ## TODO PO3 Milestone:
 * Update introductory message with a little background information to the effect of "a common misconception is that putting all your money into one account yields the best benefits. This is not always the case. For example <provide an example where using 2+ accounts yields more than just 1>"
+
+## Account Explanations
+* 401k
+* Roth 401k
+* CD
+* IRA
+* Savings
+* S&P
+* Taxes (?)
 
 ## ~~To-Do List for Calculations~~
 * 401K - Luke

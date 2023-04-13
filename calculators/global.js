@@ -32,3 +32,7 @@ function setSalary(sal) {
 function setSalaryIncrease(salaryIncrease) {
     annualSalaryIncrease = parseFloat(salaryIncrease);
 }
+
+function setTaxStatus(taxStatus) {
+    filer = parseInt(taxStatus);
+}
