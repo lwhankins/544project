@@ -237,6 +237,20 @@ accountsConfig = {
     ]
 }
 
+accountCopy = {
+    "401K": general401Copy,
+    "Traditional 401K": traditional401Copy,
+    "Roth 401K": roth401Copy,
+    "401K Ending": ending401Copy,
+    "IRA": generalIraCopy,
+    "Traditional IRA": traditionalIraCopy,
+    "Roth IRA": rothIraCopy,
+    "IRA Ending": iraEndingCopy,
+    "High-Yield Savings Account": highYieldSavingsAccountCopy,
+    "Certificates of Deposit": cdCopy,
+    "S&P Index": sAndPCopy
+}
+
 accountCalculators = {
     "Traditional 401K": calculateTraditional401k,
     "Roth 401K": calculateRoth401k,
