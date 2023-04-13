@@ -122,6 +122,7 @@ input {
     scroll-behavior: auto;
     background-color: white;
     z-index: 10;
+    padding-left: 0.75%;
 }
 
 .sidebar-money {
