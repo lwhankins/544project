@@ -481,15 +481,15 @@ function generateTable(div, configs) {
         .attr("class", "carousel-item active");
     let table = item.append("table");
     let headerRow = table.append("tr");
-    headerRow.append("th").text("Account Type").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
-    headerRow.append("th").text("Taxed Upon Contribution?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
-    headerRow.append("th").text("Taxed Upon Withdrawal?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
-    headerRow.append("th").text("Risk?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
-    headerRow.append("th").text("Contribution Limit?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
-    headerRow.append("th").text("Average Percent Yield").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
-    headerRow.append("th").text("Anytime No-Penalty Availability?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
-    headerRow.append("th").text("Employer Match?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
-    headerRow.append("th").text("Tied to Employer?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "");
+    headerRow.append("th").text("Account Type").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "Which account is being compared");
+    headerRow.append("th").text("Taxed Upon Contribution?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "Is the money you put into the account pre-retirement taxed?");
+    headerRow.append("th").text("Taxed Upon Withdrawal?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "Are your withdrawals taxed in retirement?");
+    headerRow.append("th").text("Risk?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "Can your investments possibly lose money?");
+    headerRow.append("th").text("Contribution Limit?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "Is there a limit to the amount you can add to an account each year?");
+    headerRow.append("th").text("Average Percent Yield").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "The average amount an account grows passively each year.");
+    headerRow.append("th").text("Anytime No-Penalty Availability?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "Can you withdraw your money at any time for any reason without penalty?");
+    headerRow.append("th").text("Employer Match?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "Does an employer contribute a percentage of money to the account?");
+    headerRow.append("th").text("Tied to Employer?").attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", "Is the account tied to being opened by a particular employer?");
     
     for (let i = 0; i < configs.length; i++) {
         let accountDetails = configs[i].attribs;

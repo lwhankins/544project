@@ -264,73 +264,73 @@ comparativeConfig = [
             "name": "Traditional 401k",
             "Taxed Upon Contribution": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "As long as you stay under the contribution limit, you contribute with your pre-tax income."
             },
             "Taxed Upon Withdrawal": {
                 "value": 1,
-                "tooltip": "This is a thing"
+                "tooltip": "You pay taxes on distributions in retirement."
             },
             "Risk": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, 401k portfolios are usually well-balanced to mitigate this risk."
             },
             "Contribution Limit": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Each year, the government sets a limit to the amount of money you can contribute to IRAs without penalty. In 2023, that limit is $22,500 for those under age 50."
             },
             "Average Percent Yield": {
                 "value": 7,
-                "tooltip": ""
+                "tooltip": "APYs can vary, but 7% is a good target to decide whether a particular institution's account is right for you."
             },
             "Anytime No-Penalty Availability": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "There are early withdrawal penalties unless for a few exceptions: first-time home-buying, college, having/adopting a child, and a few other things."
             },
             "Employer Match": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Many employers will match their employees' contributions, usually up to around 3-6% of the employee's annual income."
             },
             "Tied to Employer": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Yes, many employers offer 401ks to their employees."
             },
         }
     },
     {
         "account": "Roth 401K",
         "attribs": {
-            "name": "Traditional 401k",
+            "name": "Roth 401k",
             "Taxed Upon Contribution": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "You contribute with your after-tax income."
             },
             "Taxed Upon Withdrawal": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "Roth 401k withdrawals are not taxed."
             },
             "Risk": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, 401k portfolios are usually well-balanced to mitigate this risk."
             },
             "Contribution Limit": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Each year, the government sets a limit to the amount of money you can contribute to 401ks without penalty. In 2023, that limit is $22,500 for those under age 50."
             },
             "Average Percent Yield": {
                 "value": 7,
-                "tooltip": ""
+                "tooltip": "APYs can vary, but 7% is a good target to decide whether a particular institution's account is right for you."
             },
             "Anytime No-Penalty Availability": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "There are early withdrawal penalties unless for a few exceptions: first-time home-buying, college, having/adopting a child, and a few other things."
             },
             "Employer Match": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Many employers will match their employees' contributions, usually up to around 3-6% of the employee's annual income."
             },
             "Tied to Employer": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Yes, some employers offer Roth 401ks to their employees."
             },
         }
     },
@@ -340,35 +340,35 @@ comparativeConfig = [
             "name": "Traditional IRA",
             "Taxed Upon Contribution": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "This depends on whether you meet the income requirement to contribute to an IRA, which varies based on tax filing status. Check with the IRS for current brackets."
             },
             "Taxed Upon Withdrawal": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "You pay tax on your IRA distributions during retirement."
             },
             "Risk": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, IEA portfolios are usually well-balanced to mitigate this risk."
             },
             "Contribution Limit": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Each year, the government sets a limit to the amount of money you can contribute to IRAs without penalty. In 2023, that limit is $6,500 for those under age 50."
             },
             "Average Percent Yield": {
                 "value": 7,
-                "tooltip": ""
+                "tooltip": "APYs can vary, but 7% is a good target to decide whether a particular institution's account is right for you."
             },
             "Anytime No-Penalty Availability": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "There are early withdrawal penalties unless for a few exceptions: first-time home-buying, college, having/adopting a child, and a few other things."
             },
             "Employer Match": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "None for Traditional IRAs. There is a special type of IRA that does offer this, but it is less common and is outside the scope of this tool."
             },
             "Tied to Employer": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "No"
             },
         }
     },
@@ -378,35 +378,35 @@ comparativeConfig = [
             "name": "Roth IRA",
             "Taxed Upon Contribution": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "This depends on whether you meet the income requirement to contribute to an IRA, which varies based on tax filing status. Check with the IRS for current brackets."
             },
             "Taxed Upon Withdrawal": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "Roth IRA withdrawals are not taxed."
             },
             "Risk": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, IRA portfolios are usually well-balanced to mitigate this risk."
             },
             "Contribution Limit": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Each year, the government sets a limit to the amount of money you can contribute to IRAs without penalty. In 2023, that limit is $6,500 for those under age 50."
             },
             "Average Percent Yield": {
                 "value": 7,
-                "tooltip": ""
+                "tooltip": "APYs can vary, but 7% is a good target to decide whether a particular institution's account is right for you."
             },
             "Anytime No-Penalty Availability": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "There are early withdrawal penalties unless for a few exceptions: first-time home-buying, college, having/adopting a child, and a few other things."
             },
             "Employer Match": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "None for Roth IRAs."
             },
             "Tied to Employer": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "Not for Roth IRAs."
             },
         }
     },
@@ -416,35 +416,35 @@ comparativeConfig = [
             "name": "High-Yield Savings Account",
             "Taxed Upon Contribution": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "You contribute money out of your after-tax income."
             },
             "Taxed Upon Withdrawal": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "You must pay taxes on interest earned."
             },
             "Risk": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "Savings accounts are insured by the FDIC up to $250,000."
             },
             "Contribution Limit": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "You can contribute as much as you like."
             },
             "Average Percent Yield": {
                 "value": 3,
-                "tooltip": ""
+                "tooltip": "APYs can vary, but 3% is a good target to decide whether a particular institution's account is right for you."
             },
             "Anytime No-Penalty Availability": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "You can withdraw money at any time. However, many accounts have a penalty if you withdraw more than a set number of times per month (often 6)."
             },
             "Employer Match": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "None"
             },
             "Tied to Employer": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "No"
             },
         }
     },
@@ -454,35 +454,35 @@ comparativeConfig = [
             "name": "Certificates of Deposit",
             "Taxed Upon Contribution": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "You contribute money out of your after-tax income."
             },
             "Taxed Upon Withdrawal": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "You must pay taxes on interest earned."
             },
             "Risk": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "CDs are insured by the FDIC up to $250,000."
             },
             "Contribution Limit": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "You can contribute as much as you like."
             },
             "Average Percent Yield": {
                 "value": 4.5,
-                "tooltip": ""
+                "tooltip": "APYs can vary, but 4.5% is a good target to decide whether a particular institution's account is right for you."
             },
             "Anytime No-Penalty Availability": {
-                "value": 1,
-                "tooltip": ""
+                "value": 0,
+                "tooltip": "There is usually an early-withdrawal penalty if you remove money before the CD matures."
             },
             "Employer Match": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "None"
             },
             "Tied to Employer": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "No"
             },
         }
     },
@@ -492,35 +492,35 @@ comparativeConfig = [
             "name": "S&P Index",
             "Taxed Upon Contribution": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "You buy shares out of your after-tax income."
             },
             "Taxed Upon Withdrawal": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "You must pay capital gains tax on any earnings."
             },
             "Risk": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, the S&P generally follows the health of the stock market fairly well, and tends to be stable."
             },
             "Contribution Limit": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "You can buy as many shares as you want."
             },
             "Average Percent Yield": {
                 "value": 7,
-                "tooltip": ""
+                "tooltip": "The S&P, being an index, varies year-over-year depending on the health of the stock market. However, 7% is a good average for comparison purposes."
             },
             "Anytime No-Penalty Availability": {
                 "value": 1,
-                "tooltip": ""
+                "tooltip": "You can buy and sell index shares at any time."
             },
             "Employer Match": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "None"
             },
             "Tied to Employer": {
                 "value": 0,
-                "tooltip": ""
+                "tooltip": "No"
             },
         }
     }
