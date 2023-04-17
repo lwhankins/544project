@@ -379,6 +379,7 @@ function getTotalMoney() {
  *          getIdFromTitle() and set for each container in makeAccountDiv()
  */
 function runCalculators(calculators, ids) {
+    console.log("running")
     for (var i=0; i<calculators.length; i++) {
         let header = d3.select(`#${ids[i]}`)
                         .select(".panel-header");
@@ -488,7 +489,7 @@ function generateIcon(attrib) {
 
 // new function to generate table
 function generateTable(div, configs) {
-    console.log(configs)
+    //console.log(configs)
     let item = div.append("div")
         .attr("class", "carousel-item active");
     let table = item.append("table");
@@ -505,7 +506,7 @@ function generateTable(div, configs) {
     
     for (let i = 0; i < configs.length; i++) {
         let accountDetails = configs[i].attribs;
-        console.log(accountDetails)
+        //console.log(accountDetails)
         let row = table.append("tr");
         row.append("td").text(accountDetails.name);
         row.append("td").text(generateIcon(accountDetails["Taxed Upon Contribution"].value)).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Taxed Upon Contribution"].tooltip);
