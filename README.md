@@ -15,6 +15,27 @@ Branch Naming convention: ClownName-feature
 Merge to dev
 PR to main eventually
 
+
+## TODO PO3 Milestone:
+* Update introductory message with a little background information to the effect of "a common misconception is that putting all your money into one account yields the best benefits. This is not always the case. For example <provide an example where using 2+ accounts yields more than just 1>"
+* Initial contributions to 0
+* Update visual design
+  * Include visual indicator of average/suggested values on sliders
+* Speak with Fidelity advisor
+  * Thu., 4/20, 4 - 5 pm
+* Distribute beta version for feedback
+* Uncertainty values?
+* Adjust for inflation?
+
+## Account Explanations
+* 401k
+* Roth 401k
+* CD
+* IRA
+* Savings
+* S&P
+* Taxes (?)
+
 ## To-Do List for Visualizations
 ### Left Side: deadline 3/25
 * ~~webpage title and motivation paragraph -- Luke~~
@@ -44,18 +65,6 @@ Meet 3/27 to divvy this up
 * ~~preliminary results~~
 * ~~update research plan section~~
 * ~~update impacts section~~
-
-## TODO PO3 Milestone:
-* Update introductory message with a little background information to the effect of "a common misconception is that putting all your money into one account yields the best benefits. This is not always the case. For example <provide an example where using 2+ accounts yields more than just 1>"
-
-## Account Explanations
-* 401k
-* Roth 401k
-* CD
-* IRA
-* Savings
-* S&P
-* Taxes (?)
 
 ## ~~To-Do List for Calculations~~
 * 401K - Luke
