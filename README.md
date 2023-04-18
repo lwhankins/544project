@@ -26,6 +26,8 @@ PR to main eventually
       * change header color
       * resize table
       * add graphs in carousel
+  * Update sidebar: how much money you need in retirement to maintain standard of living (70-80% of pre-retirement income)
+      * adjust this amount for inflation to put in perspective of today's money?
 * Speak with Fidelity advisor
   * Thu., 4/20, 4 - 5 pm
 * Distribute beta version for feedback
