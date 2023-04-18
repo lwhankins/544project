@@ -379,7 +379,6 @@ function getTotalMoney() {
  *          getIdFromTitle() and set for each container in makeAccountDiv()
  */
 function runCalculators(calculators, ids) {
-    console.log("running")
     for (var i=0; i<calculators.length; i++) {
         let header = d3.select(`#${ids[i]}`)
                         .select(".panel-header");

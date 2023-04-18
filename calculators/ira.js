@@ -12,7 +12,6 @@ let tradIraCatchupCont = 1000;
 // Formula from https://www.wallstreetmojo.com/roth-ira-calculator/
 // Verified with https://www.dinkytown.net/java/roth-ira-calculator.html
 function calculateIraHelper(curBal, annCont, annRet, catchupCont) {
-    console.log(annCont)
     let total = curBal;
     let compoundMult = 1 + annRet;
     for (let i = currentAge; i < ageOfRetirement; i++) {
@@ -49,7 +48,6 @@ function setRothIraCurBal(bal) {
 }
 
 function setRothIraAnnCont(cont) {
-    console.log("what the fuck")
     rothIraAnnCont = parseFloat(cont);
 }
 
