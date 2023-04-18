@@ -4,7 +4,7 @@
  * 401k-specific variables, will be taken from sliders/input. Set here for testing.
 */
 
-let portionOfSalaryToContribute401k = .06; 
+let portionOfSalaryToContribute401k = 0; 
 let current401kBalance = 0;
 let annualRateOfReturn401k = .07;
 let employerMatchAmount401k = .5;
@@ -69,7 +69,7 @@ function calculateTraditional401k(){
  * Roth 401k-specific variables, will be taken from sliders/input. Set here for testing.
 */
 
-let portionOfSalaryToContributeRoth401k = .06; 
+let portionOfSalaryToContributeRoth401k = 0; 
 let currentRoth401kBalance = 0;
 let annualRateOfReturnRoth401k = .07;
 let employerMatchAmountRoth401k = .5;

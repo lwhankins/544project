@@ -2,8 +2,8 @@
 // keeps rolling over year-over-year
 // Round to nearest year of retirement (probably unnecessary)
 let cdAPY = 0.045;
-let currentCDBalance = 1000;
-let portionOfSalaryToContributeCDs = .1; 
+let currentCDBalance = 0;
+let portionOfSalaryToContributeCDs = 0; 
 
 function calculateCD() {
     let total = currentCDBalance;
