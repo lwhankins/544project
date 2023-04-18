@@ -19,7 +19,7 @@ PR to main eventually
 ## TODO PO3 Milestone:
 * Update introductory message with a little background information to the effect of "a common misconception is that putting all your money into one account yields the best benefits. This is not always the case. For example <provide an example where using 2+ accounts yields more than just 1>" -- Luke
 * Update descriptions to be shorter, with dropdown for additional info -- Luke
-* Initial contributions to 0
+* Initial contributions to 0 and fix calculators -- Luke
 * Compare Accounts section -- Amy
    * change header color
    * resize table
@@ -32,10 +32,11 @@ PR to main eventually
       * make it smaller? change things to % width?
 * Speak with Fidelity advisor -- all, if available
   * Thu., 4/20, 4 - 5 pm
-* Distribute beta version for feedback
-* Uncertainty values?
-* Adjust for inflation?
-* Update citations and additional info
+* Distribute beta version for feedback -- all, if available
+  * [website version](https://lwhankins.github.io/544project/)
+* adjust for inflation -- Connie, if there is time
+  * uncertainty values
+* Update citations and additional info -- Luke
 
 ## Account Explanations
 * 401k
