@@ -18,14 +18,20 @@ PR to main eventually
 
 ## TODO PO3 Milestone:
 * Update introductory message with a little background information to the effect of "a common misconception is that putting all your money into one account yields the best benefits. This is not always the case. For example <provide an example where using 2+ accounts yields more than just 1>"
+* Update descriptions to be shorter, with dropdown for additional info
 * Initial contributions to 0
 * Update visual design
   * Include visual indicator of average/suggested values on sliders
+  * Style compare accounts section
+      * change header color
+      * resize table
+      * add graphs in carousel
 * Speak with Fidelity advisor
   * Thu., 4/20, 4 - 5 pm
 * Distribute beta version for feedback
 * Uncertainty values?
 * Adjust for inflation?
+* Update citations and additional info
 
 ## Account Explanations
 * 401k
