@@ -362,7 +362,7 @@ comparativeConfig = [
             },
             "Risk": {
                 "value": 1,
-                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, IEA portfolios are usually well-balanced to mitigate this risk."
+                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, IRA portfolios are usually well-balanced to mitigate this risk."
             },
             "Contribution Limit": {
                 "value": 1,
