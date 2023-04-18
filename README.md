@@ -17,18 +17,20 @@ PR to main eventually
 
 
 ## TODO PO3 Milestone:
-* Update introductory message with a little background information to the effect of "a common misconception is that putting all your money into one account yields the best benefits. This is not always the case. For example <provide an example where using 2+ accounts yields more than just 1>"
-* Update descriptions to be shorter, with dropdown for additional info
+* Update introductory message with a little background information to the effect of "a common misconception is that putting all your money into one account yields the best benefits. This is not always the case. For example <provide an example where using 2+ accounts yields more than just 1>" -- Luke
+* Update descriptions to be shorter, with dropdown for additional info -- Luke
 * Initial contributions to 0
-* Update visual design
+* Compare Accounts section -- Amy
+   * change header color
+   * resize table
+   * add graphs in carousel
+* Update visual design -- Connie
   * Include visual indicator of average/suggested values on sliders
-  * Style compare accounts section
-      * change header color
-      * resize table
-      * add graphs in carousel
-  * Update sidebar: how much money you need in retirement to maintain standard of living (70-80% of pre-retirement income)
+  * Update sidebar
+      * how much money you need in retirement to maintain standard of living (70-80% of pre-retirement income)
       * adjust this amount for inflation to put in perspective of today's money?
-* Speak with Fidelity advisor
+      * make it smaller? change things to % width?
+* Speak with Fidelity advisor -- all, if available
   * Thu., 4/20, 4 - 5 pm
 * Distribute beta version for feedback
 * Uncertainty values?
