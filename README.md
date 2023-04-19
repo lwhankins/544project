@@ -17,7 +17,6 @@ PR to main eventually
 
 
 ## TODO PO3 Milestone:
-* Update introductory message with a little background information to the effect of "a common misconception is that putting all your money into one account yields the best benefits. This is not always the case. For example <provide an example where using 2+ accounts yields more than just 1>" -- Luke
 * Update descriptions to be shorter, with dropdown for additional info -- Luke
 * Initial contributions to 0 and fix calculators -- Luke
 * Compare Accounts section -- Amy
