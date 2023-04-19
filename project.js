@@ -46,6 +46,13 @@ for (let i=0; i<radiosConfig.length; i++) {
     makeRadio(basicInfoDiv, radiosConfig[i].name, radiosConfig[i].options, radiosConfig[i].setGlob, Object.values(accountCalculators), ids);
 }
 
+// Set up comparison div with comparison config
+makeComparisonDiv(comparativeConfig);
+
+for (const generalAccount in generalAccounts) {
+    makeWrapperDiv(generalAccounts[generalAccount]);
+}
+
 // set up account parameter info with accounts configs
 for (const account in accountsConfig) {
     makeAccountDiv(account, accountsConfig[account], [accountCalculators[account]]);
