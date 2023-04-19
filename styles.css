@@ -163,6 +163,12 @@ input {
 /* End sidebar styling */
 
 /* Table Styling */
+#compare-accounts-header {
+    width: 122%;
+    background-color: lightseagreen;
+    opacity: 0.9;
+}
+
 .carousel-item {
     margin-right: 0;
 }

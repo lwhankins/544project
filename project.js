@@ -61,6 +61,10 @@ for (const account in accountsConfig) {
 let sidebarDiv = d3.select("#sidebar");
 makeSidebarDiv(sidebarDiv);
 
+
+// Set up comparison div with comparison config
+makeComparisonDiv(comparativeConfig);
+
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
