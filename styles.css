@@ -188,6 +188,10 @@ table:hover {
     cursor:default;
 }
 
+.text-copy {
+    white-space: pre-wrap;
+}
+
 th, td {
     padding: 5px;
 }

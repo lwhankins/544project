@@ -181,7 +181,12 @@ function makeHeader(header, title, calculators, id) {
         .attr("data-bs-toggle", "collapse")
         .attr("data-bs-target", `#${id}-panel`)
         .attr("aria-expanded", "false")
-        .attr("aria-controls", `${id}-panel`);
+        .attr("aria-controls", `${id}-panel`)
+        .on("click", function() {
+            d3.select(`#${id}-panel-copy`)
+                .attr("class", "text-copy panel accordion-collapse collapse");
+            document.getElementById(`${id}-copy-dropdown-image`).src = "./images/right-arrow.png";
+        });
     checkbox.on("change", () => togglePanel(checkbox, calculators, id));
     header.append("h4")
         .attr("class", "header-amount")
@@ -191,6 +196,10 @@ function makeHeader(header, title, calculators, id) {
 let accountsDiv = d3.select("#accounts"); // matches index.html
 
 
+/*
+ * Makes div with copy available with dropwdown. This is appended to the bottom
+ * of each account div. 
+ */ 
 function makeCopyDropdown(title) {
     let id = getIdFromTitle(title);
     let accountInfo = d3.select(`#${id}-panel`);
@@ -243,10 +252,23 @@ function makeCopyDropdown(title) {
 
     let accountDiv = d3.select(`#${id}`);
     let copyPanel = accountDiv.append("div")
-        .attr("class", "panel accordion-collapse collapse")
+        .attr("class", "text-copy panel accordion-collapse collapse")
         .attr("id", `${id}-panel-copy`)
         .attr("aria-labelledby", `${id}-header`)
         .text(copy);
+    let references = sources[title];
+    if (title.includes("401K")) {
+        references = sources["401K"];
+    } else if (title.includes("IRA")) {
+        references = sources["IRA"];
+    }
+    let referencesDiv = copyPanel.append("div")
+        .text("References: ");
+    references.forEach(function(reference) {
+        referencesDiv.append("a")
+            .attr("href", reference[0])
+            .text(`[${reference[1]}]`);
+    });
 
 
 }
