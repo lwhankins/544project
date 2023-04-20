@@ -28,20 +28,21 @@ let height = 50;
  */
 // Can consider bootstrap range component
 // use d3-simple-slider from https://github.com/johnwalley/d3-simple-slider
-function makeInputSlider(parent, name, min, max, suggested, step, format, setGlob, calculators, ids){
+function makeInputSlider(parent, name, min, max, initial, suggested, step, format, setGlob, calculators, ids){
     // label is the top level holder
-    let label = parent.append("label")
-                      .text(name)
-                      .attr("data-bs-toggle", "tooltip")
+    label = parent.append("label").text(name);
+    if (suggested != 0) {
+        label.attr("data-bs-toggle", "tooltip")
                     .attr("data-bs-placement", "top")
-                    .attr("data-bs-title", `Standard: ${suggested}`);
+                    .attr("data-bs-title", `Suggested: ${suggested}`);
+    }
     // label holds a div with the input (field where user inputs the value and presses up/down)
     let input = label.append("div")
                     .attr("class", "param-input")
                     .append("input")
                     .attr("type", "number")
                     .attr("name", name)
-                    .attr("value", suggested)
+                    .attr("value", initial)
                     .attr("min", min)
                     .attr("max", max)
                     .attr("step", step)
@@ -60,19 +61,66 @@ function makeInputSlider(parent, name, min, max, suggested, step, format, setGlo
                     .step(step)
                     .ticks(4)
                     .tickFormat(d3.format(format))
-                    .value(suggested)
+                    .value(initial)
                     .on("onchange", (val) => {
                         input.attr("value", val);
                         setGlob(val);
                         runCalculators(calculators, ids);
                         updateSidebar();
+                        if (suggested != 0) {
+                            if (val == suggested) {
+                                svg.selectAll(".parameter-value").selectAll("text")
+                                    .attr("class", "paramater-value suggested-value");
+                            } else {
+                                svg.selectAll(".parameter-value").selectAll("text")
+                                .attr("class", "paramater-value");
+                            }
+                        }
                     });
+    if (suggested != 0) {
+        let scale = d3.scaleLinear()
+            .domain([0,4])
+            .range([min, max]);
+        let ticks = [0, 1, 2, 3, 4];
+        tickValues = [];
+        for (let i = 0; i < ticks.length; i++) {
+            let tick = scale(ticks[i]);
+            if ((Math.abs(tick-suggested)/(max-min) < .15)) {
+                continue;
+            }
+            tickValues.push(tick);
+        }
+        tickValues.push(suggested);
+        tickValues.sort();
+        slider.tickValues(tickValues);
+    }
     svg.call(slider);
+    if (suggested != 0) {
+        let selection = svg.selectAll("g.tick")
+                        .filter(function(d) { return d === suggested;});
+        selection.select("line")
+            .attr("class", "suggested-value");
+        selection.select("text")
+            .attr("class", "suggested-value");
+        if (initial == suggested) {
+            svg.selectAll(".parameter-value").selectAll("text")
+                .attr("class", "paramater-value suggested-value");
+        }
+    }
     input.on('change', function() {
         slider.value(this.value);
         setGlob(this.value);
         runCalculators(calculators, ids);
         updateSidebar();
+        if (suggested != 0) {
+            if (this.value == suggested) {
+                svg.selectAll(".parameter-value").selectAll("text")
+                    .attr("class", "paramater-value suggested-value");
+            } else {
+                svg.selectAll(".parameter-value").selectAll("text")
+                .attr("class", "paramater-value");
+            }
+        }
     });
 }
 
@@ -135,7 +183,7 @@ function addParam(parentDiv, config, calculators, ids) {
     let g = parentDiv.append("g")
         .attr("class", "param"); // add id as well?
 
-    makeInputSlider(g, config.name, config.min, config.max, config.suggested,
+    makeInputSlider(g, config.name, config.min, config.max, config.initial, config.suggested,
                     config.step, config.format, config.setGlob, calculators, ids);
 }
 
