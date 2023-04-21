@@ -173,6 +173,13 @@ input {
     margin-right: 0;
 }
 
+.suggested-value {
+    color:rgba(13, 253, 113, 0.25);
+    stroke:#59b880;
+    fill:#59b880;
+    font-weight: bold;
+}
+
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
