@@ -126,7 +126,7 @@ input {
 
 .account-copy {
     white-space: pre-line;
-    width: 550px;
+    width: 540px;
 }
 
 /* end styling for account divs (toggle panels) */
@@ -136,12 +136,14 @@ input {
     margin-left: 65%;
     position: fixed;
     margin-top: 0;
+    height: 87%;
     justify-content: center;
     align-items: center;
     scroll-behavior: auto;
     background-color: white;
     z-index: 10;
     padding-left: 0.75%;
+    border-left:2px solid darkgray;
 }
 
 .sidebar-money {
@@ -197,6 +199,7 @@ table:hover {
 
 .text-copy {
     white-space: pre-wrap;
+    padding: 10px;
 }
 
 th, td {
