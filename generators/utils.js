@@ -181,7 +181,12 @@ function makeHeader(header, title, calculators, id) {
         .attr("data-bs-toggle", "collapse")
         .attr("data-bs-target", `#${id}-panel`)
         .attr("aria-expanded", "false")
-        .attr("aria-controls", `${id}-panel`);
+        .attr("aria-controls", `${id}-panel`)
+        .on("click", function() {
+            d3.select(`#${id}-panel-copy`)
+                .attr("class", "text-copy panel accordion-collapse collapse");
+            document.getElementById(`${id}-copy-dropdown-image`).src = "./images/right-arrow.png";
+        });
     checkbox.on("change", () => togglePanel(checkbox, calculators, id));
     header.append("h4")
         .attr("class", "header-amount")
@@ -189,6 +194,109 @@ function makeHeader(header, title, calculators, id) {
 }
 
 let accountsDiv = d3.select("#accounts"); // matches index.html
+
+
+/*
+ * Makes div with copy available with dropwdown. This is appended to the bottom
+ * of each account div. 
+ */ 
+function makeCopyDropdown(title) {
+    let id = getIdFromTitle(title);
+    let accountInfo = d3.select(`#${id}-panel`);
+    let dropDownHeader = accountInfo.append("div");
+    let toggleCopy = dropDownHeader.append("label")
+        .attr("class", "copy-dropdown-label")
+        .on("click", function(event) {
+            if (event.srcElement == this) {
+                return;
+            }
+            let img = document.getElementById(`${id}-copy-dropdown-image`);
+            if(img.src.includes("right-arrow.png")) {
+                img.src = "./images/down-arrow.png";
+            } else {
+                img.src = "./images/right-arrow.png";
+            }
+            return;
+        })
+        .text("Show More Info");
+    let dropDownImage = toggleCopy.append("img")
+        .attr("id", `${id}-copy-dropdown-image`)
+        .attr("src", "./images/right-arrow.png")
+        .attr("class", "copy-dropdown-image")
+        .on("click", function(event) {
+            let img = document.getElementById(`${id}-copy-dropdown-image`);
+            if(img.src.includes("right-arrow.png")) {
+                img.src = "./images/down-arrow.png";
+            } else {
+                img.src = "./images/right-arrow.png";
+            }
+            return;
+        })
+    let checkbox = toggleCopy.append("input")
+        .attr("type", "checkbox")
+        .attr("id", `${id}-copy-dropwdown-checkbox`)
+        .attr("class", "copy-check-input collapsed")
+        .attr("role", "switch")
+        .attr("data-bs-toggle", "collapse")
+        .attr("data-bs-target", `#${id}-panel-copy`)
+        .attr("aria-expanded", "false")
+        .attr("aria-controls", `${id}-panel-copy`);
+    let copy = accountCopy[title];
+    if (title.includes("IRA")) {
+        copy = accountCopy["IRA"] + "\n\n" + copy + "\n\n" + accountCopy["IRA Ending"];
+    }
+
+    if (title.includes("401")) {
+        copy = accountCopy["401K"] + "\n\n" + copy + "\n\n" + accountCopy["401K Ending"];
+    }
+
+    let accountDiv = d3.select(`#${id}`);
+    let copyPanel = accountDiv.append("div")
+        .attr("class", "text-copy panel accordion-collapse collapse")
+        .attr("id", `${id}-panel-copy`)
+        .attr("aria-labelledby", `${id}-header`)
+        .text(copy);
+    let references = sources[title];
+    if (title.includes("401K")) {
+        references = sources["401K"];
+    } else if (title.includes("IRA")) {
+        references = sources["IRA"];
+    }
+    let referencesDiv = copyPanel.append("div")
+        .text("References: ");
+    references.forEach(function(reference) {
+        referencesDiv.append("a")
+            .attr("href", reference[0])
+            .text(`[${reference[1]}]`);
+    });
+
+
+}
+
+/*
+ * Creates the wrapper for account types. Wrapper will include
+ * non-unique account types (one wrapper for 401ks). Wrapper becomes
+ * parent div for each account div.
+ */
+function makeWrapperDiv(accountTitle) {
+    let wrapperDiv;
+    if (document.getElementById(accountTitle + "-wrapper") == null) {
+        wrapperDiv = accountsDiv.append("div")
+            .attr("id", getIdFromTitle(accountTitle) + "-wrapper")
+            .attr("class", "wrapper-div");
+    } else {
+        wrapperDiv = document.getElementById(accountTitle + "-wrapper");
+    }
+    let introCopy = accountCopy["Intro " + accountTitle];
+    if (accountTitle.includes("IRA")) {
+        introCopy = accountCopy["Intro IRA"];
+    }
+    if (accountTitle.includes("FourOhOne")) {
+        introCopy = accountCopy["Intro 401K"];
+    }
+    wrapperDiv.text(introCopy);
+}
+
 /*
  * Make a div for an account type (e.g., Traditional 401k), with a
  * container as the top level holder. Each container has the structure:
@@ -208,7 +316,15 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     let id = getIdFromTitle(title);
 
     // each account div is a container, the top level holder
-    let accountDiv = accountsDiv.append("div")
+    let wrapperDiv;
+    if (title.includes("IRA")) {
+        wrapperDiv = d3.select("#" + getIdFromTitle("IRA") + "-wrapper");
+    } else if (title.includes("401K")) {
+        wrapperDiv = d3.select("#" + getIdFromTitle("401K") + "-wrapper");
+    } else {
+        wrapperDiv = d3.select("#" + getIdFromTitle(title) + "-wrapper");
+    }
+    let accountDiv = wrapperDiv.append("div")
         .attr("class", "container accordion-item")
         .attr("id", id);
     // container holds div for panel header, which is always shown
@@ -224,21 +340,11 @@ function makeAccountDiv(title, paramConfigs, calculators) {
         .attr("id", `${id}-panel`)
         .attr("aria-labelledby", `${id}-header`)
 
-    let copy = accountCopy[title];
-    if (title.includes("IRA")) {
-        copy = accountCopy["IRA"] + "\n\n" + copy + "\n\n" + accountCopy["IRA Ending"];
-    }
-
-    if (title.includes("401")) {
-        copy = accountCopy["401K"] + "\n\n" + copy + "\n\n" + accountCopy["401K Ending"];
-    }
-    panel.append("div")
-        .attr("class", "account-copy")
-        .text(copy)
     // add each parameter using its config
     for (let i = 0; i < paramConfigs.length; i++) {
         addParam(panel, paramConfigs[i], calculators, [id]);
     }
+    makeCopyDropdown(title);
     return accountDiv;
 }
 

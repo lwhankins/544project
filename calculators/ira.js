@@ -1,13 +1,13 @@
 const catchupAge = 50;
 let rothIraCurBal = 0;
-let rothIraAnnCont = 0.06;
+let rothIraAnnCont = 0;
 let rothIraAnnRet = 0.07;
-let rothIraCatchupCont = 1000;
+let rothIraCatchupCont = 0;
 
 let tradIraCurBal = 0;
-let tradIraAnnCont = 0.06;
+let tradIraAnnCont = 0;
 let tradIraAnnRet = 0.07;
-let tradIraCatchupCont = 1000;
+let tradIraCatchupCont = 0;
 
 // Formula from https://www.wallstreetmojo.com/roth-ira-calculator/
 // Verified with https://www.dinkytown.net/java/roth-ira-calculator.html

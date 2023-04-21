@@ -11,7 +11,7 @@ accountsConfig = {
         {"name": "Percent (%) Salary to Contribute",
         "min": 0,
         "max": .25,
-        "suggested": .06,
+        "suggested": 0,
         "step": .01,
         "format": ".1%",
         "setGlob": set401kSalaryPortionContribution},
@@ -53,7 +53,7 @@ accountsConfig = {
         {"name": "Percent (%) Salary to Contribute",
         "min": 0,
         "max": .25,
-        "suggested": .06,
+        "suggested": 0,
         "step": .01,
         "format": ".1%",
         "setGlob": setRoth401kSalaryPortionContribution},
@@ -95,7 +95,7 @@ accountsConfig = {
         {"name": "Percent (%) of salary to contribute",
         "min": 0,
         "max": .25,
-        "suggested": 0.06,
+        "suggested": 0,
         "step": 0.01,
         "format": ".1%",
         "setGlob": setTradIraAnnCont},
@@ -129,7 +129,7 @@ accountsConfig = {
         {"name": "Percent (%) Salary to Contribute",
         "min": 0,
         "max": .25,
-        "suggested": 0.06,
+        "suggested": 0,
         "step": 0.01,
         "format": ".1%",
         "setGlob": setRothIraAnnCont},
@@ -172,8 +172,8 @@ accountsConfig = {
         {
             "name": "Percent (%) Salary to Contribute",
             "min": 0,
-            "max": 25,
-            "suggested": 10,
+            "max": .25,
+            "suggested": 0,
             "step": .01,
             "format": ".2%",
             "setGlob": setSavingsPortionContribution
@@ -202,8 +202,8 @@ accountsConfig = {
         {
             "name": "Percent (%) Salary to Contribute",
             "min": 0,
-            "max": 25,
-            "suggested": 10,
+            "max": .25,
+            "suggested": 0,
             "step": .01,
             "format": ".2%",
             "setGlob": setCDSalaryPortionContibution
@@ -222,7 +222,7 @@ accountsConfig = {
         {"name": "Percent (%) Salary to Contribute",
         "min": 0,
         "max": .25,
-        "suggested": .05,
+        "suggested": 0,
         "step": .01,
         "format": ".1%",
         "setGlob": setPortionOfSalaryToContributeSP},
@@ -237,17 +237,31 @@ accountsConfig = {
     ]
 }
 
+generalAccounts = [
+    "401K",
+    "IRA",
+    "High-Yield Savings Account",
+    "Certificates of Deposit",
+    "S&P Index"
+]
+
+
 accountCopy = {
+    "Intro 401K": intro401Copy,
     "401K": general401Copy,
     "Traditional 401K": traditional401Copy,
     "Roth 401K": roth401Copy,
     "401K Ending": ending401Copy,
+    "Intro IRA": introIraCopy,
     "IRA": generalIraCopy,
     "Traditional IRA": traditionalIraCopy,
     "Roth IRA": rothIraCopy,
     "IRA Ending": iraEndingCopy,
+    "Intro High-Yield Savings Account": introHighYieldSavingsAccountCopy,
     "High-Yield Savings Account": highYieldSavingsAccountCopy,
+    "Intro Certificates of Deposit": introCdCopy,
     "Certificates of Deposit": cdCopy,
+    "Intro S&P Index": introSnP,
     "S&P Index": sAndPCopy
 }
 
@@ -362,7 +376,7 @@ comparativeConfig = [
             },
             "Risk": {
                 "value": 1,
-                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, IEA portfolios are usually well-balanced to mitigate this risk."
+                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, IRA portfolios are usually well-balanced to mitigate this risk."
             },
             "Contribution Limit": {
                 "value": 1,

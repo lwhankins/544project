@@ -49,6 +49,10 @@ for (let i=0; i<radiosConfig.length; i++) {
 // Set up comparison div with comparison config
 makeComparisonDiv(comparativeConfig);
 
+for (const generalAccount in generalAccounts) {
+    makeWrapperDiv(generalAccounts[generalAccount]);
+}
+
 // set up account parameter info with accounts configs
 for (const account in accountsConfig) {
     makeAccountDiv(account, accountsConfig[account], [accountCalculators[account]]);
@@ -56,6 +60,10 @@ for (const account in accountsConfig) {
 
 let sidebarDiv = d3.select("#sidebar");
 makeSidebarDiv(sidebarDiv);
+
+
+// Set up comparison div with comparison config
+makeComparisonDiv(comparativeConfig);
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
