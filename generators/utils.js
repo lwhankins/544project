@@ -412,9 +412,19 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     
     Honk, honk. - Clownie
  */
-function makeSidebarDiv(div) {
+function makeSidebarDiv(top) {
     let money = getTotalMoney()
-    div.attr("class", "panel-side");
+    makeSidebarOpener(top);
+    
+    let div = top.append("div")
+        .attr("class", "panel-side");
+    div.append("a")
+        .attr("href", "javascript:void(0)")
+        .attr("id", "closebtn")
+        .attr("class", "btn-close")
+        .on("click", closeSidebar)
+    //div.style("display", "none");
+    div.property("hidden", true);
     let header = div.append("div")
         .append("h3")
         .attr("class", "sidebar-text")
@@ -437,6 +447,29 @@ function makeSidebarDiv(div) {
         .attr("class", "bar-chart");
     averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
     makeBarChartY(averageAmts, "comparison");
+}
+
+function makeSidebarOpener(top) {
+    top.append("div")
+        .attr("id", "openbtn")
+        .attr("class", "carousel-control-prev-icon")
+        .on("click", openSidebar);
+}
+
+function openSidebar() {
+    let button = d3.select("#openbtn")
+        .property("hidden", true);
+
+    let sidebar = d3.select(".panel-side")
+        .property("hidden", false);
+}
+
+function closeSidebar() {
+    let button = d3.select("#openbtn")
+        .property("hidden", false);
+
+    let sidebar = d3.select(".panel-side")
+        .property("hidden", true);
 }
 
 function updateSidebar() {
