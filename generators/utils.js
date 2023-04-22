@@ -97,7 +97,7 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
     svg.call(slider);
     if (suggested != 0) {
         let selection = svg.selectAll("g.tick")
-                        .filter(function(d) { return d === suggested;});
+                        .filter(function(d) { return d == suggested;});
         selection.select("line")
             .attr("class", "suggested-value");
         selection.select("text")
@@ -126,11 +126,11 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
 
 function makeRadio(parent, name, options, setGlob, calculators, ids) {
     let container = parent.append("div").attr("class", "param-radio");
-    let top = container.append("h4")
+    let top = container.append("h6")
                       .text(name);
-    container.append("div")
+    /*container.append("div")
                       .text(taxCopy);
-    container.append("br");
+    container.append("br");*/
 
     // label holds a div with the buttons
     for (let i=0; i < options.length; i++) {
@@ -611,6 +611,7 @@ function runCalculators(calculators, ids) {
 function makeComparisonDiv(configs) {
     // each account div is a container, the top level holder
     let id = "compare-accounts";
+    accountsDiv.append("br");
     let compDiv = accountsDiv.append("div")
         .attr("class", "accordion-item")
         .style("width", "130%")

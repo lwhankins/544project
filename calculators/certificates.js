@@ -20,7 +20,7 @@ function calculateCD() {
 }
 
 function setCdAPY(apy) {
-    cdAPY = parseFloat(apy / 100);
+    cdAPY = parseFloat(apy);
 }
 
 function setCurrentCDBalance(currentBalance) {
@@ -28,5 +28,5 @@ function setCurrentCDBalance(currentBalance) {
 }
 
 function setCDSalaryPortionContibution(contribution) {
-    portionOfSalaryToContributeCDs = parseFloat(contribution / 100);
+    portionOfSalaryToContributeCDs = parseFloat(contribution);
 }
