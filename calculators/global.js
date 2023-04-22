@@ -12,6 +12,8 @@ var moneyPerMonth = 0;
 var averageAmericanTotal = 255000;
 var contributions = [];
 var averageAmts = [];
+var salaryAtRetirement = salary;
+var salaryAtRetirementAfterTaxes = salaryAtRetirement;
 
 function setAge(age) {
     currentAge = parseInt(age);

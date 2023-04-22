@@ -28,20 +28,21 @@ let height = 50;
  */
 // Can consider bootstrap range component
 // use d3-simple-slider from https://github.com/johnwalley/d3-simple-slider
-function makeInputSlider(parent, name, min, max, suggested, step, format, setGlob, calculators, ids){
+function makeInputSlider(parent, name, min, max, initial, suggested, step, format, setGlob, calculators, ids){
     // label is the top level holder
-    let label = parent.append("label")
-                      .text(name)
-                      .attr("data-bs-toggle", "tooltip")
+    label = parent.append("label").text(name);
+    if (suggested != 0) {
+        label.attr("data-bs-toggle", "tooltip")
                     .attr("data-bs-placement", "top")
-                    .attr("data-bs-title", `Standard: ${suggested}`);
+                    .attr("data-bs-title", `Suggested: ${suggested}`);
+    }
     // label holds a div with the input (field where user inputs the value and presses up/down)
     let input = label.append("div")
                     .attr("class", "param-input")
                     .append("input")
                     .attr("type", "number")
                     .attr("name", name)
-                    .attr("value", suggested)
+                    .attr("value", initial)
                     .attr("min", min)
                     .attr("max", max)
                     .attr("step", step)
@@ -60,19 +61,66 @@ function makeInputSlider(parent, name, min, max, suggested, step, format, setGlo
                     .step(step)
                     .ticks(4)
                     .tickFormat(d3.format(format))
-                    .value(suggested)
+                    .value(initial)
                     .on("onchange", (val) => {
                         input.attr("value", val);
                         setGlob(val);
                         runCalculators(calculators, ids);
                         updateSidebar();
+                        if (suggested != 0) {
+                            if (val == suggested) {
+                                svg.selectAll(".parameter-value").selectAll("text")
+                                    .attr("class", "paramater-value suggested-value");
+                            } else {
+                                svg.selectAll(".parameter-value").selectAll("text")
+                                .attr("class", "paramater-value");
+                            }
+                        }
                     });
+    if (suggested != 0) {
+        let scale = d3.scaleLinear()
+            .domain([0,4])
+            .range([min, max]);
+        let ticks = [0, 1, 2, 3, 4];
+        tickValues = [];
+        for (let i = 0; i < ticks.length; i++) {
+            let tick = scale(ticks[i]);
+            if ((Math.abs(tick-suggested)/(max-min) < .15)) {
+                continue;
+            }
+            tickValues.push(tick);
+        }
+        tickValues.push(suggested);
+        tickValues.sort();
+        slider.tickValues(tickValues);
+    }
     svg.call(slider);
+    if (suggested != 0) {
+        let selection = svg.selectAll("g.tick")
+                        .filter(function(d) { return d === suggested;});
+        selection.select("line")
+            .attr("class", "suggested-value");
+        selection.select("text")
+            .attr("class", "suggested-value");
+        if (initial == suggested) {
+            svg.selectAll(".parameter-value").selectAll("text")
+                .attr("class", "paramater-value suggested-value");
+        }
+    }
     input.on('change', function() {
         slider.value(this.value);
         setGlob(this.value);
         runCalculators(calculators, ids);
         updateSidebar();
+        if (suggested != 0) {
+            if (this.value == suggested) {
+                svg.selectAll(".parameter-value").selectAll("text")
+                    .attr("class", "paramater-value suggested-value");
+            } else {
+                svg.selectAll(".parameter-value").selectAll("text")
+                .attr("class", "paramater-value");
+            }
+        }
     });
 }
 
@@ -135,7 +183,7 @@ function addParam(parentDiv, config, calculators, ids) {
     let g = parentDiv.append("g")
         .attr("class", "param"); // add id as well?
 
-    makeInputSlider(g, config.name, config.min, config.max, config.suggested,
+    makeInputSlider(g, config.name, config.min, config.max, config.initial, config.suggested,
                     config.step, config.format, config.setGlob, calculators, ids);
 }
 
@@ -387,7 +435,7 @@ function makeSidebarDiv(div) {
     let comp = div.append("div") // Bar chart by average (averageAmts)
         .attr("id", "comparison")
         .attr("class", "bar-chart");
-    averageAmts = [{entity: "You", amount: money},{entity: "Average American", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
     makeBarChartY(averageAmts, "comparison");
 }
 
@@ -398,7 +446,7 @@ function updateSidebar() {
         .text(() => `${moneyFormat.format(money)}`);
 
     makeBarChartX(contributions, "breakdown", money);
-    averageAmts = [{entity: "You", amount: money},{entity: "Average American", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12}, {entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
     makeBarChartY(averageAmts, "comparison");
 }
 
@@ -407,7 +455,7 @@ function makeBarChartX(data, id, money) {
     if (money != 0) {
         plot = Plot.plot({
             x: { 
-                axis: "top",
+                axis: "bottom",
                 label: null,
                 labelAnchor: "center",
             },
@@ -415,21 +463,26 @@ function makeBarChartX(data, id, money) {
                 label: null
             },
             marks: [
-                Plot.barX(data, {x: Object.keys(data[0])[1], y: Object.keys(data[0])[0], fill: "black", fillOpacity: 0.6})
+                Plot.barY(data, {y: Object.keys(data[0])[1], x: Object.keys(data[0])[0], fill: "green", fillOpacity: 0.6})
             ],
             style: {
                 overflow: "visible",
-                fontSize: 20
+                fontSize: 20,
+                height: "175px"
             }
         })
     }
 
+    let d3Elem = d3.select(`#${id}`);
     let elem = document.getElementById(id);
     try {
-        elem.removeChild(elem.lastElementChild);
+        elem.innerHTML = "";
     } catch(e) {}
     
     if (plot) {
+        d3Elem.append("div")
+            .attr("class", "sidebar-text")
+            .text(() => "breakdown");
         elem.append(plot);
     }
 }
@@ -441,22 +494,25 @@ function makeBarChartY(data, id) {
         },
         x: { label: ""},
         marks: [
-          Plot.barY(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], fill: "blue", fillOpacity: 0.3})
+          Plot.barY(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], fill: "green", fillOpacity: 0.3})
         ],
         style: {
             fontSize: 30,
             marginLeft: 15,
-            overflow: "visible"
+            overflow: "visible",
+            height: "175px"
         }
       })
     let elem = document.getElementById(id);
+    let d3Elem = d3.select(`#${id}`);
     try {
-        elem.removeChild(elem.lastElementChild);
+        elem.innerHTML = "";
     } catch(e) {}
-    
+    d3Elem.append("div")
+        .attr("class", "sidebar-text")
+        .text(() => `In comparison, the average American has $${Math.round(averageAmericanTotal / (yearsInRetirement * 12))} per month, and you need $${Math.round(salaryAtRetirementAfterTaxes/12)} per month to maintain the same standard of living you would have right before retirement.`);
     elem.append(plot);
 }
-
 /*
     Get the total amount of money per month.
 */
@@ -497,6 +553,11 @@ function runCalculators(calculators, ids) {
                 .text("$" + d3.format(",.0f")(amount));
         }
     }
+    let salaryAtRetirement = salary;
+    for (let i = currentAge; i < ageOfRetirement; i++) {
+        salaryAtRetirement = salaryAtRetirement + salaryAtRetirement*annualSalaryIncrease;
+    }
+    salaryAtRetirementAfterTaxes = .8 *(salaryAtRetirement - taxesPerYear(salaryAtRetirement));
 }
 
 /*

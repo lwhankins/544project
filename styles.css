@@ -127,7 +127,7 @@ input {
 
 .account-copy {
     white-space: pre-line;
-    width: 550px;
+    width: 540px;
 }
 
 /* end styling for account divs (toggle panels) */
@@ -137,12 +137,14 @@ input {
     margin-left: 65%;
     position: fixed;
     margin-top: 0;
+    height: 87%;
     justify-content: center;
     align-items: center;
     scroll-behavior: auto;
     background-color: white;
     z-index: 10;
     padding-left: 0.75%;
+    border-left:2px solid darkgray;
 }
 
 .sidebar-money {
@@ -174,6 +176,13 @@ input {
     margin-right: 0;
 }
 
+.suggested-value {
+    color:rgba(13, 253, 113, 0.25);
+    stroke:#59b880;
+    fill:#59b880;
+    font-weight: bold;
+}
+
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -191,6 +200,7 @@ table:hover {
 
 .text-copy {
     white-space: pre-wrap;
+    padding: 10px;
 }
 
 th, td {

@@ -46,6 +46,7 @@ for (let i=0; i<radiosConfig.length; i++) {
     makeRadio(basicInfoDiv, radiosConfig[i].name, radiosConfig[i].options, radiosConfig[i].setGlob, Object.values(accountCalculators), ids);
 }
 
+
 for (const generalAccount in generalAccounts) {
     makeWrapperDiv(generalAccounts[generalAccount]);
 }
@@ -56,6 +57,7 @@ for (const account in accountsConfig) {
 }
 
 let sidebarDiv = d3.select("#sidebar");
+runCalculators(accountCalculators, ids);
 makeSidebarDiv(sidebarDiv);
 
 
