@@ -536,9 +536,10 @@ function makeComparisonDiv(configs) {
         .attr("class", "carousel slide")
         .attr("id", "compCarousel")
         .attr("data-ride", "carousel")
-    let carouselInner = carousel.append("div");
+    let carouselInner = carousel.append("div").attr("class", "carousel-inner");
     generateTable(carouselInner, configs);
-    //generateCompGraph(carouselInner, configs);
+    generateNumGraph(carouselInner);
+    generateAgeGraph(carouselInner);
     // Left control
     let left = carousel.append("a")
         .attr("class", "carousel-control-prev")

@@ -53,6 +53,7 @@ input {
     position: absolute;
     top: 40px;
     width: 50px;
+    padding: 5px;
 }
 
 .param-slider {
@@ -202,6 +203,13 @@ th, td {
     border-color:rgba(1, 29, 13, 0.25);
     border-radius: 5px;
     margin: 5px 5px;
+    padding: 5px;
 }
 
 /* End table styling */
+
+/* Carousel Styling */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(100%);
+}
