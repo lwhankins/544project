@@ -612,17 +612,19 @@ function makeComparisonDiv(configs) {
     // each account div is a container, the top level holder
     let id = "compare-accounts";
     let compDiv = accountsDiv.append("div")
-        .attr("class", "container accordion-item")
+        .attr("class", "accordion-item")
+        .style("width", "130%")
         .attr("id", "compare-accounts");
     // container holds div for panel header, which is always shown
     // panel header contains account name and toggle
     let header = compDiv.append("div")
         .attr("class", "panel-header accordion-header")
         .attr("id", `compare-accounts-header`)
+        .style("width", "100%");
     makeCompHeader(header, "Compare Accounts", id);
     // container holds div for panel, which is shown if toggle is on
     let panel = compDiv.append("div")
-        .attr("class", "panel accordion-collapse collapse")
+        .attr("class", "accordion-collapse collapse")
         .attr("id", `${id}-panel`)
         .attr("aria-labelledby", `${id}-header`)
     // add carousel
@@ -644,8 +646,7 @@ function makeComparisonDiv(configs) {
         .attr("class", "carousel-control-prev-icon")
         .attr("aria-hidden", "true");
     left.append("span")
-        .attr("class", "sr-only")
-        .text("Previous");
+        .attr("class", "sr-only");
     // Right control
     let right = carousel.append("a")
         .attr("class", "carousel-control-next")
@@ -656,8 +657,7 @@ function makeComparisonDiv(configs) {
         .attr("class", "carousel-control-next-icon")
         .attr("aria-hidden", "true");
     right.append("span")
-        .attr("class", "sr-only")
-        .text("Next");
+        .attr("class", "sr-only");
     return compDiv;
 }
 
