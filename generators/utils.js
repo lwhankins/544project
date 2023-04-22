@@ -412,9 +412,19 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     
     Honk, honk. - Clownie
  */
-function makeSidebarDiv(div) {
+function makeSidebarDiv(top) {
     let money = getTotalMoney()
-    div.attr("class", "panel-side");
+    makeSidebarOpener(top);
+    
+    let div = top.append("div")
+        .attr("class", "panel-side");
+    div.append("a")
+        .attr("href", "javascript:void(0)")
+        .attr("id", "closebtn")
+        .attr("class", "btn-close")
+        .on("click", closeSidebar)
+    //div.style("display", "none");
+    div.property("hidden", true);
     let header = div.append("div")
         .append("h3")
         .attr("class", "sidebar-text")
@@ -437,6 +447,29 @@ function makeSidebarDiv(div) {
         .attr("class", "bar-chart");
     averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
     makeBarChartY(averageAmts, "comparison");
+}
+
+function makeSidebarOpener(top) {
+    top.append("div")
+        .attr("id", "openbtn")
+        .attr("class", "carousel-control-prev-icon")
+        .on("click", openSidebar);
+}
+
+function openSidebar() {
+    let button = d3.select("#openbtn")
+        .property("hidden", true);
+
+    let sidebar = d3.select(".panel-side")
+        .property("hidden", false);
+}
+
+function closeSidebar() {
+    let button = d3.select("#openbtn")
+        .property("hidden", false);
+
+    let sidebar = d3.select(".panel-side")
+        .property("hidden", true);
 }
 
 function updateSidebar() {
@@ -541,7 +574,6 @@ function getTotalMoney() {
  *          getIdFromTitle() and set for each container in makeAccountDiv()
  */
 function runCalculators(calculators, ids) {
-    console.log("running")
     for (var i=0; i<calculators.length; i++) {
         let header = d3.select(`#${ids[i]}`)
                         .select(".panel-header");
@@ -580,51 +612,73 @@ function makeComparisonDiv(configs) {
     // each account div is a container, the top level holder
     let id = "compare-accounts";
     let compDiv = accountsDiv.append("div")
-        .attr("class", "container accordion-item")
+        .attr("class", "accordion-item")
+        .style("width", "130%")
         .attr("id", "compare-accounts");
     // container holds div for panel header, which is always shown
     // panel header contains account name and toggle
     let header = compDiv.append("div")
         .attr("class", "panel-header accordion-header")
         .attr("id", `compare-accounts-header`)
+        .style("width", "100%");
     makeCompHeader(header, "Compare Accounts", id);
     // container holds div for panel, which is shown if toggle is on
     let panel = compDiv.append("div")
-        .attr("class", "panel accordion-collapse collapse")
+        .attr("class", "accordion-collapse collapse")
         .attr("id", `${id}-panel`)
         .attr("aria-labelledby", `${id}-header`)
     // add carousel
     let carousel = panel.append("div")
-        .attr("class", "carousel slide")
+        .attr("class", "carousel carousel-dark slide")
         .attr("id", "compCarousel")
-        .attr("data-ride", "carousel")
-    let carouselInner = carousel.append("div");
+        .attr("data-bs-ride", "carousel")
+        .attr("data-bs-interval", false);
+
+    let carouselInner = carousel.append("div").attr("class", "carousel-inner");
     generateTable(carouselInner, configs);
-    //generateCompGraph(carouselInner, configs);
+    generateNumGraph(carouselInner);
+    generateAgeGraph(carouselInner);
+
+    let indicators = carousel.append("div").attr("class", "carousel-indicators");
+    indicators.append("button")
+        .attr("type", "button")
+        .attr("data-bs-target", "#compCarousel")
+        .attr("data-bs-slide-to", 0)
+        .attr("class", "active")
+        .attr("aria-current", "true")
+        .attr("aria-label", "Slide 1");
+    indicators.append("button")
+        .attr("type", "button")
+        .attr("data-bs-target", "#compCarousel")
+        .attr("data-bs-slide-to", 1)
+        .attr("aria-label", "Slide 2");
+    indicators.append("button")
+        .attr("type", "button")
+        .attr("data-bs-target", "#compCarousel")
+        .attr("data-bs-slide-to", 2)
+        .attr("aria-label", "Slide 3");
     // Left control
     let left = carousel.append("a")
         .attr("class", "carousel-control-prev")
-        .attr("href", "#compCarousel")
+        .attr("data-bs-target", "#compCarousel")
         .attr("role", "button")
-        .attr("data-slide", "prev");
+        .attr("data-bs-slide", "prev");
     left.append("span")
         .attr("class", "carousel-control-prev-icon")
         .attr("aria-hidden", "true");
     left.append("span")
-        .attr("class", "sr-only")
-        .text("Previous");
+        .attr("class", "sr-only");
     // Right control
     let right = carousel.append("a")
         .attr("class", "carousel-control-next")
-        .attr("href", "#compCarousel")
+        .attr("data-bs-target", "#compCarousel")
         .attr("role", "button")
-        .attr("data-slide", "next");
+        .attr("data-bs-slide", "next");
     right.append("span")
         .attr("class", "carousel-control-next-icon")
         .attr("aria-hidden", "true");
     right.append("span")
-        .attr("class", "sr-only")
-        .text("Next");
+        .attr("class", "sr-only");
     return compDiv;
 }
 

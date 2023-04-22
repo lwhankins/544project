@@ -48,7 +48,6 @@ function setRothIraCurBal(bal) {
 }
 
 function setRothIraAnnCont(cont) {
-    console.log("what the fuck")
     rothIraAnnCont = parseFloat(cont);
 }
 
