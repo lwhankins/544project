@@ -629,19 +629,40 @@ function makeComparisonDiv(configs) {
         .attr("aria-labelledby", `${id}-header`)
     // add carousel
     let carousel = panel.append("div")
-        .attr("class", "carousel slide")
+        .attr("class", "carousel carousel-dark slide")
         .attr("id", "compCarousel")
-        .attr("data-ride", "carousel")
+        .attr("data-bs-ride", "carousel")
+        .attr("data-bs-interval", false);
+
     let carouselInner = carousel.append("div").attr("class", "carousel-inner");
     generateTable(carouselInner, configs);
     generateNumGraph(carouselInner);
     generateAgeGraph(carouselInner);
+
+    let indicators = carousel.append("div").attr("class", "carousel-indicators");
+    indicators.append("button")
+        .attr("type", "button")
+        .attr("data-bs-target", "#compCarousel")
+        .attr("data-bs-slide-to", 0)
+        .attr("class", "active")
+        .attr("aria-current", "true")
+        .attr("aria-label", "Slide 1");
+    indicators.append("button")
+        .attr("type", "button")
+        .attr("data-bs-target", "#compCarousel")
+        .attr("data-bs-slide-to", 1)
+        .attr("aria-label", "Slide 2");
+    indicators.append("button")
+        .attr("type", "button")
+        .attr("data-bs-target", "#compCarousel")
+        .attr("data-bs-slide-to", 2)
+        .attr("aria-label", "Slide 3");
     // Left control
     let left = carousel.append("a")
         .attr("class", "carousel-control-prev")
-        .attr("href", "#compCarousel")
+        .attr("data-bs-target", "#compCarousel")
         .attr("role", "button")
-        .attr("data-slide", "prev");
+        .attr("data-bs-slide", "prev");
     left.append("span")
         .attr("class", "carousel-control-prev-icon")
         .attr("aria-hidden", "true");
@@ -650,9 +671,9 @@ function makeComparisonDiv(configs) {
     // Right control
     let right = carousel.append("a")
         .attr("class", "carousel-control-next")
-        .attr("href", "#compCarousel")
+        .attr("data-bs-target", "#compCarousel")
         .attr("role", "button")
-        .attr("data-slide", "next");
+        .attr("data-bs-slide", "next");
     right.append("span")
         .attr("class", "carousel-control-next-icon")
         .attr("aria-hidden", "true");

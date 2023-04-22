@@ -227,10 +227,9 @@ th, td {
 /* End table styling */
 
 /* Carousel Styling */
-.carousel-control-prev-icon,
+/* .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    filter: invert(100%);
-}
+} */
 
 .carousel-control-next {
     right: -80px;
@@ -238,4 +237,8 @@ th, td {
 
 .carousel-control-prev {
     left: -80px;
+}
+
+.carousel-indicators {
+    position: relative;
 }
