@@ -1,5 +1,4 @@
 function generateNumGraph(carouselInner) {
-    console.log("wut")
     let item = carouselInner.append("div")
         .attr("class", "carousel-item");
 
@@ -14,7 +13,6 @@ function generateNumGraph(carouselInner) {
 }
 
 function generateAgeGraph(carouselInner) {
-    console.log("tf")
     let item = carouselInner.append("div")
         .attr("class", "carousel-item");
 

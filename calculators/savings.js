@@ -24,11 +24,11 @@ function calculateHYSavings() {
 }
 
 function setSavingsAPY(apy) {
-    savingsAPY = parseFloat(apy / 100);
+    savingsAPY = parseFloat(apy);
 }
 
 function setHYSavingsAPY(apy) {
-    highYieldSavingsAPY = parseFloat(apy / 100);
+    highYieldSavingsAPY = parseFloat(apy);
 }
 
 function setCurrentSavingsBalance(currentBalance) {
@@ -36,5 +36,5 @@ function setCurrentSavingsBalance(currentBalance) {
 }
 
 function setSavingsPortionContribution(contribution) {
-    portionOfSalaryToContributeSavings = parseFloat(contribution / 100);
+    portionOfSalaryToContributeSavings = parseFloat(contribution);
 }
