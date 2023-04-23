@@ -453,7 +453,7 @@ function makeSidebarDiv(top) {
         .attr("id", "breakdown")
         .attr("class", "bar-chart");
 
-    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: retirementMonthly(afterInflationYearly(averageAmericanTotal))}];
     makeBarChartY(averageAmts, "comparison");
     openSidebar();
 }
@@ -552,7 +552,7 @@ function makeBarChartY(data, id) {
     } catch(e) {}
     let newDiv = d3Elem.append("div")
         .attr("class", "sidebar-text")
-        .text(() => `In comparison, the average American has $${Math.round(averageAmericanTotal / (yearsInRetirement * 12))} per month,
+        .text(() => `In comparison, the average American has $${Math.round(retirementMonthly(afterInflationYearly(averageAmericanTotal)))} per month (adjusted for inflation),
                     and you need $${Math.round(salaryAtRetirementAfterTaxes/12)} per month to maintain pre-retirement standard of living.`);
     newDiv.append("span").text(" ? ").attr("class", "tooltip-logo")
         .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title",

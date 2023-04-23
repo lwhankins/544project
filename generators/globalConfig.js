@@ -44,7 +44,17 @@ globalsConfig = [
     "step": .005,
     "format": ".1%",
     "setGlob": setSalaryIncrease,
-    "tooltip": "Most employers give an average salary raise of 3% per year. This is largely driven by inflation."}
+    "tooltip": "Most employers give an average salary raise of 3% per year. This is largely driven by inflation."},
+
+    {"name": "Inflation",
+    "min": 0,
+    "max": .10,
+    "initial": .03,
+    "suggested": 0,
+    "step": .005,
+    "format": ".1%",
+    "setGlob": setInflation,
+    "tooltip": "Inflation rate per year. This has a large impact on what reasonable retirement savings will look like in the future."}
 ]
 
 radiosConfig = [
