@@ -81,6 +81,19 @@ input {
     font-size: 14px;
 }
 
+.tooltip-logo {
+    margin-left: 4px;
+    display: inline-block;
+    color: #fff;
+    background: rgb(170, 170, 170);
+    border: solid 1px #fff;
+    border-radius: 12px;
+    height: 16px;
+    width: 16px;
+    text-align: center;
+    font: 12px sans-serif;
+}
+
 /* begin styling for account divs (toggle panels) */
 .accordion-item {
     border: 0px;
@@ -168,6 +181,7 @@ input {
 }
 
 .panel-side {
+    margin-right: 20px;
     margin-left: 65%;
     position: fixed;
     margin-top: 0;
@@ -195,6 +209,10 @@ input {
 .bar-chart {
     margin-left: 10px;
     margin-bottom: 10px;
+}
+
+#breakdown {
+    margin-top: 20px;
 }
 
 /* End sidebar styling */

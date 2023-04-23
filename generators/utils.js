@@ -28,10 +28,14 @@ let height = 50;
  */
 // Can consider bootstrap range component
 // use d3-simple-slider from https://github.com/johnwalley/d3-simple-slider
-function makeInputSlider(parent, name, min, max, initial, suggested, step, format, setGlob, calculators, ids){
+function makeInputSlider(parent, name, min, max, initial, suggested, step, format, setGlob, tooltip, calculators, ids){
     // label is the top level holder
     label = parent.append("label").text(name);
-    if (suggested != 0) {
+    if (tooltip) {
+        label.append("span").text(" ? ").attr("class", "tooltip-logo")
+        .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", tooltip);
+    }
+    if (suggested) {
         label.attr("data-bs-toggle", "tooltip")
                     .attr("data-bs-placement", "top")
                     .attr("data-bs-title", `Suggested: ${suggested}`);
@@ -184,7 +188,7 @@ function addParam(parentDiv, config, calculators, ids) {
         .attr("class", "param"); // add id as well?
 
     makeInputSlider(g, config.name, config.min, config.max, config.initial, config.suggested,
-                    config.step, config.format, config.setGlob, calculators, ids);
+                    config.step, config.format, config.setGlob, config.tooltip, calculators, ids);
 }
 
 /* 
@@ -438,13 +442,14 @@ function makeSidebarDiv(top) {
         .attr("class", "sidebar-text")
         .text(() => "per month in retirement");
 
+    let comp = div.append("div") // Bar chart by average (averageAmts)
+        .attr("id", "comparison")
+        .attr("class", "bar-chart");
+
     let breakdown = div.append("div") // Bar chart per type (contributions)
         .attr("id", "breakdown")
         .attr("class", "bar-chart");
 
-    let comp = div.append("div") // Bar chart by average (averageAmts)
-        .attr("id", "comparison")
-        .attr("class", "bar-chart");
     averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
     makeBarChartY(averageAmts, "comparison");
     openSidebar();
@@ -516,7 +521,7 @@ function makeBarChartX(data, id, money) {
     if (plot) {
         d3Elem.append("div")
             .attr("class", "sidebar-text")
-            .text(() => "breakdown");
+            .text(() => "Breakdown: Where is the $ coming from?");
         elem.append(plot);
     }
 }
@@ -542,9 +547,13 @@ function makeBarChartY(data, id) {
     try {
         elem.innerHTML = "";
     } catch(e) {}
-    d3Elem.append("div")
+    let newDiv = d3Elem.append("div")
         .attr("class", "sidebar-text")
-        .text(() => `In comparison, the average American has $${Math.round(averageAmericanTotal / (yearsInRetirement * 12))} per month, and you need $${Math.round(salaryAtRetirementAfterTaxes/12)} per month to maintain the same standard of living you would have right before retirement.`);
+        .text(() => `In comparison, the average American has $${Math.round(averageAmericanTotal / (yearsInRetirement * 12))} per month,
+                    and you need $${Math.round(salaryAtRetirementAfterTaxes/12)} per month to maintain pre-retirement standard of living.`);
+    newDiv.append("span").text(" ? ").attr("class", "tooltip-logo")
+        .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title",
+        "To maintain standard of living, retirement income should replace 70-80% of pre-retirement income. We use 80% in our estimate.");
     elem.append(plot);
 }
 /*
