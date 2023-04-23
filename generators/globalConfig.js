@@ -51,7 +51,7 @@ globalsConfig = [
     "max": .10,
     "initial": .03,
     "suggested": 0,
-    "step": .005,
+    "step": .001,
     "format": ".1%",
     "setGlob": setInflation,
     "tooltip": "Inflation rate per year. This has a large impact on what reasonable retirement savings will look like in the future."}
