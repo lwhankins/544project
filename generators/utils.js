@@ -59,7 +59,7 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
                     .append("g")
                     .attr("transform", `translate(30,10)`);
     let slider = d3.sliderHorizontal()
-                    .width(300)
+                    .width(400)
                     .min(min)
                     .max(max)
                     .step(step)
