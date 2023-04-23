@@ -25,7 +25,8 @@ accountsConfig = {
         "suggested": 0,
         "step": .05,
         "format": ".1%",
-        "setGlob": setEmployerMatchAmount401k},
+        "setGlob": setEmployerMatchAmount401k,
+        "tooltip": "Partial matches of 50% are the most common structure for 401k plans. Some employers offer a full match (100%)."},
 
         {"name": "Employer Match Limit (%)",
         "min": 0,
@@ -34,7 +35,8 @@ accountsConfig = {
         "suggested": 0,
         "step": .01,
         "format": ".1%",
-        "setGlob": setEmployerMaxMatch401k},
+        "setGlob": setEmployerMaxMatch401k,
+        "tooltip": "Employers cap their matches to a certain portion of your salary, typically 4 to 6% (2023)."},
 
         {"name": "Current Balance",
         "min": 0,
@@ -101,7 +103,8 @@ accountsConfig = {
         "suggested": 6500,
         "step": 100,
         "format": ",",
-        "setGlob": setTradIraAnnCont},
+        "setGlob": setTradIraAnnCont,
+        "tooltip": "Total IRA contributions are capped at $6,500 (2023)."},
 
         {"name": "Annual Rate of Return",
         "min": .01,
@@ -119,7 +122,8 @@ accountsConfig = {
         "suggested": 1000,
         "step": 100,
         "format": ",",
-        "setGlob": setTradIraCatchupCont},
+        "setGlob": setTradIraCatchupCont,
+        "tooltip": "Once you are 50 or older, you can make additional contributions to an IRA to ensure you have enough saved for retirement. This variable will adjust your future contributions to the maximum allowed."},
 
         {"name": "Current Balance",
         "min": 0,
@@ -139,7 +143,8 @@ accountsConfig = {
         "suggested": 6500,
         "step": 100,
         "format": ",",
-        "setGlob": setRothIraAnnCont},
+        "setGlob": setRothIraAnnCont,
+        "tooltip": "Total IRA contributions are capped at $6,500 (2023). Max this out if you can."},
 
         {"name": "Annual Rate of Return",
         "min": .01,
@@ -157,7 +162,8 @@ accountsConfig = {
         "suggested": 1000,
         "step": 100,
         "format": ",",
-        "setGlob": setRothIraCatchupCont},
+        "setGlob": setRothIraCatchupCont,
+        "tooltip": "Once you are 50 or older, you can make additional contributions to an IRA to ensure you have enough saved for retirement. This variable will adjust your future contributions to the maximum allowed."},
     
         {"name": "Current Balance",
         "min": 0,
