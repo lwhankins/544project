@@ -1,4 +1,3 @@
-let padding = 10;
 let width = 500;
 let height = 50;
 
@@ -28,10 +27,14 @@ let height = 50;
  */
 // Can consider bootstrap range component
 // use d3-simple-slider from https://github.com/johnwalley/d3-simple-slider
-function makeInputSlider(parent, name, min, max, initial, suggested, step, format, setGlob, calculators, ids){
+function makeInputSlider(parent, name, min, max, initial, suggested, step, format, setGlob, tooltip, calculators, ids){
     // label is the top level holder
     label = parent.append("label").text(name);
-    if (suggested != 0) {
+    if (tooltip) {
+        label.append("span").text(" ? ").attr("class", "tooltip-logo")
+        .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", tooltip);
+    }
+    if (suggested) {
         label.attr("data-bs-toggle", "tooltip")
                     .attr("data-bs-placement", "top")
                     .attr("data-bs-title", `Suggested: ${suggested}`);
@@ -53,14 +56,16 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
                     .append("svg")
                     .attr("width", width)
                     .attr("height", height)
-                    .attr("transform", `translate(${padding},${padding})`);
-    let slider = d3.sliderBottom()
+                    .append("g")
+                    .attr("transform", `translate(30,10)`);
+    let slider = d3.sliderHorizontal()
                     .width(400)
                     .min(min)
                     .max(max)
                     .step(step)
                     .ticks(4)
                     .tickFormat(d3.format(format))
+                    .tickPadding(-6)
                     .value(initial)
                     .on("onchange", (val) => {
                         input.attr("value", val);
@@ -184,7 +189,7 @@ function addParam(parentDiv, config, calculators, ids) {
         .attr("class", "param"); // add id as well?
 
     makeInputSlider(g, config.name, config.min, config.max, config.initial, config.suggested,
-                    config.step, config.format, config.setGlob, calculators, ids);
+                    config.step, config.format, config.setGlob, config.tooltip, calculators, ids);
 }
 
 /* 
@@ -331,7 +336,9 @@ function makeWrapperDiv(accountTitle) {
     if (document.getElementById(accountTitle + "-wrapper") == null) {
         wrapperDiv = accountsDiv.append("div")
             .attr("id", getIdFromTitle(accountTitle) + "-wrapper")
-            .attr("class", "wrapper-div");
+            .attr("class", "wrapper-div")
+        wrapperDiv.append("h3")
+            .text(accountTitle);
     } else {
         wrapperDiv = document.getElementById(accountTitle + "-wrapper");
     }
@@ -342,7 +349,7 @@ function makeWrapperDiv(accountTitle) {
     if (accountTitle.includes("FourOhOne")) {
         introCopy = accountCopy["Intro 401K"];
     }
-    wrapperDiv.text(introCopy);
+    wrapperDiv.append("p").text(introCopy);
 }
 
 /*
@@ -438,15 +445,17 @@ function makeSidebarDiv(top) {
         .attr("class", "sidebar-text")
         .text(() => "per month in retirement");
 
+    let comp = div.append("div") // Bar chart by average (averageAmts)
+        .attr("id", "comparison")
+        .attr("class", "bar-chart");
+
     let breakdown = div.append("div") // Bar chart per type (contributions)
         .attr("id", "breakdown")
         .attr("class", "bar-chart");
 
-    let comp = div.append("div") // Bar chart by average (averageAmts)
-        .attr("id", "comparison")
-        .attr("class", "bar-chart");
-    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: (afterInflationYearly(averageAmericanTotal) / (20*12))}];
     makeBarChartY(averageAmts, "comparison");
+    openSidebar();
 }
 
 function makeSidebarOpener(top) {
@@ -478,9 +487,9 @@ function updateSidebar() {
     div.select(".sidebar-money")
         .text(() => `${moneyFormat.format(money)}`);
 
-    makeBarChartX(contributions, "breakdown", money);
-    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12}, {entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12}, {entity: "you", amount: money},{entity: "avg", amount: (afterInflationYearly(averageAmericanTotal) / (20*12))}];
     makeBarChartY(averageAmts, "comparison");
+    makeBarChartX(contributions, "breakdown", money);
 }
 
 function makeBarChartX(data, id, money) {
@@ -515,7 +524,7 @@ function makeBarChartX(data, id, money) {
     if (plot) {
         d3Elem.append("div")
             .attr("class", "sidebar-text")
-            .text(() => "breakdown");
+            .text(() => "Breakdown: Where is the $ coming from?");
         elem.append(plot);
     }
 }
@@ -541,9 +550,16 @@ function makeBarChartY(data, id) {
     try {
         elem.innerHTML = "";
     } catch(e) {}
-    d3Elem.append("div")
+    let newDiv = d3Elem.append("div")
         .attr("class", "sidebar-text")
-        .text(() => `In comparison, the average American has $${Math.round(averageAmericanTotal / (yearsInRetirement * 12))} per month, and you need $${Math.round(salaryAtRetirementAfterTaxes/12)} per month to maintain the same standard of living you would have right before retirement.`);
+        .text(() => `In comparison, the average American has $${Math.round(afterInflationYearly(averageAmericanTotal) / (20*12))} per month (adjusted for inflation),
+                    and you need $${Math.round(salaryAtRetirementAfterTaxes/12)} per month to maintain pre-retirement standard of living.`);
+    newDiv.append("span").text(" ? ").attr("class", "tooltip-logo")
+        .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("id", "maintain-sol-tooltip").attr("data-bs-title",
+        "To maintain standard of living, retirement income should replace 70-80% of pre-retirement income. We use 80% in our estimate.");
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].filter(el => (el.id == "maintain-sol-tooltip"));
+    tooltipList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     elem.append(plot);
 }
 /*

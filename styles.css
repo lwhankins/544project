@@ -1,8 +1,31 @@
 body {
-    margin-left: 80px;
+    margin-left: 60px;
 }
 
-#page-title, #basic_info, #citations {
+a:link, a:visited {
+    color: #36a866;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin-bottom: 0rem;
+}
+
+hr {
+    margin-left: -20px;
+    margin-top: 40px; 
+    margin-bottom: 40px;
+}
+
+#page-title {
+    margin-top: 60px;
+}
+
+#citations {
     margin-top: 20px;
 }
 
@@ -49,6 +72,10 @@ input {
     position: relative;
 }
 
+.param label {
+    font-weight: 500;
+}
+
 .param-input {
     position: absolute;
     top: 40px;
@@ -59,8 +86,27 @@ input {
 .param-slider {
     position: absolute;
     top: 30px;
-    left: 120px;
+    left: 100px;
     padding: 10px;
+}
+
+
+.axis text,
+.slider text {
+    font-size: 14px;
+}
+
+.tooltip-logo {
+    margin-left: 4px;
+    display: inline-block;
+    color: #fff;
+    background: rgb(170, 170, 170);
+    border: solid 1px #fff;
+    border-radius: 12px;
+    height: 16px;
+    width: 16px;
+    text-align: center;
+    font: 12px sans-serif;
 }
 
 /* begin styling for account divs (toggle panels) */
@@ -74,16 +120,30 @@ input {
 }
 
 .panel-header {
-    background: lightgreen;
+    background: #73bd84;
     height: 40px;
     width: 600px;
     display: table;
     padding-left: 10px;
     padding-right: 10px;
+    border-radius: 5px;
+    margin-top: -10px;
 }
 
 .header-title, .header-amount {
     margin-top: 5px;
+}
+
+.param-input input {
+    border-color: #aaa;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    background-color: transparent;
+}
+
+.param-input input:focus {
+    outline:none;
 }
 
 .header-title {
@@ -150,6 +210,7 @@ input {
 }
 
 .panel-side {
+    margin-right: 20px;
     margin-left: 65%;
     position: fixed;
     margin-top: 0;
@@ -166,7 +227,7 @@ input {
 .sidebar-money {
     font-weight: 1000;
     font-size: 2rem;
-    color: green;
+    color: #488a58;
     text-align: center;
 }
 
@@ -177,6 +238,10 @@ input {
 .bar-chart {
     margin-left: 10px;
     margin-bottom: 10px;
+}
+
+#breakdown {
+    margin-top: 20px;
 }
 
 /* End sidebar styling */
@@ -192,10 +257,15 @@ input {
     margin-right: 0;
 }
 
+.parameter-value {
+    fill: #666666;
+    font-weight: bold;
+}
+
 .suggested-value {
-    color:rgba(13, 253, 113, 0.25);
-    stroke:#59b880;
-    fill:#59b880;
+    /* color:#488a58; */
+    /* stroke:#488a58; */
+    fill:#488a58;
     font-weight: bold;
 }
 
@@ -226,12 +296,12 @@ th, td {
 .wrapper-div {
     width: 620px;
     white-space: pre-line;
-    background-color: #f5f2f2 !important;
+    /* background-color: #f1f1f1 !important;
     border-style: solid;
-    border-color:rgba(1, 29, 13, 0.25);
+    border-color:#36a866; */
     border-radius: 5px;
     margin: 5px 5px;
-    padding: 5px;
+    padding: 7px;
 }
 
 /* End table styling */
