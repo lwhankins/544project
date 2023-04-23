@@ -2,7 +2,20 @@ body {
     margin-left: 80px;
 }
 
-#page-title, #basic_info, #citations {
+a:link, a:visited {
+    color: #36a866;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#page-title {
+    margin-top: 60px;
+}
+
+#basic_info, #citations {
     margin-top: 20px;
 }
 
@@ -79,7 +92,7 @@ input {
 }
 
 .panel-header {
-    background: lightgreen;
+    background: #73bd84;
     height: 40px;
     width: 600px;
     display: table;
@@ -171,7 +184,7 @@ input {
 .sidebar-money {
     font-weight: 1000;
     font-size: 2rem;
-    color: green;
+    color: #488a58;
     text-align: center;
 }
 
@@ -197,10 +210,15 @@ input {
     margin-right: 0;
 }
 
+.parameter-value {
+    fill: #666666;
+    font-weight: bold;
+}
+
 .suggested-value {
-    color:rgba(13, 253, 113, 0.25);
-    stroke:#59b880;
-    fill:#59b880;
+    /* color:#488a58; */
+    /* stroke:#488a58; */
+    fill:#488a58;
     font-weight: bold;
 }
 

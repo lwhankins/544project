@@ -1,15 +1,6 @@
 accountsConfig = {
     "Traditional 401K" : [
-        {"name": "Current Balance",
-        "min": 0,
-        "max": 100000,
-        "initial": 0,
-        "suggested": 0,
-        "step": 100,
-        "format": ",",
-        "setGlob": setCurrent401kBalance},
-
-        {"name": "Percent (%) Salary to Contribute",
+        {"name": "Annual Contribution (% Salary)",
         "min": 0.0,
         "max": .25,
         "initial": 0,
@@ -43,10 +34,8 @@ accountsConfig = {
         "suggested": 0,
         "step": .01,
         "format": ".1%",
-        "setGlob": setEmployerMaxMatch401k}
-    ],
+        "setGlob": setEmployerMaxMatch401k},
 
-    "Roth 401K" : [
         {"name": "Current Balance",
         "min": 0,
         "max": 100000,
@@ -54,9 +43,11 @@ accountsConfig = {
         "suggested": 0,
         "step": 100,
         "format": ",",
-        "setGlob": setCurrentRoth401kBalance},
+        "setGlob": setCurrent401kBalance}
+    ],
 
-        {"name": "Percent (%) Salary to Contribute",
+    "Roth 401K" : [
+        {"name": "Annual Contribution (% Salary)",
         "min": 0,
         "max": .25,
         "initial": 0,
@@ -90,10 +81,8 @@ accountsConfig = {
         "suggested": 0,
         "step": .01,
         "format": ".1%",
-        "setGlob": setEmployerMaxMatchRoth401k}
-    ],
+        "setGlob": setEmployerMaxMatchRoth401k},
 
-    "Traditional IRA" : [
         {"name": "Current Balance",
         "min": 0,
         "max": 100000,
@@ -101,9 +90,11 @@ accountsConfig = {
         "suggested": 0,
         "step": 100,
         "format": ",",
-        "setGlob": setTradIraCurBal},
+        "setGlob": setCurrentRoth401kBalance}
+    ],
 
-        {"name": "Annual Contribution",
+    "Traditional IRA" : [
+        {"name": "Annual Contribution (Total $)",
         "min": 0,
         "max": 6500,
         "initial": 0,
@@ -128,10 +119,8 @@ accountsConfig = {
         "suggested": 1000,
         "step": 100,
         "format": ",",
-        "setGlob": setTradIraCatchupCont}
-    ],
+        "setGlob": setTradIraCatchupCont},
 
-    "Roth IRA" : [
         {"name": "Current Balance",
         "min": 0,
         "max": 100000,
@@ -139,9 +128,11 @@ accountsConfig = {
         "suggested": 0,
         "step": 100,
         "format": ",",
-        "setGlob": setRothIraCurBal},
+        "setGlob": setTradIraCurBal}
+    ],
 
-        {"name": "Annual Contribution",
+    "Roth IRA" : [
+        {"name": "Annual Contribution (Total $)",
         "min": 0,
         "max": 6500,
         "initial": 0,
@@ -166,11 +157,32 @@ accountsConfig = {
         "suggested": 1000,
         "step": 100,
         "format": ",",
-        "setGlob": setRothIraCatchupCont}],
+        "setGlob": setRothIraCatchupCont},
+    
+        {"name": "Current Balance",
+        "min": 0,
+        "max": 100000,
+        "initial": 0,
+        "suggested": 0,
+        "step": 100,
+        "format": ",",
+        "setGlob": setRothIraCurBal}
+    ],
 
     "High-Yield Savings Account" : [
+
         {
-            "name": "Annual Percent (%) Yield",
+            "name": "Annual Contribution (% Salary)",
+            "min": 0,
+            "max": .25,
+            "initial": 0,
+            "suggested": .03,
+            "step": .01,
+            "format": ".2%",
+            "setGlob": setSavingsPortionContribution
+        },
+        {
+            "name": "Annual Rate of Return",
             "min": 0,
             "max": .1,
             "initial": .03,
@@ -180,7 +192,7 @@ accountsConfig = {
             "setGlob": setHYSavingsAPY
         },
         {
-            "name": "Current Savings Balance",
+            "name": "Current Balance",
             "min": 0,
             "max": 100000,
             "initial": 0,
@@ -188,22 +200,22 @@ accountsConfig = {
             "step": 100,
             "format": ",",
             "setGlob": setCurrentSavingsBalance
-        },
+        }
+    ],
+
+    "Certificates of Deposit" : [
         {
-            "name": "Percent (%) Salary to Contribute",
+            "name": "Annual Contribution (% Salary)",
             "min": 0,
             "max": .25,
             "initial": 0,
             "suggested": .03,
             "step": .01,
             "format": ".2%",
-            "setGlob": setSavingsPortionContribution
-        }
-    ],
-
-    "Certificates of Deposit" : [
+            "setGlob": setCDSalaryPortionContibution
+        },
         {
-            "name": "Annual Percent (%) Yield",
+            "name": "Annual Rate of Return",
             "min": 0,
             "max": .1,
             "initial": .045,
@@ -221,30 +233,11 @@ accountsConfig = {
             "step": 100,
             "format": ",",
             "setGlob": setCurrentCDBalance
-        },
-        {
-            "name": "Percent (%) Salary to Contribute",
-            "min": 0,
-            "max": .25,
-            "initial": 0,
-            "suggested": .03,
-            "step": .01,
-            "format": ".2%",
-            "setGlob": setCDSalaryPortionContibution
         }
     ],
 
     "S&P Index" : [
-        {"name": "Current Balance",
-        "min": 0,
-        "max": 100000,
-        "initial": 0,
-        "suggested": 0,
-        "step": 100,
-        "format": ",",
-        "setGlob": setCurrentAmountInvestedSP},
-
-        {"name": "Percent (%) Salary to Contribute",
+        {"name": "Annual Contribution (% Salary)",
         "min": 0,
         "max": .25,
         "initial": 0,
@@ -260,7 +253,16 @@ accountsConfig = {
         "suggested": .07,
         "step": .005,
         "format": ".1%",
-        "setGlob": setExpectedReturnSP}
+        "setGlob": setExpectedReturnSP},
+
+        {"name": "Current Balance",
+        "min": 0,
+        "max": 100000,
+        "initial": 0,
+        "suggested": 0,
+        "step": 100,
+        "format": ",",
+        "setGlob": setCurrentAmountInvestedSP}
     ]
 }
 

@@ -447,6 +447,7 @@ function makeSidebarDiv(top) {
         .attr("class", "bar-chart");
     averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
     makeBarChartY(averageAmts, "comparison");
+    openSidebar();
 }
 
 function makeSidebarOpener(top) {
