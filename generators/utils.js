@@ -638,7 +638,7 @@ function makeComparisonDiv(configs) {
     let carouselInner = carousel.append("div").attr("class", "carousel-inner");
     generateTable(carouselInner, configs);
     generateNumGraph(carouselInner);
-    generateAgeGraph(carouselInner);
+    generateAgeGraph(carouselInner)
 
     let indicators = carousel.append("div").attr("class", "carousel-indicators");
     indicators.append("button")
