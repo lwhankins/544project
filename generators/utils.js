@@ -1,5 +1,4 @@
-let padding = 10;
-let width = 440;
+let width = 500;
 let height = 50;
 
 /*
@@ -57,9 +56,10 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
                     .append("svg")
                     .attr("width", width)
                     .attr("height", height)
-                    .attr("transform", `translate(${padding},${padding})`);
-    let slider = d3.sliderBottom()
-                    .width(400)
+                    .append("g")
+                    .attr("transform", `translate(30,10)`);
+    let slider = d3.sliderHorizontal()
+                    .width(300)
                     .min(min)
                     .max(max)
                     .step(step)
