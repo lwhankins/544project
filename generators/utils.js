@@ -1,5 +1,4 @@
-let padding = 10;
-let width = 440;
+let width = 500;
 let height = 50;
 
 /*
@@ -57,9 +56,10 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
                     .append("svg")
                     .attr("width", width)
                     .attr("height", height)
-                    .attr("transform", `translate(${padding},${padding})`);
-    let slider = d3.sliderBottom()
-                    .width(400)
+                    .append("g")
+                    .attr("transform", `translate(30,10)`);
+    let slider = d3.sliderHorizontal()
+                    .width(300)
                     .min(min)
                     .max(max)
                     .step(step)
@@ -453,7 +453,7 @@ function makeSidebarDiv(top) {
         .attr("id", "breakdown")
         .attr("class", "bar-chart");
 
-    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: (afterInflationYearly(averageAmericanTotal) / (20*12))}];
     makeBarChartY(averageAmts, "comparison");
     openSidebar();
 }
@@ -487,7 +487,7 @@ function updateSidebar() {
     div.select(".sidebar-money")
         .text(() => `${moneyFormat.format(money)}`);
 
-    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12}, {entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12}, {entity: "you", amount: money},{entity: "avg", amount: (afterInflationYearly(averageAmericanTotal) / (20*12))}];
     makeBarChartY(averageAmts, "comparison");
     makeBarChartX(contributions, "breakdown", money);
 }
@@ -552,7 +552,7 @@ function makeBarChartY(data, id) {
     } catch(e) {}
     let newDiv = d3Elem.append("div")
         .attr("class", "sidebar-text")
-        .text(() => `In comparison, the average American has $${Math.round(averageAmericanTotal / (yearsInRetirement * 12))} per month,
+        .text(() => `In comparison, the average American has $${Math.round(afterInflationYearly(averageAmericanTotal) / (20*12))} per month (adjusted for inflation),
                     and you need $${Math.round(salaryAtRetirementAfterTaxes/12)} per month to maintain pre-retirement standard of living.`);
     newDiv.append("span").text(" ? ").attr("class", "tooltip-logo")
         .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("id", "maintain-sol-tooltip").attr("data-bs-title",

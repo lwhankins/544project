@@ -8,6 +8,7 @@ var ageOfRetirement = 65;
 var yearsInRetirement = 20;
 var salary = 50000;
 var annualSalaryIncrease = .03;
+var inflationRate = .03;
 var moneyPerMonth = 0;
 var averageAmericanTotal = 255000;
 var contributions = [];
@@ -33,6 +34,10 @@ function setSalary(sal) {
 
 function setSalaryIncrease(salaryIncrease) {
     annualSalaryIncrease = parseFloat(salaryIncrease);
+}
+
+function setInflation(inflation) {
+    inflationRate = parseFloat(inflation);
 }
 
 function setTaxStatus(taxStatus) {

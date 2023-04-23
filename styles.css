@@ -90,14 +90,6 @@ input {
     padding: 10px;
 }
 
-/* hacky */
-.param-slider .axis {
-    transform: translate(20px, 17px);
-}
-
-.param-slider .slider {
-    transform: translate(20px, 10px);
-}
 
 .axis text,
 .slider text {
