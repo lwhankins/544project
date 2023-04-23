@@ -15,7 +15,7 @@ function calculateIraHelper(curBal, annCont, annRet, catchupCont) {
     let total = curBal;
     let compoundMult = 1 + annRet;
     for (let i = currentAge; i < ageOfRetirement; i++) {
-        total = total * compoundMult + (annCont*salary) * compoundMult;
+        total = total * compoundMult + annCont * compoundMult;
         if (i >= catchupAge) {
             total += catchupCont * compoundMult;
         }
@@ -40,15 +40,13 @@ function calculateTraditionalIra(){
     return total / (yearsInRetirement * 12); // total after taxes
 }
 
-console.log(calculateTraditionalIra());
-
 // roth IRA setters
 function setRothIraCurBal(bal) {
     rothIraCurBal = parseInt(bal);
 }
 
 function setRothIraAnnCont(cont) {
-    rothIraAnnCont = parseFloat(cont);
+    rothIraAnnCont = parseInt(cont);
 }
 
 function setRothIraAnnRet(ret) {
@@ -65,7 +63,7 @@ function setTradIraCurBal(bal) {
 }
 
 function setTradIraAnnCont(cont) {
-    tradIraAnnCont = parseFloat(cont);
+    tradIraAnnCont = parseInt(cont);
 }
 
 function setTradIraAnnRet(ret) {
