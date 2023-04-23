@@ -487,9 +487,9 @@ function updateSidebar() {
     div.select(".sidebar-money")
         .text(() => `${moneyFormat.format(money)}`);
 
-    makeBarChartX(contributions, "breakdown", money);
     averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12}, {entity: "you", amount: money},{entity: "avg", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
     makeBarChartY(averageAmts, "comparison");
+    makeBarChartX(contributions, "breakdown", money);
 }
 
 function makeBarChartX(data, id, money) {
@@ -555,8 +555,11 @@ function makeBarChartY(data, id) {
         .text(() => `In comparison, the average American has $${Math.round(retirementMonthly(afterInflationYearly(averageAmericanTotal)))} per month (adjusted for inflation),
                     and you need $${Math.round(salaryAtRetirementAfterTaxes/12)} per month to maintain pre-retirement standard of living.`);
     newDiv.append("span").text(" ? ").attr("class", "tooltip-logo")
-        .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title",
+        .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("id", "maintain-sol-tooltip").attr("data-bs-title",
         "To maintain standard of living, retirement income should replace 70-80% of pre-retirement income. We use 80% in our estimate.");
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].filter(el => (el.id == "maintain-sol-tooltip"));
+    tooltipList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     elem.append(plot);
 }
 /*
