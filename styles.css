@@ -63,6 +63,11 @@ input {
     padding: 10px;
 }
 
+.axis text,
+.slider text {
+    font-size: 14px;
+}
+
 /* begin styling for account divs (toggle panels) */
 .accordion-item {
     border: 0px;
