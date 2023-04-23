@@ -1,5 +1,5 @@
 body {
-    margin-left: 80px;
+    margin-left: 60px;
 }
 
 a:link, a:visited {
@@ -11,11 +11,21 @@ a:hover {
     text-decoration: underline;
 }
 
+p {
+    margin-bottom: 0rem;
+}
+
+hr {
+    margin-left: -20px;
+    margin-top: 40px; 
+    margin-bottom: 40px;
+}
+
 #page-title {
     margin-top: 60px;
 }
 
-#basic_info, #citations {
+#citations {
     margin-top: 20px;
 }
 
@@ -62,6 +72,10 @@ input {
     position: relative;
 }
 
+.param label {
+    font-weight: 500;
+}
+
 .param-input {
     position: absolute;
     top: 40px;
@@ -72,8 +86,17 @@ input {
 .param-slider {
     position: absolute;
     top: 30px;
-    left: 120px;
+    left: 100px;
     padding: 10px;
+}
+
+/* hacky */
+.param-slider .axis {
+    transform: translate(20px, 17px);
+}
+
+.param-slider .slider {
+    transform: translate(20px, 10px);
 }
 
 .axis text,
@@ -111,10 +134,24 @@ input {
     display: table;
     padding-left: 10px;
     padding-right: 10px;
+    border-radius: 5px;
+    margin-top: -10px;
 }
 
 .header-title, .header-amount {
     margin-top: 5px;
+}
+
+.param-input input {
+    border-color: #aaa;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    background-color: transparent;
+}
+
+.param-input input:focus {
+    outline:none;
 }
 
 .header-title {
@@ -267,12 +304,12 @@ th, td {
 .wrapper-div {
     width: 620px;
     white-space: pre-line;
-    background-color: #f5f2f2 !important;
+    /* background-color: #f1f1f1 !important;
     border-style: solid;
-    border-color:rgba(1, 29, 13, 0.25);
+    border-color:#36a866; */
     border-radius: 5px;
     margin: 5px 5px;
-    padding: 5px;
+    padding: 7px;
 }
 
 /* End table styling */

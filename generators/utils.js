@@ -1,5 +1,5 @@
 let padding = 10;
-let width = 500;
+let width = 440;
 let height = 50;
 
 /*
@@ -65,6 +65,7 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
                     .step(step)
                     .ticks(4)
                     .tickFormat(d3.format(format))
+                    .tickPadding(-6)
                     .value(initial)
                     .on("onchange", (val) => {
                         input.attr("value", val);
@@ -335,7 +336,9 @@ function makeWrapperDiv(accountTitle) {
     if (document.getElementById(accountTitle + "-wrapper") == null) {
         wrapperDiv = accountsDiv.append("div")
             .attr("id", getIdFromTitle(accountTitle) + "-wrapper")
-            .attr("class", "wrapper-div");
+            .attr("class", "wrapper-div")
+        wrapperDiv.append("h3")
+            .text(accountTitle);
     } else {
         wrapperDiv = document.getElementById(accountTitle + "-wrapper");
     }
@@ -346,7 +349,7 @@ function makeWrapperDiv(accountTitle) {
     if (accountTitle.includes("FourOhOne")) {
         introCopy = accountCopy["Intro 401K"];
     }
-    wrapperDiv.text(introCopy);
+    wrapperDiv.append("p").text(introCopy);
 }
 
 /*
