@@ -19,7 +19,7 @@ function generateNumGraph(carouselInner) {
             label: "Number of accounts of each type in 2021, according to the U.S. Survey of Income and Program Participation (SIPP)"
         },
         marks: [
-            Plot.barY(graphData, {x: "account", y: "num", fill: "blue"})
+            Plot.barY(graphData, {x: "account", y: "num", fill: "#f2a750"})
         ],
         style: {
             overflow: "visible",
