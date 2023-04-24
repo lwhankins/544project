@@ -34,11 +34,6 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
         label.append("span").text(" ? ").attr("class", "tooltip-logo")
         .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", tooltip);
     }
-    if (suggested) {
-        label.attr("data-bs-toggle", "tooltip")
-                    .attr("data-bs-placement", "top")
-                    .attr("data-bs-title", `Suggested: ${suggested}`);
-    }
     // label holds a div with the input (field where user inputs the value and presses up/down)
     let input = label.append("div")
                     .attr("class", "param-input")
@@ -51,13 +46,18 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
                     .attr("step", step)
                     ;
     // label holds a div with the slider, contained in an svg
-    var svg = label.append("div")
+    var sliderDiv = label.append("div")
                     .attr("class", "param-slider")
-                    .append("svg")
+    var svg = sliderDiv.append("svg")
                     .attr("width", width)
                     .attr("height", height)
                     .append("g")
                     .attr("transform", `translate(30,10)`);
+    if (suggested) {
+        sliderDiv.attr("data-bs-toggle", "tooltip")
+                    .attr("data-bs-placement", "top")
+                    .attr("data-bs-title", `Suggested: ${suggested}`);
+    }
     let slider = d3.sliderHorizontal()
                     .width(400)
                     .min(min)
