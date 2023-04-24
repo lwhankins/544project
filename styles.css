@@ -296,11 +296,11 @@ th, td {
 .wrapper-div {
     width: 620px;
     white-space: pre-line;
-    /* background-color: #f1f1f1 !important;
+    background-color: #f3f3f3 !important;
     border-style: solid;
-    border-color:#36a866; */
-    border-radius: 5px;
-    margin: 5px 5px;
+    border-color:#f3f3f3;
+    border-radius: 8px;
+    margin: 7px;
     padding: 7px;
 }
 
