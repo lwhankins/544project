@@ -271,7 +271,7 @@ function makeCopyDropdown(title) {
             }
             return;
         })
-        .text("Show More Info");
+        .text("Show Specifics");
     let dropDownImage = toggleCopy.append("img")
         .attr("id", `${id}-copy-dropdown-image`)
         .attr("src", "./images/right-arrow.png")
@@ -295,14 +295,6 @@ function makeCopyDropdown(title) {
         .attr("aria-expanded", "false")
         .attr("aria-controls", `${id}-panel-copy`);
     let copy = accountCopy[title];
-    if (title.includes("IRA")) {
-        copy = accountCopy["IRA"] + "\n\n" + copy + "\n\n" + accountCopy["IRA Ending"];
-    }
-
-    if (title.includes("401")) {
-        copy = accountCopy["401K"] + "\n\n" + copy + "\n\n" + accountCopy["401K Ending"];
-    }
-
     let accountDiv = d3.select(`#${id}`);
     let copyPanel = accountDiv.append("div")
         .attr("class", "text-copy panel accordion-collapse collapse")
@@ -322,7 +314,69 @@ function makeCopyDropdown(title) {
             .attr("href", reference[0])
             .text(`[${reference[1]}]`);
     });
+}
 
+function addSummaryCopy(title) {
+    let id = getIdFromTitle(title);
+    let copy = null;
+    if (title.includes("IRA")) {
+        copy = accountCopy["IRA"] + "\n\n" + accountCopy["IRA Ending"];
+    } else if (title.includes("401")) {
+        copy = accountCopy["401K"] + "\n\n" + accountCopy["401K Ending"];
+    } else {
+        return;
+    }
+    wrapperDiv = d3.select("#" + getIdFromTitle(title) + "-wrapper");
+    let dropDownHeader = wrapperDiv.append("div");
+    let toggleCopy = dropDownHeader.append("label")
+        .attr("class", "copy-dropdown-label")
+        .on("click", function(event) {
+            if (event.srcElement == this) {
+                return;
+            }
+            let img = document.getElementById(`${id}-copy-summary-dropdown-image`);
+            if(img.src.includes("right-arrow.png")) {
+                img.src = "./images/down-arrow.png";
+            } else {
+                img.src = "./images/right-arrow.png";
+            }
+            return;
+        })
+        .text("Show Account Info");
+    let dropDownImage = toggleCopy.append("img")
+        .attr("id", `${id}-copy-summary-dropdown-image`)
+        .attr("src", "./images/right-arrow.png")
+        .attr("class", "copy-dropdown-image")
+        .on("click", function(event) {
+            let img = document.getElementById(`${id}-copy-summary-dropdown-image`);
+            if(img.src.includes("right-arrow.png")) {
+                img.src = "./images/down-arrow.png";
+            } else {
+                img.src = "./images/right-arrow.png";
+            }
+            return;
+        })
+    let checkbox = toggleCopy.append("input")
+        .attr("type", "checkbox")
+        .attr("id", `${id}-copy-summary-dropwdown-checkbox`)
+        .attr("class", "copy-check-input collapsed")
+        .attr("role", "switch")
+        .attr("data-bs-toggle", "collapse")
+        .attr("data-bs-target", `#${id}-panel-copy-summary`)
+        .attr("aria-expanded", "false")
+        .attr("aria-controls", `${id}-panel-copy-summary`);
+    let copyPanel = wrapperDiv.append("div")
+        .attr("class", "text-copy panel accordion-collapse collapse")
+        .attr("id", `${id}-panel-copy-summary`)
+        .text(copy);
+    let references = sources[title];
+    let referencesDiv = copyPanel.append("div")
+        .text("References: ");
+    references.forEach(function(reference) {
+        referencesDiv.append("a")
+            .attr("href", reference[0])
+            .text(`[${reference[1]}]`);
+    });
 
 }
 
