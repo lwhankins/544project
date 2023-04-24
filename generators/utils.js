@@ -271,7 +271,7 @@ function makeCopyDropdown(title) {
             }
             return;
         })
-        .text("Show More Info");
+        .text("Show Specifics");
     let dropDownImage = toggleCopy.append("img")
         .attr("id", `${id}-copy-dropdown-image`)
         .attr("src", "./images/right-arrow.png")
@@ -342,7 +342,7 @@ function addSummaryCopy(title) {
             }
             return;
         })
-        .text("Show More Info");
+        .text("Show Account Info");
     let dropDownImage = toggleCopy.append("img")
         .attr("id", `${id}-copy-summary-dropdown-image`)
         .attr("src", "./images/right-arrow.png")
