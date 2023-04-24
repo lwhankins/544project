@@ -23,6 +23,10 @@ for (const account in accountsConfig) {
     makeAccountDiv(account, accountsConfig[account], [accountCalculators[account]]);
 }
 
+for (const generalAccount in generalAccounts) {
+    addSummaryCopy(generalAccounts[generalAccount]);
+}
+
 let sidebarDiv = d3.select("#sidebar");
 runCalculators(accountCalculators, ids);
 makeSidebarDiv(sidebarDiv);
