@@ -38,20 +38,33 @@ function generateNumGraph(carouselInner) {
 
 function generateAgeGraph(carouselInner) {
     let graphData = data["accounts_by_age"];
+
+
     let item = carouselInner.append("div")
-        .attr("class", "carousel-item");
+        .attr("class", "carousel-item")
+        .attr("id", "account-age-graph");
 
-    let svg = item.append("svg")
-        .attr("height", "100%")
-        .attr("width", "100%");
-
-    let circles = svg.selectAll("circle")
-        .data(graphData)
-        .join("circle")
-        .call(updatePoint)
-
+    //dotplot.legend("color")
     
-    //dotplot = Plot.dot(athletes, {x: "weight", y: "height", stroke: "sex"}).plot()
+    dotplot = Plot.dot(graphData, {x: "age", y: "num", stroke: "account"}).plot(
+        {
+            color: {
+                legend: true
+            },
+            y: {
+               label: "Number of accounts by age and account type in 2021, according to the U.S. Survey of Income and Program Participation (SIPP)" 
+            },
+            style: {
+                overflow: "visible",
+                fontSize: 12,
+                margin: "auto"
+            }
+        }
+    )
+    
+    //dotplot.legend("color")
+    let elem = document.getElementById("account-age-graph");
+    elem.append(dotplot);
 
     // Scatterplot -- age on x, number of accounts on y
     // color differentiates account types - needs legend
