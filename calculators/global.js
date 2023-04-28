@@ -7,12 +7,13 @@ var currentAge = 30;
 var ageOfRetirement = 65;
 var yearsInRetirement = 20;
 var salary = 50000;
-var annualSalaryIncrease = .03;
-var inflationRate = .03;
+var annualSalaryIncrease = .028;
+var inflationRate = .022;
 var moneyPerMonth = 0;
 var averageAmericanTotal = 255000;
 //https://www.annuity.org/retirement/planning/average-retirement-income/
 var medianAmericanRetirementSalary = 47620;
+var medianAmericanRetirementMonthly = 3486; // after taxesPerYear;
 var contributions = [];
 var averageAmts = [];
 var salaryAtRetirement = salary;

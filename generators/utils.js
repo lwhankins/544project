@@ -1,6 +1,6 @@
 let width = 500;
 let height = 50;
-
+let thousands = d3.format(",d");
 /*
  * Make a label with text, numerical input, and slider for a parameter. Structure:
  *
@@ -511,9 +511,9 @@ function makeSidebarDiv(top) {
         .attr("id", "breakdown")
         .attr("class", "bar-chart");
 
-    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},
+    averageAmts = [{entity: "maintain", amount: removeInflation(salaryAtRetirementAfterTaxes/12)},
                     {entity: "you", amount: money},
-                    {entity: "avg", amount: (afterInflationYearly(medianAmericanRetirementSalary) / 12)}];
+                    {entity: "avg", amount: medianAmericanRetirementMonthly}];
     makeBarChartY(averageAmts, "comparison");
     openSidebar();
 }
@@ -547,9 +547,9 @@ function updateSidebar() {
     div.select(".sidebar-money")
         .text(() => `${moneyFormat.format(money)}`);
 
-    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},
+    averageAmts = [{entity: "maintain", amount: removeInflation(salaryAtRetirementAfterTaxes/12)},
                     {entity: "you", amount: money},{entity: "avg",
-                    amount: (afterInflationYearly(medianAmericanRetirementSalary) / 12)}];
+                    amount: medianAmericanRetirementMonthly}];
     makeBarChartY(averageAmts, "comparison");
     makeBarChartX(contributions, "breakdown", money);
 }
@@ -614,8 +614,8 @@ function makeBarChartY(data, id) {
     } catch(e) {}
     let newDiv = d3Elem.append("div")
         .attr("class", "sidebar-text")
-        .text(() => `In comparison, the median American 65+ has $${Math.round((afterInflationYearly(medianAmericanRetirementSalary) / 12))} per month (adjusted for inflation),
-                    and you need $${Math.round(salaryAtRetirementAfterTaxes/12)} per month to maintain pre-retirement standard of living.`);
+        .text(() => `In comparison, the median American 65+ has $${thousands(medianAmericanRetirementMonthly)} per month (adjusted for inflation),
+                    and you need $${thousands(removeInflation(salaryAtRetirementAfterTaxes/12))} per month to maintain pre-retirement standard of living.`);
     newDiv.append("span").text(" ? ").attr("class", "tooltip-logo")
         .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("id", "maintain-sol-tooltip").attr("data-bs-title",
         "To maintain standard of living, retirement income should replace 70-80% of pre-retirement income. We use 80% in our estimate.");
