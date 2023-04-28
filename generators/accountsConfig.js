@@ -74,7 +74,8 @@ accountsConfig = {
         "suggested": 0,
         "step": .05,
         "format": ".1%",
-        "setGlob": setEmployerMatchAmountRoth401k},
+        "setGlob": setEmployerMatchAmountRoth401k,
+        "tooltip": "Partial matches of 50% are the most common structure for 401k plans. Some employers offer a full match (100%)."},
 
         {"name": "Employer Match Limit (%)",
         "min": 0,
@@ -83,7 +84,8 @@ accountsConfig = {
         "suggested": 0,
         "step": .01,
         "format": ".1%",
-        "setGlob": setEmployerMaxMatchRoth401k},
+        "setGlob": setEmployerMaxMatchRoth401k,
+        "tooltip": "Employers cap their matches to a certain portion of your salary, typically 4 to 6% (2023)."},
 
         {"name": "Current Balance",
         "min": 0,

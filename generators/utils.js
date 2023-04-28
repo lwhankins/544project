@@ -238,7 +238,9 @@ function makeHeader(header, title, calculators, id) {
         .on("click", function() {
             d3.select(`#${id}-panel-copy`)
                 .attr("class", "text-copy panel accordion-collapse collapse");
-            document.getElementById(`${id}-copy-dropdown-image`).src = "./images/right-arrow.png";
+            if (title.includes("401K") || title.includes("IRA")) {
+                document.getElementById(`${id}-copy-dropdown-image`).src = "./images/right-arrow.png";
+            }
         });
     checkbox.on("change", () => togglePanel(checkbox, calculators, id));
     header.append("h4")
@@ -324,7 +326,7 @@ function addSummaryCopy(title) {
     } else if (title.includes("401")) {
         copy = accountCopy["401K"] + "\n\n" + accountCopy["401K Ending"];
     } else {
-        return;
+        copy = accountCopy[title];
     }
     wrapperDiv = d3.select("#" + getIdFromTitle(title) + "-wrapper");
     let dropDownHeader = wrapperDiv.append("div");
@@ -453,7 +455,9 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     for (let i = 0; i < paramConfigs.length; i++) {
         addParam(panel, paramConfigs[i], calculators, [id]);
     }
-    makeCopyDropdown(title);
+    if (title.includes("401K") || title.includes("IRA")) {
+        makeCopyDropdown(title);
+    }
     return accountDiv;
 }
 
