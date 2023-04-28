@@ -567,12 +567,14 @@ function makeBarChartX(data, id, money) {
                 label: null
             },
             marks: [
-                Plot.barY(data, {y: Object.keys(data[0])[1], x: Object.keys(data[0])[0], fill: "green", fillOpacity: 0.6})
+                Plot.barY(data, {y: Object.keys(data[0])[1], x: Object.keys(data[0])[0], fill: "green", fillOpacity: 0.6}),
+                Plot.text(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], text: (d) => moneyFormat.format(d.money), dy: -6, lineAnchor: "bottom"}),
             ],
             style: {
                 overflow: "visible",
                 fontSize: 20,
-                height: "175px"
+                height: "175px",
+                marginTop: "5px"
             }
         })
     }
@@ -598,13 +600,15 @@ function makeBarChartY(data, id) {
         },
         x: { label: ""},
         marks: [
-          Plot.barY(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], fill: "green", fillOpacity: 0.3})
+          Plot.barY(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], fill: "green", fillOpacity: 0.3}),
+          Plot.text(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], text: (d) => moneyFormat.format(d.amount), dy: -6, lineAnchor: "bottom"}),
         ],
         style: {
             fontSize: 30,
             marginLeft: 15,
             overflow: "visible",
-            height: "175px"
+            height: "175px",
+            marginTop: "5px"
         }
       })
     let elem = document.getElementById(id);
@@ -628,7 +632,7 @@ function makeBarChartY(data, id) {
     d3Elem.append("div")
         .attr("class", "sidebar-text")
         .html(`<br>Adjusted for inflation<br>
-        avg: $${thousands(afterInflationYearly(medianAmericanRetirementMonthly))}\n<br>maintain: $${thousands(salaryAtRetirementAfterTaxes/12)}\n<br>you: $${thousands(getTotalMoney())}`);
+        avg: $${thousands(afterInflationYearly(medianAmericanRetirementMonthly))}\n | maintain: $${thousands(salaryAtRetirementAfterTaxes/12)}\n | you: $${thousands(getTotalMoney())}`);
 }
 /*
     Get the total amount of money per month.
