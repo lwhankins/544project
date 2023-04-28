@@ -478,7 +478,7 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     Honk, honk. - Clownie
  */
 function makeSidebarDiv(top) {
-    let money = getTotalMoney()
+    let money = removeInflation(getTotalMoney());
     makeSidebarOpener(top);
     
     let div = top.append("div")
@@ -542,7 +542,7 @@ function closeSidebar() {
 }
 
 function updateSidebar() {
-    let money = getTotalMoney();
+    let money = removeInflation(getTotalMoney());
     let div = d3.select("#sidebar");
     div.select(".sidebar-money")
         .text(() => `${moneyFormat.format(money)}`);
@@ -614,7 +614,7 @@ function makeBarChartY(data, id) {
     } catch(e) {}
     let newDiv = d3Elem.append("div")
         .attr("class", "sidebar-text")
-        .text(() => `In comparison, the median American 65+ has $${thousands(medianAmericanRetirementMonthly)} per month (adjusted for inflation),
+        .text(() => `In comparison, the median American 65+ has $${thousands(medianAmericanRetirementMonthly)} per month,
                     and you need $${thousands(removeInflation(salaryAtRetirementAfterTaxes/12))} per month to maintain pre-retirement standard of living.`);
     newDiv.append("span").text(" ? ").attr("class", "tooltip-logo")
         .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("id", "maintain-sol-tooltip").attr("data-bs-title",
@@ -623,6 +623,12 @@ function makeBarChartY(data, id) {
     const tooltipList = [...tooltipTriggerList].filter(el => (el.id == "maintain-sol-tooltip"));
     tooltipList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     elem.append(plot);
+
+    // ugly but whatever
+    d3Elem.append("div")
+        .attr("class", "sidebar-text")
+        .html(`<br>Adjusted for inflation<br>
+        avg: $${thousands(afterInflationYearly(medianAmericanRetirementMonthly))}\n<br>maintain: $${thousands(salaryAtRetirementAfterTaxes/12)}\n<br>you: $${thousands(getTotalMoney())}`);
 }
 /*
     Get the total amount of money per month.
