@@ -11,6 +11,8 @@ var annualSalaryIncrease = .03;
 var inflationRate = .03;
 var moneyPerMonth = 0;
 var averageAmericanTotal = 255000;
+//https://www.annuity.org/retirement/planning/average-retirement-income/
+var medianAmericanRetirementSalary = 47620;
 var contributions = [];
 var averageAmts = [];
 var salaryAtRetirement = salary;
