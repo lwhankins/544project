@@ -24,11 +24,45 @@ let fidelityAssetData = {
     "Aggressive": {"mean": 9.77, "std": 15.70, "stock": .85}
 }
 
+// let accountsList = ["Traditional 401K", "Roth 401K", "Traditional IRA", "Roth IRA",
+//                     "High-Yield Savings Account", "Certificates of Deposit", "S&P Index"];
+let growthAccounts = ["Traditional 401K", "Roth 401K", "Traditional IRA", "Roth IRA"];
+let growthCalculators = [calculateTraditional401kSim, calculateRoth401kSim, 
+                         calculateTraditionalIraSim, calculateRothIraSim];
+let checkboxes = [];
+for (let i=0; i < growthAccounts.length; i++) {
+    let checkbox = d3.select(`#${getIdFromTitle(growthAccounts[i])}`)
+                .select(".panel-header")
+                .select(".toggle")
+                .select(".form-check-input");
+    checkboxes.push(checkbox);
+}
+
+// set up monte carlo div
+makeUncertaintyDiv();
+
+// https://www.investopedia.com/articles/investing/062714/100-minus-your-age-outdated.asp
+function getSuggestedAssetMix(){
+    let yearsUntilRetirement = ageOfRetirement - currentAge;
+    let suggested;
+    if (yearsUntilRetirement <= 5)
+        suggested = "Conservative";
+    else if (yearsUntilRetirement <= 10)
+        suggested = "Moderate";
+    else if (yearsUntilRetirement <= 15)
+        suggested = "Balanced";
+    else if (yearsUntilRetirement <= 35)
+        suggested = "Growth";
+    else
+        suggested = "Aggressive";
+    return suggested;
+}
+
 let simsData = [];
 function runMonteCarlo(mean, std, numSims=1000) {
     let dist = d3.randomNormal(mean, std);
     for (let i=0; i<numSims; i++) {
-        let rors = [];
+        let rors = []; // generate list of rates of return for each year until retirement
         for (let year=0; year<(ageOfRetirement-currentAge); year++)
             rors.push(dist());
         let sim = calculateGrowth(rors);
@@ -36,8 +70,20 @@ function runMonteCarlo(mean, std, numSims=1000) {
     }
 }
 
-function calculateGrowth(ratesOfReturn) {
+function calculateGrowth(rors) {
+    let totalsSum = [];
+    // cur age, years of investment, after tax amount
+    for (let i=0; i<(ageOfRetirement-currentAge+2); i++)
+        totalsSum.push(0);
 
+    for (let i=0; i < growthAccounts.length; i++) {
+        if (checkboxes[i].property("checked")) {
+            let totals = growthCalculators[i](rors);
+            for (let j=0; j < totals.length; j++) {
+                totalsSum[j] += totals[j]; 
+            }
+        }
+    }
 }
 
 function makeUncertaintyDiv() {
@@ -50,7 +96,7 @@ function makeUncertaintyDiv() {
     // container holds div for panel header, which is always shown
     // panel header contains account name and toggle
     let header = uncertaintyDiv.append("div")
-        .attr("class", "panel-header accordion-header")
+        .attr("class", "panel-header accordion-header orange-header")
         .attr("id", `${id}-header`)
         .style("width", "100%");
     makeUncertaintyHeader(header, "Uncertainty Analysis", id);
@@ -79,13 +125,15 @@ function makeUncertaintyHeader(header, title, id) {
 }
 
 
-function calculate401kSim() {
+function calculateTraditional401kSim(rors) {
     let total = current401kBalance;
+    let totals = [total];
     let currentSalary = salary;
+    let curMaxIndividualContribution = maxAllowedIndividualContribution401k;
     for  (let i = 0; i < (ageOfRetirement - currentAge); i++) {
         let amountInvestedThisYearByMe = currentSalary*portionOfSalaryToContribute401k;
-        if (amountInvestedThisYearByMe > maxAllowedIndividualContribution401k) { // cap at max contribution
-            amountInvestedThisYearByMe = maxAllowedIndividualContribution401k;
+        if (amountInvestedThisYearByMe > curMaxIndividualContribution) { // cap at max contribution
+            amountInvestedThisYearByMe = curMaxIndividualContribution;
         }
         let portionOfSalaryAllowedToContribute = amountInvestedThisYearByMe / currentSalary; // see what percentage of salary you contributed after capping
         let amountEmployerWillMatch = portionOfSalaryAllowedToContribute;
@@ -93,28 +141,30 @@ function calculate401kSim() {
             amountEmployerWillMatch = employerMaxMatch401k; // cap their contribution as well
         }
         let amountInvestedThisYearByEmployer = currentSalary*(amountEmployerWillMatch*employerMatchAmount401k);
-        let returnOnTotal = total * annualRateOfReturn401k;
+        let returnOnTotal = total * rors[i];
         total = total + amountInvestedThisYearByMe + amountInvestedThisYearByEmployer + returnOnTotal;
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
-        maxAllowedIndividualContribution401k += roughAverageContributionIncreasePerYear401k;
+        curMaxIndividualContribution += roughAverageContributionIncreasePerYear401k;
+        totals.push(total);
     }
-    return total;
+
+    let finalTotal = totals[totals.length-1];
+    let retirementTaxAmount = taxesPerYear(finalTotal / yearsInRetirement);
+    finalTotal -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
+    totals.push(finalTotal);
+
+    return totals;
 }
 
-function calculateTraditional401kSim(){
-    let total = calculate401k();
-    let retirementTaxAmount = taxesPerYear(total / yearsInRetirement);
-    total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
-    return total / (yearsInRetirement * 12); // total after taxes
-}
-
-function calculateRoth401kSim() {
+function calculateRoth401kSim(rors) {
     let total = currentRoth401kBalance;
+    let totals = [total];
     let currentSalary = salary;
+    let curMaxIndividualContribution = maxAllowedIndividualContributionRoth401k;
     for  (let i = 0; i < (ageOfRetirement - currentAge); i++) {
         let amountInvestedThisYearByMe = currentSalary*portionOfSalaryToContributeRoth401k;
-        if (amountInvestedThisYearByMe > maxAllowedIndividualContributionRoth401k) { // cap at max contribution
-            amountInvestedThisYearByMe = maxAllowedIndividualContributionRoth401k;
+        if (amountInvestedThisYearByMe > curMaxIndividualContribution) { // cap at max contribution
+            amountInvestedThisYearByMe = curMaxIndividualContribution;
         }
         let portionOfSalaryAllowedToContribute = amountInvestedThisYearByMe / currentSalary; // see what percentage of salary you contributed after capping
         let amountEmployerWillMatch = portionOfSalaryAllowedToContribute;
@@ -122,34 +172,41 @@ function calculateRoth401kSim() {
             amountEmployerWillMatch = employerMaxMatchRoth401k; // cap their contribution as well
         }
         let amountInvestedThisYearByEmployer = currentSalary*(amountEmployerWillMatch*employerMatchAmountRoth401k);
-        let returnOnTotal = total * annualRateOfReturnRoth401k;
+        let returnOnTotal = total * rors[i];
         total = total + amountInvestedThisYearByMe + amountInvestedThisYearByEmployer + returnOnTotal;
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
-        maxAllowedIndividualContributionRoth401k += roughAverageContributionIncreasePerYearRoth401k;
+        curMaxIndividualContribution += roughAverageContributionIncreasePerYearRoth401k;
+        totals.push(total);
     }
-    return total / (yearsInRetirement * 12);
+    totals.push(totals[totals.length-1]);
+    return totals;
 }
 
-function calculateIraHelperSim(curBal, annCont, annRet, catchupCont) {
+function calculateIraHelperSim(curBal, annCont, rors, catchupCont) {
     let total = curBal;
-    let compoundMult = 1 + annRet;
+    let totals = [total];
     for (let i = currentAge; i < ageOfRetirement; i++) {
+        let compoundMult = 1 + rors[i-currentAge];
         total = total * compoundMult + annCont * compoundMult;
         if (i >= catchupAge) {
             total += catchupCont * compoundMult;
         }
+        totals.push(total);
     }
-    return total;
+    return totals;
 }
 
-function calculateRothIraSim(){
-    let total = calculateIraHelper(rothIraCurBal, rothIraAnnCont, rothIraAnnRet, rothIraCatchupCont)
-    return total / (yearsInRetirement * 12);
+function calculateRothIraSim(rors){
+    let totals = calculateIraHelperSim(rothIraCurBal, rothIraAnnCont, rors, rothIraCatchupCont);
+    totals.push(totals[totals.length-1]);
+    return totals;
 }
 
-function calculateTraditionalIraSim(){
-    let total = calculateIraHelper(tradIraCurBal, tradIraAnnCont, tradIraAnnRet, tradIraCatchupCont);
-    let retirementTaxAmount = taxesPerYear(total / yearsInRetirement);
-    total -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
-    return total / (yearsInRetirement * 12); // total after taxes
+function calculateTraditionalIraSim(rors){
+    let totals = calculateIraHelperSim(tradIraCurBal, tradIraAnnCont, rors, tradIraCatchupCont);
+    let finalTotal = totals[totals.length-1];
+    let retirementTaxAmount = taxesPerYear(finalTotal / yearsInRetirement);
+    finalTotal -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
+    totals.push(finalTotal);
+    return totals;
 }

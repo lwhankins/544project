@@ -1,5 +1,5 @@
 body {
-    margin-left: 60px;
+    margin-left: 10%;
 }
 
 a:link, a:visited {
@@ -132,6 +132,16 @@ input {
 
 .header-title, .header-amount {
     margin-top: 5px;
+    color: #212529;
+}
+
+.header-amount {
+    text-align: right;
+}
+
+.lump-sums {
+    text-align: right;
+    font-size: 14px;
 }
 
 .param-input input {
@@ -186,22 +196,22 @@ input {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e")
 }
 
-#compare-accounts-header .form-check-input:checked {
+.orange-header .form-check-input:checked {
     background-color: #f9911a;
     border-color: #f9911a;
 }
 
-#compare-accounts-header .form-check-input:focus {
+.orange-header .form-check-input:focus {
     border-color: #f7af5e;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(255, 209, 149, 0.866);
 }
 
-#compare-accounts-header .form-switch .form-check-input:focus {
+.orange-header .form-switch .form-check-input:focus {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23f7af5e'/%3e%3c/svg%3e")
 }
 
-#compare-accounts-header .form-switch .form-check-input:checked {
+.orange-header .form-switch .form-check-input:checked {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e")
 }
 
@@ -229,8 +239,8 @@ input {
 }
 
 .panel-side {
-    margin-right: 20px;
-    margin-left: 65%;
+    margin-right: 2%;
+    margin-left: 62%;
     position: fixed;
     margin-top: 0;
     height: 87%;
@@ -268,7 +278,7 @@ input {
 /* End sidebar styling */
 
 /* Table Styling */
-#compare-accounts-header {
+.orange-header {
     width: 122%;
     background-color: #fcbe78;
     opacity: 0.9;
