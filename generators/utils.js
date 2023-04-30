@@ -1,6 +1,6 @@
 let width = 500;
 let height = 50;
-
+let thousands = d3.format(",d");
 /*
  * Make a label with text, numerical input, and slider for a parameter. Structure:
  *
@@ -67,8 +67,10 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
                     .tickFormat(d3.format(format))
                     .tickPadding(-6)
                     .value(initial)
-                    .on("onchange", (val) => {
-                        input.attr("value", val);
+                    .on("drag", (val) => {
+                        console.log(input.value, val)
+                        input.property("value", val);
+                        //input.val(val)
                         setGlob(val);
                         runCalculators(calculators, ids);
                         updateSidebar();
@@ -478,7 +480,7 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     Honk, honk. - Clownie
  */
 function makeSidebarDiv(top) {
-    let money = getTotalMoney()
+    let money = removeInflation(getTotalMoney());
     makeSidebarOpener(top);
     
     let div = top.append("div")
@@ -511,7 +513,9 @@ function makeSidebarDiv(top) {
         .attr("id", "breakdown")
         .attr("class", "bar-chart");
 
-    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: (afterInflationYearly(averageAmericanTotal) / (20*12))}];
+    averageAmts = [{entity: "maintain", amount: removeInflation(salaryAtRetirementAfterTaxes/12)},
+                    {entity: "you", amount: money},
+                    {entity: "avg", amount: medianAmericanRetirementMonthly}];
     makeBarChartY(averageAmts, "comparison");
     openSidebar();
 }
@@ -540,12 +544,14 @@ function closeSidebar() {
 }
 
 function updateSidebar() {
-    let money = getTotalMoney();
+    let money = removeInflation(getTotalMoney());
     let div = d3.select("#sidebar");
     div.select(".sidebar-money")
         .text(() => `${moneyFormat.format(money)}`);
 
-    averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12}, {entity: "you", amount: money},{entity: "avg", amount: (afterInflationYearly(averageAmericanTotal) / (20*12))}];
+    averageAmts = [{entity: "maintain", amount: removeInflation(salaryAtRetirementAfterTaxes/12)},
+                    {entity: "you", amount: money},{entity: "avg",
+                    amount: medianAmericanRetirementMonthly}];
     makeBarChartY(averageAmts, "comparison");
     makeBarChartX(contributions, "breakdown", money);
 }
@@ -563,12 +569,14 @@ function makeBarChartX(data, id, money) {
                 label: null
             },
             marks: [
-                Plot.barY(data, {y: Object.keys(data[0])[1], x: Object.keys(data[0])[0], fill: "green", fillOpacity: 0.6})
+                Plot.barY(data, {y: Object.keys(data[0])[1], x: Object.keys(data[0])[0], fill: "green", fillOpacity: 0.6}),
+                Plot.text(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], text: (d) => '$' + thousands(d.money), dy: -6, lineAnchor: "bottom"}),
             ],
             style: {
                 overflow: "visible",
                 fontSize: 20,
-                height: "175px"
+                height: "175px",
+                marginTop: "5px"
             }
         })
     }
@@ -594,13 +602,15 @@ function makeBarChartY(data, id) {
         },
         x: { label: ""},
         marks: [
-          Plot.barY(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], fill: "green", fillOpacity: 0.3})
+          Plot.barY(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], fill: "green", fillOpacity: 0.3}),
+          Plot.text(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], text: (d) => '$' + thousands(d.amount), dy: -6, lineAnchor: "bottom"}),
         ],
         style: {
             fontSize: 30,
             marginLeft: 15,
             overflow: "visible",
-            height: "175px"
+            height: "175px",
+            marginTop: "5px"
         }
       })
     let elem = document.getElementById(id);
@@ -610,8 +620,8 @@ function makeBarChartY(data, id) {
     } catch(e) {}
     let newDiv = d3Elem.append("div")
         .attr("class", "sidebar-text")
-        .text(() => `In comparison, the average American has $${Math.round(afterInflationYearly(averageAmericanTotal) / (20*12))} per month (adjusted for inflation),
-                    and you need $${Math.round(salaryAtRetirementAfterTaxes/12)} per month to maintain pre-retirement standard of living.`);
+        .text(() => `In comparison, the median American 65+ has $${thousands(medianAmericanRetirementMonthly)} per month,
+                    and you need $${thousands(removeInflation(salaryAtRetirementAfterTaxes/12))} per month to maintain pre-retirement standard of living.`);
     newDiv.append("span").text(" ? ").attr("class", "tooltip-logo")
         .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("id", "maintain-sol-tooltip").attr("data-bs-title",
         "To maintain standard of living, retirement income should replace 70-80% of pre-retirement income. We use 80% in our estimate.");
@@ -619,6 +629,12 @@ function makeBarChartY(data, id) {
     const tooltipList = [...tooltipTriggerList].filter(el => (el.id == "maintain-sol-tooltip"));
     tooltipList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     elem.append(plot);
+
+    // ugly but whatever
+    d3Elem.append("div")
+        .attr("class", "sidebar-text")
+        .html(`<br>Adjusted for inflation<br>
+        <strong>avg: $${thousands(afterInflationYearly(medianAmericanRetirementMonthly))}</strong>\n | <strong>maintain: $${thousands(salaryAtRetirementAfterTaxes/12)}</strong>\n | <strong>you: $${thousands(getTotalMoney())}</strong>`);
 }
 /*
     Get the total amount of money per month.

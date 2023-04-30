@@ -39,22 +39,22 @@ globalsConfig = [
     {"name": "Average Salary Raise Per Year",
     "min": 0,
     "max": .10,
-    "initial": .03,
+    "initial": .028,
     "suggested": 0,
-    "step": .005,
+    "step": .001,
     "format": ".1%",
     "setGlob": setSalaryIncrease,
-    "tooltip": "Most employers give an average salary raise of 3% per year. This is largely driven by inflation."},
+    "tooltip": "Suggested value based on average salary raise since 2001 [13]. Most employers give an average salary raise of ~3% per year, which is largely driven by inflation. We recommend a salary raise slightly higher than the inflation value below."},
 
     {"name": "Inflation",
     "min": 0,
     "max": .10,
-    "initial": .03,
+    "initial": .022,
     "suggested": 0,
     "step": .001,
     "format": ".1%",
     "setGlob": setInflation,
-    "tooltip": "Inflation rate per year. This has a large impact on what reasonable retirement savings will look like in the future."}
+    "tooltip": "Suggested value based on average inflation rate since 2000 [12]. Inflation rate has a large impact on what reasonable retirement savings will look like in the future."}
 ]
 
 radiosConfig = [
