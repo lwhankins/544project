@@ -10,45 +10,64 @@
   </head>
   <body>
     <script src="https://unpkg.com/d3-simple-slider"></script>
+    <script src="https://unpkg.com/d3-arrow@0.0.25/dist/d3-arrow.min.js"></script>
 
-    <h3 id="page-title">How Much $ Will I Have When I Retire?</h3>
-    <h6 id="authors">By Amy Paul, Luke Hankins, and Connie Sun</h6>
     <div id="sidebar"></div>
+
+    <h3 id="page-title">How Much Money Will I Have When I Retire?</h3>
+    <h6 id="authors">By Amy Paul, Luke Hankins, and Connie Sun</h6>
+    
     <div id="motivation">
-      Planning for retirement is one of the most important things adults can do to ensure their lasting financial security. 
+      <!-- Planning for retirement is one of the most important things adults can do to ensure their lasting financial security. 
       Unfortunately, the myriad of retirement account types, each with their own benefits, drawbacks and stipulations make this an unnecessarily complicated decision.
       Lack of information on these accounts in education or in the general conversation makes optimized or even adequate financial planning feel inaccessible.
       To help you pick a retirement account or combination of retirement accounts best suited to your financial goals, we have consolidated the primary account types here.
-      Our calculator will take the contributions amount(s) and account type(s) you have selected and display how much you will have available each month when you retire.
+      Our calculator will take the contributions amount(s) and account type(s) you have selected and display how much you will have available each month when you retire. -->
+      Planning for retirement is one of the most important things you can do to 
+      ensure lasting financial security.<sup><a href="https://www.investopedia.com/articles/younginvestors/08/generation-y.asp">10</a></sup>
+      Unfortunately, retirement planning can be daunting, and saving for retirement is only getting harder.<sup><a href="https://money.com/saving-retirement-harder/">11</a></sup>
+      To help you plan a strategy that works for you, our calculator and comparison tools use the most important factors associated with different retirement accounts and compute the amount of money you will have per month during retirement.
     </div>
+
+    <hr style="max-width: 740px !important">
+
     <div class="flex-container" style="display: flex">
       <div id="basic_info" style="width: 66rem">
         <h3>Basic Info</h3>
-        Let's start with where you are and how long of a retirement you'd like. Starting to contribute to these accounts earlier will give more time for your accounts to grow, while retiring later will 
-        leave you with more money per month in retirement. You may want to retire early and that's okay too. Let's see how you can make sure you'll have the lifestyle you want in retirement. <br>
       </div>
     </div>
     
-    <hr style="max-width: 700px !important">
+    <hr style="max-width: 740px !important">
 
       <div id="accounts" class="accordion accordion-flush" style="width: 43rem">
-        <h4> Account Types</h4>
-        Now you get to select which kinds of retirement accounts you'd like to contribute to. Each has their own benefits and drawbacks, which are detailed in the account dropdown. If this is your first time
-        dipping your toe in financial planning, starting with a 401k and an IRA is a good baseline, especially if your employer will match some of your contributions to your 401k. 
-        <br>
-        <div id="compare-accounts"></div>
+        <h3> Account Types</h3>
+        Now you get to select which kinds of retirement accounts you'd like to contribute to. Each has its own benefits and drawbacks, which are detailed in the account dropdown. To help you prioritize your contributions, we spoke to a Fidelity Investment Advisor with over a decade of experience in retirement investing; their suggestions are highlighted in the Advice sections for each account.
+        <br><br>
       </div>
 
+    <hr style="max-width: 740px !important">
     
     <div id="citations">
       <h3>Citations and Additional Info...</h3>
-      <p>TODO
-        https://www.investopedia.com/terms/c/certificateofdeposit.asp
-        https://www.fidelity.com/retirement-ira/ira-comparison
-        https://www.guardianlife.com/ira
-        https://www.nerdwallet.com/article/investing/roth-401k-vs-401k#:~:text=The%20biggest%20difference%20between%20a,on%20the%20distributions%20in%20retirement.
-        https://en.wikipedia.org/wiki/S%26P_500
-        https://www.fool.com/investing/how-to-invest/index-funds/average-return/#:~:text=Over%20the%20past%2030%20years,rate%20of%2010.7%25%20per%20year.
+      <p>
+
+        [1] <a href=https://www.cnbc.com/select/high-yield-savings-account-risk>https://www.cnbc.com/select/high-yield-savings-account-risk</a> <br>
+        [2] <a href=https://www.experian.com/blogs/ask-experian/pros-cons-high-yield-savings-account>https://www.experian.com/blogs/ask-experian/pros-cons-high-yield-savings-account/</a><br>
+        [3] <a href=https://www.fidelity.com/building-savings/learn-about-iras/what-is-an-ira>https://www.fidelity.com/building-savings/learn-about-iras/what-is-an-ira</a><br>
+        [4] <a href=https://www.fidelity.com/retirement-ira/ira-comparison>https://www.fidelity.com/retirement-ira/ira-comparison</a><br>
+        [5] <a href="https://www.fool.com/investing/how-to-invest/index-funds/average-return/#:~:text=Over%20the%20past%2030%20years,rate%20of%2010.7%25%20per%20year">https://www.fool.com/investing/how-to-invest/index-funds/average-return</a><br>
+        [6] <a href=https://www.investopedia.com/terms/1/401kplan.asp>https://www.investopedia.com/terms/1/401kplan.asp</a><br>
+        [7] <a href=https://www.investopedia.com/terms/c/certificateofdeposit.asp>https://www.investopedia.com/terms/c/certificateofdeposit.asp</a><br>
+        [8] <a href="https://www.nerdwallet.com/article/investing/roth-401k-vs-401k#:~:text=The%20biggest%20difference%20between%20a,on%20the%20distributions%20in%20retirement">https://www.nerdwallet.com/article/investing/roth-401k-vs-401k</a><br>
+        [9] <a href=https://en.wikipedia.org/wiki/S%26P_500>https://en.wikipedia.org/wiki/S%26P_500</a><br>
+        [10] <a href="https://www.investopedia.com/articles/younginvestors/08/generation-y.asp">https://www.investopedia.com/articles/younginvestors/08/generation-y.asp</a><br>
+        [11] <a href="https://money.com/saving-retirement-harder/">https://money.com/saving-retirement-harder/</a><br>
+        [12] <a href="https://data.bls.gov/timeseries/CUUR0000SA0L1E?output_view=pct_12mths">https://data.bls.gov/timeseries/CUUR0000SA0L1E?output_view=pct_12mths</a><br>
+        [13] <a href="https://data.bls.gov/timeseries/CIU1010000000000A">https://data.bls.gov/timeseries/CIU1010000000000A</a><br>
+        [14] <a href="https://www.fidelity.com/bin-public/060_www_fidelity_com/documents/wealth-planning_investment-strategy.pdf">https://www.fidelity.com/bin-public/060_www_fidelity_com/documents/wealth-planning_investment-strategy.pdf</a><br>
+
+        <br>
+
       </p>
     </div>
 
@@ -66,6 +85,8 @@
       
     </script>
     <script src="svg.js"></script>
+    <script src="data/sipp.js"></script>
+    <script src="generators/graphs.js"></script>
     <script src="calculators/global.js"></script>
     <script src="calculators/taxes.js"></script>
     <script src="calculators/401k.js"></script>
@@ -73,10 +94,13 @@
     <script src="calculators/ira.js"></script>
     <script src="calculators/savings.js"></script>
     <script src="calculators/certificates.js"></script>
+    <script src="calculators/inflation.js"></script>
     <script src="copy.js"></script>
     <script src="generators/utils.js"></script>
     <script src="generators/globalConfig.js"></script>
     <script src="generators/accountsConfig.js"></script>
+    
     <script src="project.js"></script>
+    <script src="calculators/monteCarlo.js"></script>
   </body>
 </html>

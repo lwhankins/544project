@@ -3,15 +3,17 @@ accountsConfig = {
         {"name": "Current Balance",
         "min": 0,
         "max": 100000,
+        "initial": 0,
         "suggested": 0,
         "step": 100,
         "format": ",",
         "setGlob": setCurrent401kBalance},
 
-        {"name": "Percent (%) Salary to Contribute",
-        "min": 0,
+        {"name": "Annual Contribution (% Salary)",
+        "min": 0.0,
         "max": .25,
-        "suggested": .06,
+        "initial": 0,
+        "suggested": .06, 
         "step": .01,
         "format": ".1%",
         "setGlob": set401kSalaryPortionContribution},
@@ -19,6 +21,7 @@ accountsConfig = {
         {"name": "Annual Rate of Return",
         "min": .01,
         "max": .15,
+        "initial": .07,
         "suggested": .07,
         "step": .005,
         "format": ".1%",
@@ -27,32 +30,38 @@ accountsConfig = {
         {"name": "Employer Match of Your Contribution (%)",
         "min": 0,
         "max": 1,
-        "suggested": .5,
+        "initial": .5,
+        "suggested": 0,
         "step": .05,
         "format": ".1%",
-        "setGlob": setEmployerMatchAmount401k},
+        "setGlob": setEmployerMatchAmount401k,
+        "tooltip": "Partial matches of 50% are the most common structure for 401k plans. Some employers offer a full match (100%)."},
 
         {"name": "Employer Match Limit (%)",
         "min": 0,
         "max": .15,
-        "suggested": .06,
+        "initial": .06,
+        "suggested": 0,
         "step": .01,
         "format": ".1%",
-        "setGlob": setEmployerMaxMatch401k}
+        "setGlob": setEmployerMaxMatch401k,
+        "tooltip": "Employers cap their matches to a certain portion of your salary, typically 4 to 6% (2023)."}
     ],
 
     "Roth 401K" : [
         {"name": "Current Balance",
         "min": 0,
         "max": 100000,
+        "initial": 0,
         "suggested": 0,
         "step": 100,
         "format": ",",
         "setGlob": setCurrentRoth401kBalance},
 
-        {"name": "Percent (%) Salary to Contribute",
+        {"name": "Annual Contribution (% Salary)",
         "min": 0,
         "max": .25,
+        "initial": 0,
         "suggested": .06,
         "step": .01,
         "format": ".1%",
@@ -61,6 +70,7 @@ accountsConfig = {
         {"name": "Annual Rate of Return",
         "min": .01,
         "max": .15,
+        "initial": .07,
         "suggested": .07,
         "step": .005,
         "format": ".1%",
@@ -69,40 +79,48 @@ accountsConfig = {
         {"name": "Employer Match of Your Contribution (%)",
         "min": 0,
         "max": 1,
-        "suggested": .5,
+        "initial": .5,
+        "suggested": 0,
         "step": .05,
         "format": ".1%",
-        "setGlob": setEmployerMatchAmountRoth401k},
+        "setGlob": setEmployerMatchAmountRoth401k,
+        "tooltip": "Partial matches of 50% are the most common structure for 401k plans. Some employers offer a full match (100%)."},
 
         {"name": "Employer Match Limit (%)",
         "min": 0,
         "max": .15,
-        "suggested": .06,
+        "initial": .06,
+        "suggested": 0,
         "step": .01,
         "format": ".1%",
-        "setGlob": setEmployerMaxMatchRoth401k}
+        "setGlob": setEmployerMaxMatchRoth401k,
+        "tooltip": "Employers cap their matches to a certain portion of your salary, typically 4 to 6% (2023)."}
     ],
 
     "Traditional IRA" : [
         {"name": "Current Balance",
         "min": 0,
         "max": 100000,
+        "initial": 0,
         "suggested": 0,
         "step": 100,
         "format": ",",
         "setGlob": setTradIraCurBal},
 
-        {"name": "Annual Contribution",
+        {"name": "Annual Contribution (Total $)",
         "min": 0,
         "max": 6500,
+        "initial": 0,
         "suggested": 6500,
         "step": 100,
         "format": ",",
-        "setGlob": setTradIraAnnCont},
+        "setGlob": setTradIraAnnCont,
+        "tooltip": "Total IRA contributions are capped at $6,500 (2023)."},
 
         {"name": "Annual Rate of Return",
         "min": .01,
         "max": .15,
+        "initial": .07,
         "suggested": .07,
         "step": .005,
         "format": ".1%",
@@ -111,32 +129,38 @@ accountsConfig = {
         {"name": "Catchup Contribution",
         "min": 0,
         "max": 1000,
+        "initial": 0,
         "suggested": 1000,
         "step": 100,
         "format": ",",
-        "setGlob": setTradIraCatchupCont}
+        "setGlob": setTradIraCatchupCont,
+        "tooltip": "Once you are 50 or older, you can make additional contributions to an IRA to ensure you have enough saved for retirement. This variable will adjust your future contributions to the maximum allowed."}
     ],
 
     "Roth IRA" : [
         {"name": "Current Balance",
         "min": 0,
         "max": 100000,
+        "initial": 0,
         "suggested": 0,
         "step": 100,
         "format": ",",
         "setGlob": setRothIraCurBal},
 
-        {"name": "Annual Contribution",
+        {"name": "Annual Contribution (Total $)",
         "min": 0,
         "max": 6500,
+        "initial": 0,
         "suggested": 6500,
         "step": 100,
         "format": ",",
-        "setGlob": setRothIraAnnCont},
+        "setGlob": setRothIraAnnCont,
+        "tooltip": "Total IRA contributions are capped at $6,500 (2023). Max this out if you can."},
 
         {"name": "Annual Rate of Return",
         "min": .01,
         "max": .15,
+        "initial": .07,
         "suggested": .07,
         "step": .005,
         "format": ".1%",
@@ -145,68 +169,77 @@ accountsConfig = {
         {"name": "Catchup Contribution",
         "min": 0,
         "max": 1000,
+        "initial": 0,
         "suggested": 1000,
         "step": 100,
         "format": ",",
-        "setGlob": setRothIraCatchupCont}],
+        "setGlob": setRothIraCatchupCont,
+        "tooltip": "Once you are 50 or older, you can make additional contributions to an IRA to ensure you have enough saved for retirement. This variable will adjust your future contributions to the maximum allowed."}
+    ],
 
     "High-Yield Savings Account" : [
         {
-            "name": "Annual Percent (%) Yield",
-            "min": 0,
-            "max": .1,
-            "suggested": .03,
-            "step":.01,
-            "format": ".2%",
-            "setGlob": setHYSavingsAPY
-        },
-        {
-            "name": "Current Savings Balance",
+            "name": "Current Balance",
             "min": 0,
             "max": 100000,
-            "suggested": 1000,
+            "initial": 0,
+            "suggested": 0,
             "step": 100,
             "format": ",",
             "setGlob": setCurrentSavingsBalance
         },
         {
-            "name": "Percent (%) Salary to Contribute",
+            "name": "Annual Contribution (% Salary)",
             "min": 0,
-            "max": 25,
-            "suggested": 10,
+            "max": .25,
+            "initial": 0,
+            "suggested": .03,
             "step": .01,
             "format": ".2%",
             "setGlob": setSavingsPortionContribution
+        },
+        {
+            "name": "Annual Rate of Return",
+            "min": 0,
+            "max": .1,
+            "initial": .03,
+            "suggested": .03,
+            "step":.01,
+            "format": ".2%",
+            "setGlob": setHYSavingsAPY
         }
     ],
 
     "Certificates of Deposit" : [
         {
-            "name": "Annual Percent (%) Yield",
-            "min": 0,
-            "max": 10,
-            "suggested": 4.5,
-            "step": .01,
-            "format": ".2%",
-            "setGlob": setCdAPY
-        },
-        {
             "name": "Current Balance",
             "min": 0,
             "max": 100000,
-            "suggested": 1000,
+            "initial": 0,
+            "suggested": 0,
             "step": 100,
             "format": ",",
             "setGlob": setCurrentCDBalance
         },
         {
-            "name": "Percent (%) Salary to Contribute",
+            "name": "Annual Contribution (% Salary)",
             "min": 0,
-            "max": 25,
-            "suggested": 10,
+            "max": .25,
+            "initial": 0,
+            "suggested": .03,
             "step": .01,
             "format": ".2%",
             "setGlob": setCDSalaryPortionContibution
+        },
+        {
+            "name": "Annual Rate of Return",
+            "min": 0,
+            "max": .1,
+            "initial": .045,
+            "suggested": .045,
+            "step": .001,
+            "format": ".2%",
+            "setGlob": setCdAPY
         }
     ],
 
@@ -214,15 +247,17 @@ accountsConfig = {
         {"name": "Current Balance",
         "min": 0,
         "max": 100000,
+        "initial": 0,
         "suggested": 0,
         "step": 100,
         "format": ",",
         "setGlob": setCurrentAmountInvestedSP},
 
-        {"name": "Percent (%) Salary to Contribute",
+        {"name": "Annual Contribution (% Salary)",
         "min": 0,
         "max": .25,
-        "suggested": .05,
+        "initial": 0,
+        "suggested": .03,
         "step": .01,
         "format": ".1%",
         "setGlob": setPortionOfSalaryToContributeSP},
@@ -230,11 +265,40 @@ accountsConfig = {
         {"name": "Annual Rate of Return",
         "min": .01,
         "max": .15,
+        "initial": .07,
         "suggested": .07,
         "step": .005,
         "format": ".1%",
         "setGlob": setExpectedReturnSP}
     ]
+}
+
+generalAccounts = [
+    "401K",
+    "IRA",
+    "High-Yield Savings Account",
+    "Certificates of Deposit",
+    "S&P Index"
+]
+
+
+accountCopy = {
+    "Intro 401K": intro401Copy,
+    "401K": general401Copy,
+    "Traditional 401K": traditional401Copy,
+    "Roth 401K": roth401Copy,
+    "401K Ending": ending401Copy,
+    "Intro IRA": introIraCopy,
+    "IRA": generalIraCopy,
+    "Traditional IRA": traditionalIraCopy,
+    "Roth IRA": rothIraCopy,
+    "IRA Ending": iraEndingCopy,
+    "Intro High-Yield Savings Account": introHighYieldSavingsAccountCopy,
+    "High-Yield Savings Account": highYieldSavingsAccountCopy,
+    "Intro Certificates of Deposit": introCdCopy,
+    "Certificates of Deposit": cdCopy,
+    "Intro S&P Index": introSnP,
+    "S&P Index": sAndPCopy
 }
 
 accountCalculators = {
@@ -348,7 +412,7 @@ comparativeConfig = [
             },
             "Risk": {
                 "value": 1,
-                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, IEA portfolios are usually well-balanced to mitigate this risk."
+                "tooltip": "Since your money is in investments, there is a chance they will lose money. However, IRA portfolios are usually well-balanced to mitigate this risk."
             },
             "Contribution Limit": {
                 "value": 1,

@@ -4,7 +4,7 @@
  * 401k-specific variables, will be taken from sliders/input. Set here for testing.
 */
 
-let portionOfSalaryToContribute401k = .06; 
+let portionOfSalaryToContribute401k = 0; 
 let current401kBalance = 0;
 let annualRateOfReturn401k = .07;
 let employerMatchAmount401k = .5;
@@ -19,10 +19,11 @@ let roughAverageContributionIncreasePerYear401k = 450;
 function calculate401k() {
     let total = current401kBalance;
     let currentSalary = salary;
+    let curMaxIndividualContribution = maxAllowedIndividualContribution401k;
     for  (let i = 0; i < (ageOfRetirement - currentAge); i++) {
         let amountInvestedThisYearByMe = currentSalary*portionOfSalaryToContribute401k;
-        if (amountInvestedThisYearByMe > maxAllowedIndividualContribution401k) { // cap at max contribution
-            amountInvestedThisYearByMe = maxAllowedIndividualContribution401k;
+        if (amountInvestedThisYearByMe > curMaxIndividualContribution) { // cap at max contribution
+            amountInvestedThisYearByMe = curMaxIndividualContribution;
         }
         let portionOfSalaryAllowedToContribute = amountInvestedThisYearByMe / currentSalary; // see what percentage of salary you contributed after capping
         let amountEmployerWillMatch = portionOfSalaryAllowedToContribute;
@@ -33,7 +34,7 @@ function calculate401k() {
         let returnOnTotal = total * annualRateOfReturn401k;
         total = total + amountInvestedThisYearByMe + amountInvestedThisYearByEmployer + returnOnTotal;
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
-        maxAllowedIndividualContribution401k += roughAverageContributionIncreasePerYear401k;
+        curMaxIndividualContribution += roughAverageContributionIncreasePerYear401k;
     }
     return total;
 }
@@ -69,7 +70,7 @@ function calculateTraditional401k(){
  * Roth 401k-specific variables, will be taken from sliders/input. Set here for testing.
 */
 
-let portionOfSalaryToContributeRoth401k = .06; 
+let portionOfSalaryToContributeRoth401k = 0; 
 let currentRoth401kBalance = 0;
 let annualRateOfReturnRoth401k = .07;
 let employerMatchAmountRoth401k = .5;
@@ -84,10 +85,11 @@ let roughAverageContributionIncreasePerYearRoth401k = 450;
 function calculateRoth401k() {
     let total = currentRoth401kBalance;
     let currentSalary = salary;
+    let curMaxIndividualContribution = maxAllowedIndividualContributionRoth401k;
     for  (let i = 0; i < (ageOfRetirement - currentAge); i++) {
         let amountInvestedThisYearByMe = currentSalary*portionOfSalaryToContributeRoth401k;
-        if (amountInvestedThisYearByMe > maxAllowedIndividualContributionRoth401k) { // cap at max contribution
-            amountInvestedThisYearByMe = maxAllowedIndividualContributionRoth401k;
+        if (amountInvestedThisYearByMe > curMaxIndividualContribution) { // cap at max contribution
+            amountInvestedThisYearByMe = curMaxIndividualContribution;
         }
         let portionOfSalaryAllowedToContribute = amountInvestedThisYearByMe / currentSalary; // see what percentage of salary you contributed after capping
         let amountEmployerWillMatch = portionOfSalaryAllowedToContribute;
@@ -98,7 +100,7 @@ function calculateRoth401k() {
         let returnOnTotal = total * annualRateOfReturnRoth401k;
         total = total + amountInvestedThisYearByMe + amountInvestedThisYearByEmployer + returnOnTotal;
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
-        maxAllowedIndividualContributionRoth401k += roughAverageContributionIncreasePerYearRoth401k;
+        curMaxIndividualContribution += roughAverageContributionIncreasePerYearRoth401k;
     }
     return total / (yearsInRetirement * 12);
 }

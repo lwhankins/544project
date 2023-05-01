@@ -1,13 +1,13 @@
 const catchupAge = 50;
 let rothIraCurBal = 0;
-let rothIraAnnCont = 6000;
+let rothIraAnnCont = 0;
 let rothIraAnnRet = 0.07;
-let rothIraCatchupCont = 1000;
+let rothIraCatchupCont = 0;
 
 let tradIraCurBal = 0;
-let tradIraAnnCont = 6000;
+let tradIraAnnCont = 0;
 let tradIraAnnRet = 0.07;
-let tradIraCatchupCont = 1000;
+let tradIraCatchupCont = 0;
 
 // Formula from https://www.wallstreetmojo.com/roth-ira-calculator/
 // Verified with https://www.dinkytown.net/java/roth-ira-calculator.html
@@ -40,23 +40,21 @@ function calculateTraditionalIra(){
     return total / (yearsInRetirement * 12); // total after taxes
 }
 
-console.log(calculateTraditionalIra());
-
 // roth IRA setters
 function setRothIraCurBal(bal) {
-    rothCurBal = parseInt(bal);
+    rothIraCurBal = parseInt(bal);
 }
 
 function setRothIraAnnCont(cont) {
-    rothAnnCont = parseInt(cont);
+    rothIraAnnCont = parseInt(cont);
 }
 
 function setRothIraAnnRet(ret) {
-    rothAnnRet = parseFloat(ret);
+    rothIraAnnRet = parseFloat(ret);
 }
 
 function setRothIraCatchupCont(cont){
-    rothCatchupCont = parseInt(cont);
+    rothIraCatchupCont = parseInt(cont);
 }
 
 // traditional IRA setters

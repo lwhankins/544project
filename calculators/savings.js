@@ -1,8 +1,8 @@
 // Varies widely depending on the bank -- I'll use 0.01% as a barometer since it's the baseline anyway
 let savingsAPY = 0.0001; // Ew
 let highYieldSavingsAPY = 0.03;
-let currentSavingsBalance = 1000;
-let portionOfSalaryToContributeSavings = .1; 
+let currentSavingsBalance = 0;
+let portionOfSalaryToContributeSavings = 0; 
 
 function calculateSavings() {
     let total = currentSavingsBalance;
@@ -24,11 +24,11 @@ function calculateHYSavings() {
 }
 
 function setSavingsAPY(apy) {
-    savingsAPY = parseFloat(apy / 100);
+    savingsAPY = parseFloat(apy);
 }
 
 function setHYSavingsAPY(apy) {
-    highYieldSavingsAPY = parseFloat(apy / 100);
+    highYieldSavingsAPY = parseFloat(apy);
 }
 
 function setCurrentSavingsBalance(currentBalance) {
@@ -36,5 +36,5 @@ function setCurrentSavingsBalance(currentBalance) {
 }
 
 function setSavingsPortionContribution(contribution) {
-    portionOfSalaryToContributeSavings = parseFloat(contribution / 100);
+    portionOfSalaryToContributeSavings = parseFloat(contribution);
 }

@@ -3,7 +3,7 @@
 */
 
 let currentAmountInvestedSP = 0;
-let portionOfSalaryToContributeSP = .05; 
+let portionOfSalaryToContributeSP = 0; 
 let expectedAnnualReturnSP = .07;
 
 

@@ -1,7 +1,6 @@
-let padding = 10;
 let width = 500;
 let height = 50;
-
+let thousands = d3.format(",d");
 /*
  * Make a label with text, numerical input, and slider for a parameter. Structure:
  *
@@ -28,61 +27,117 @@ let height = 50;
  */
 // Can consider bootstrap range component
 // use d3-simple-slider from https://github.com/johnwalley/d3-simple-slider
-function makeInputSlider(parent, name, min, max, suggested, step, format, setGlob, calculators, ids){
+function makeInputSlider(parent, name, min, max, initial, suggested, step, format, setGlob, tooltip, calculators, ids){
     // label is the top level holder
-    let label = parent.append("label")
-                      .text(name)
-                      .attr("data-bs-toggle", "tooltip")
-                    .attr("data-bs-placement", "top")
-                    .attr("data-bs-title", `Standard: ${suggested}`);
+    label = parent.append("label").text(name);
+    if (tooltip) {
+        label.append("span").text(" ? ").attr("class", "tooltip-logo")
+        .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", tooltip);
+    }
     // label holds a div with the input (field where user inputs the value and presses up/down)
     let input = label.append("div")
                     .attr("class", "param-input")
                     .append("input")
                     .attr("type", "number")
                     .attr("name", name)
-                    .attr("value", suggested)
+                    .attr("value", initial)
                     .attr("min", min)
                     .attr("max", max)
                     .attr("step", step)
                     ;
     // label holds a div with the slider, contained in an svg
-    var svg = label.append("div")
+    var sliderDiv = label.append("div")
                     .attr("class", "param-slider")
-                    .append("svg")
+    var svg = sliderDiv.append("svg")
                     .attr("width", width)
                     .attr("height", height)
-                    .attr("transform", `translate(${padding},${padding})`);
-    let slider = d3.sliderBottom()
+                    .append("g")
+                    .attr("transform", `translate(30,10)`);
+    if (suggested) {
+        sliderDiv.attr("data-bs-toggle", "tooltip")
+                    .attr("data-bs-placement", "top")
+                    .attr("data-bs-title", `Suggested: ${suggested}`);
+    }
+    let slider = d3.sliderHorizontal()
                     .width(400)
                     .min(min)
                     .max(max)
                     .step(step)
                     .ticks(4)
                     .tickFormat(d3.format(format))
-                    .value(suggested)
+                    .tickPadding(-6)
+                    .value(initial)
                     .on("onchange", (val) => {
-                        input.attr("value", val);
+                        // console.log(input.value, val)
+                        input.property("value", val);
+                        //input.val(val)
                         setGlob(val);
                         runCalculators(calculators, ids);
                         updateSidebar();
+                        if (suggested != 0) {
+                            if (val == suggested) {
+                                svg.selectAll(".parameter-value").selectAll("text")
+                                    .attr("class", "paramater-value suggested-value");
+                            } else {
+                                svg.selectAll(".parameter-value").selectAll("text")
+                                .attr("class", "paramater-value");
+                            }
+                        }
                     });
+    if (suggested != 0) {
+        let scale = d3.scaleLinear()
+            .domain([0,4])
+            .range([min, max]);
+        let ticks = [0, 1, 2, 3, 4];
+        tickValues = [];
+        for (let i = 0; i < ticks.length; i++) {
+            let tick = scale(ticks[i]);
+            if ((Math.abs(tick-suggested)/(max-min) < .15)) {
+                continue;
+            }
+            tickValues.push(tick);
+        }
+        tickValues.push(suggested);
+        tickValues.sort();
+        slider.tickValues(tickValues);
+    }
     svg.call(slider);
+    if (suggested != 0) {
+        let selection = svg.selectAll("g.tick")
+                        .filter(function(d) { return d == suggested;});
+        selection.select("line")
+            .attr("class", "suggested-value");
+        selection.select("text")
+            .attr("class", "suggested-value");
+        if (initial == suggested) {
+            svg.selectAll(".parameter-value").selectAll("text")
+                .attr("class", "paramater-value suggested-value");
+        }
+    }
     input.on('change', function() {
         slider.value(this.value);
         setGlob(this.value);
         runCalculators(calculators, ids);
         updateSidebar();
+        if (suggested != 0) {
+            if (this.value == suggested) {
+                svg.selectAll(".parameter-value").selectAll("text")
+                    .attr("class", "paramater-value suggested-value");
+            } else {
+                svg.selectAll(".parameter-value").selectAll("text")
+                .attr("class", "paramater-value");
+            }
+        }
     });
 }
 
 function makeRadio(parent, name, options, setGlob, calculators, ids) {
     let container = parent.append("div").attr("class", "param-radio");
-    let top = container.append("h4")
+    let top = container.append("h6")
                       .text(name);
-    container.append("div")
+    /*container.append("div")
                       .text(taxCopy);
-    container.append("br");
+    container.append("br");*/
 
     // label holds a div with the buttons
     for (let i=0; i < options.length; i++) {
@@ -135,8 +190,8 @@ function addParam(parentDiv, config, calculators, ids) {
     let g = parentDiv.append("g")
         .attr("class", "param"); // add id as well?
 
-    makeInputSlider(g, config.name, config.min, config.max, config.suggested,
-                    config.step, config.format, config.setGlob, calculators, ids);
+    makeInputSlider(g, config.name, config.min, config.max, config.initial, config.suggested,
+                    config.step, config.format, config.setGlob, config.tooltip, calculators, ids);
 }
 
 /* 
@@ -181,7 +236,14 @@ function makeHeader(header, title, calculators, id) {
         .attr("data-bs-toggle", "collapse")
         .attr("data-bs-target", `#${id}-panel`)
         .attr("aria-expanded", "false")
-        .attr("aria-controls", `${id}-panel`);
+        .attr("aria-controls", `${id}-panel`)
+        .on("click", function() {
+            d3.select(`#${id}-panel-copy`)
+                .attr("class", "text-copy panel accordion-collapse collapse");
+            if (title.includes("401K") || title.includes("IRA")) {
+                document.getElementById(`${id}-copy-dropdown-image`).src = "./images/right-arrow.png";
+            }
+        });
     checkbox.on("change", () => togglePanel(checkbox, calculators, id));
     header.append("h4")
         .attr("class", "header-amount")
@@ -189,6 +251,165 @@ function makeHeader(header, title, calculators, id) {
 }
 
 let accountsDiv = d3.select("#accounts"); // matches index.html
+
+
+/*
+ * Makes div with copy available with dropwdown. This is appended to the bottom
+ * of each account div. 
+ */ 
+function makeCopyDropdown(title) {
+    let id = getIdFromTitle(title);
+    let accountInfo = d3.select(`#${id}-panel`);
+    let dropDownHeader = accountInfo.append("div");
+    let toggleCopy = dropDownHeader.append("label")
+        .attr("class", "copy-dropdown-label")
+        .on("click", function(event) {
+            if (event.srcElement == this) {
+                return;
+            }
+            let img = document.getElementById(`${id}-copy-dropdown-image`);
+            if(img.src.includes("right-arrow.png")) {
+                img.src = "./images/down-arrow.png";
+            } else {
+                img.src = "./images/right-arrow.png";
+            }
+            return;
+        })
+        .text("Show Specifics");
+    let dropDownImage = toggleCopy.append("img")
+        .attr("id", `${id}-copy-dropdown-image`)
+        .attr("src", "./images/right-arrow.png")
+        .attr("class", "copy-dropdown-image")
+        .on("click", function(event) {
+            let img = document.getElementById(`${id}-copy-dropdown-image`);
+            if(img.src.includes("right-arrow.png")) {
+                img.src = "./images/down-arrow.png";
+            } else {
+                img.src = "./images/right-arrow.png";
+            }
+            return;
+        })
+    let checkbox = toggleCopy.append("input")
+        .attr("type", "checkbox")
+        .attr("id", `${id}-copy-dropwdown-checkbox`)
+        .attr("class", "copy-check-input collapsed")
+        .attr("role", "switch")
+        .attr("data-bs-toggle", "collapse")
+        .attr("data-bs-target", `#${id}-panel-copy`)
+        .attr("aria-expanded", "false")
+        .attr("aria-controls", `${id}-panel-copy`);
+    let copy = accountCopy[title];
+    let accountDiv = d3.select(`#${id}`);
+    let copyPanel = accountDiv.append("div")
+        .attr("class", "text-copy panel accordion-collapse collapse")
+        .attr("id", `${id}-panel-copy`)
+        .attr("aria-labelledby", `${id}-header`)
+        .text(copy);
+    let references = sources[title];
+    if (title.includes("401K")) {
+        references = sources["401K"];
+    } else if (title.includes("IRA")) {
+        references = sources["IRA"];
+    }
+    let referencesDiv = copyPanel.append("div")
+        .text("References: ");
+    references.forEach(function(reference) {
+        referencesDiv.append("a")
+            .attr("href", reference[0])
+            .text(`[${reference[1]}]`);
+    });
+}
+
+function addSummaryCopy(title) {
+    let id = getIdFromTitle(title);
+    let copy = null;
+    if (title.includes("IRA")) {
+        copy = accountCopy["IRA"] + "\n\n" + accountCopy["IRA Ending"];
+    } else if (title.includes("401")) {
+        copy = accountCopy["401K"] + "\n\n" + accountCopy["401K Ending"];
+    } else {
+        copy = accountCopy[title];
+    }
+    wrapperDiv = d3.select("#" + getIdFromTitle(title) + "-wrapper");
+    let dropDownHeader = wrapperDiv.append("div");
+    let toggleCopy = dropDownHeader.append("label")
+        .attr("class", "copy-dropdown-label")
+        .on("click", function(event) {
+            if (event.srcElement == this) {
+                return;
+            }
+            let img = document.getElementById(`${id}-copy-summary-dropdown-image`);
+            if(img.src.includes("right-arrow.png")) {
+                img.src = "./images/down-arrow.png";
+            } else {
+                img.src = "./images/right-arrow.png";
+            }
+            return;
+        })
+        .text("Show Account Info");
+    let dropDownImage = toggleCopy.append("img")
+        .attr("id", `${id}-copy-summary-dropdown-image`)
+        .attr("src", "./images/right-arrow.png")
+        .attr("class", "copy-dropdown-image")
+        .on("click", function(event) {
+            let img = document.getElementById(`${id}-copy-summary-dropdown-image`);
+            if(img.src.includes("right-arrow.png")) {
+                img.src = "./images/down-arrow.png";
+            } else {
+                img.src = "./images/right-arrow.png";
+            }
+            return;
+        })
+    let checkbox = toggleCopy.append("input")
+        .attr("type", "checkbox")
+        .attr("id", `${id}-copy-summary-dropwdown-checkbox`)
+        .attr("class", "copy-check-input collapsed")
+        .attr("role", "switch")
+        .attr("data-bs-toggle", "collapse")
+        .attr("data-bs-target", `#${id}-panel-copy-summary`)
+        .attr("aria-expanded", "false")
+        .attr("aria-controls", `${id}-panel-copy-summary`);
+    let copyPanel = wrapperDiv.append("div")
+        .attr("class", "text-copy panel accordion-collapse collapse")
+        .attr("id", `${id}-panel-copy-summary`)
+        .text(copy);
+    let references = sources[title];
+    let referencesDiv = copyPanel.append("div")
+        .text("References: ");
+    references.forEach(function(reference) {
+        referencesDiv.append("a")
+            .attr("href", reference[0])
+            .text(`[${reference[1]}]`);
+    });
+
+}
+
+/*
+ * Creates the wrapper for account types. Wrapper will include
+ * non-unique account types (one wrapper for 401ks). Wrapper becomes
+ * parent div for each account div.
+ */
+function makeWrapperDiv(accountTitle) {
+    let wrapperDiv;
+    if (document.getElementById(accountTitle + "-wrapper") == null) {
+        wrapperDiv = accountsDiv.append("div")
+            .attr("id", getIdFromTitle(accountTitle) + "-wrapper")
+            .attr("class", "wrapper-div")
+        wrapperDiv.append("h3")
+            .text(accountTitle);
+    } else {
+        wrapperDiv = document.getElementById(accountTitle + "-wrapper");
+    }
+    let introCopy = accountCopy["Intro " + accountTitle];
+    if (accountTitle.includes("IRA")) {
+        introCopy = accountCopy["Intro IRA"];
+    }
+    if (accountTitle.includes("FourOhOne")) {
+        introCopy = accountCopy["Intro 401K"];
+    }
+    wrapperDiv.append("p").text(introCopy);
+}
+
 /*
  * Make a div for an account type (e.g., Traditional 401k), with a
  * container as the top level holder. Each container has the structure:
@@ -208,7 +429,15 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     let id = getIdFromTitle(title);
 
     // each account div is a container, the top level holder
-    let accountDiv = accountsDiv.append("div")
+    let wrapperDiv;
+    if (title.includes("IRA")) {
+        wrapperDiv = d3.select("#" + getIdFromTitle("IRA") + "-wrapper");
+    } else if (title.includes("401K")) {
+        wrapperDiv = d3.select("#" + getIdFromTitle("401K") + "-wrapper");
+    } else {
+        wrapperDiv = d3.select("#" + getIdFromTitle(title) + "-wrapper");
+    }
+    let accountDiv = wrapperDiv.append("div")
         .attr("class", "container accordion-item")
         .attr("id", id);
     // container holds div for panel header, which is always shown
@@ -223,9 +452,13 @@ function makeAccountDiv(title, paramConfigs, calculators) {
         .attr("class", "panel accordion-collapse collapse")
         .attr("id", `${id}-panel`)
         .attr("aria-labelledby", `${id}-header`)
+
     // add each parameter using its config
     for (let i = 0; i < paramConfigs.length; i++) {
         addParam(panel, paramConfigs[i], calculators, [id]);
+    }
+    if (title.includes("401K") || title.includes("IRA")) {
+        makeCopyDropdown(title);
     }
     return accountDiv;
 }
@@ -246,9 +479,19 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     
     Honk, honk. - Clownie
  */
-function makeSidebarDiv(div) {
-    let money = getTotalMoney()
-    div.attr("class", "panel-side");
+function makeSidebarDiv(top) {
+    let money = getTotalMoney();
+    makeSidebarOpener(top);
+    
+    let div = top.append("div")
+        .attr("class", "panel-side");
+    div.append("a")
+        .attr("href", "javascript:void(0)")
+        .attr("id", "closebtn")
+        .attr("class", "btn-close")
+        .on("click", closeSidebar)
+    //div.style("display", "none");
+    div.property("hidden", true);
     let header = div.append("div")
         .append("h3")
         .attr("class", "sidebar-text")
@@ -256,32 +499,61 @@ function makeSidebarDiv(div) {
     
     div.append("h3")
         .attr("class", "sidebar-money")
-        .text(() => `${moneyFormat.format(money)}`);
+        .text(() => `$${thousands(money)}`);
     
     div.append("h3")
         .attr("class", "sidebar-text")
         .text(() => "per month in retirement");
 
+    let comp = div.append("div") // Bar chart by average (averageAmts)
+        .attr("id", "comparison")
+        .attr("class", "bar-chart");
+
     let breakdown = div.append("div") // Bar chart per type (contributions)
         .attr("id", "breakdown")
         .attr("class", "bar-chart");
 
-    let comp = div.append("div") // Bar chart by average (averageAmts)
-        .attr("id", "comparison")
-        .attr("class", "bar-chart");
-    averageAmts = [{entity: "You", amount: money},{entity: "Average American", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    averageAmts = [{entity: "maintain", amount: removeInflation(salaryAtRetirementAfterTaxes/12)},
+                    {entity: "you", amount: money},
+                    {entity: "avg", amount: medianAmericanRetirementMonthly}];
     makeBarChartY(averageAmts, "comparison");
+    openSidebar();
+}
+
+function makeSidebarOpener(top) {
+    top.append("div")
+        .attr("id", "openbtn")
+        .attr("class", "carousel-control-prev-icon")
+        .on("click", openSidebar);
+}
+
+function openSidebar() {
+    let button = d3.select("#openbtn")
+        .property("hidden", true);
+
+    let sidebar = d3.select(".panel-side")
+        .property("hidden", false);
+}
+
+function closeSidebar() {
+    let button = d3.select("#openbtn")
+        .property("hidden", false);
+
+    let sidebar = d3.select(".panel-side")
+        .property("hidden", true);
 }
 
 function updateSidebar() {
     let money = getTotalMoney();
     let div = d3.select("#sidebar");
     div.select(".sidebar-money")
-        .text(() => `${moneyFormat.format(money)}`);
+        .text(() => `$${thousands(money)}`);
 
-    makeBarChartX(contributions, "breakdown", money);
-    averageAmts = [{entity: "You", amount: money},{entity: "Average American", amount: averageAmericanTotal / (yearsInRetirement * 12)}];
+    averageAmts = [{entity: "maintain", amount: removeInflation(salaryAtRetirementAfterTaxes/12)},
+                    {entity: "you", amount: money},{entity: "avg",
+                    amount: medianAmericanRetirementMonthly}];
     makeBarChartY(averageAmts, "comparison");
+    makeBarChartX(contributions, "breakdown", money);
 }
 
 function makeBarChartX(data, id, money) {
@@ -289,7 +561,7 @@ function makeBarChartX(data, id, money) {
     if (money != 0) {
         plot = Plot.plot({
             x: { 
-                axis: "top",
+                axis: "bottom",
                 label: null,
                 labelAnchor: "center",
             },
@@ -297,21 +569,28 @@ function makeBarChartX(data, id, money) {
                 label: null
             },
             marks: [
-                Plot.barX(data, {x: Object.keys(data[0])[1], y: Object.keys(data[0])[0], fill: "black", fillOpacity: 0.6})
+                Plot.barY(data, {y: Object.keys(data[0])[1], x: Object.keys(data[0])[0], fill: "green", fillOpacity: 0.6}),
+                Plot.text(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], text: (d) => '$' + thousands(d.money), dy: -6, lineAnchor: "bottom"}),
             ],
             style: {
                 overflow: "visible",
-                fontSize: 20
+                fontSize: 20,
+                height: "175px",
+                marginTop: "5px"
             }
         })
     }
 
+    let d3Elem = d3.select(`#${id}`);
     let elem = document.getElementById(id);
     try {
-        elem.removeChild(elem.lastElementChild);
+        elem.innerHTML = "";
     } catch(e) {}
     
     if (plot) {
+        d3Elem.append("div")
+            .attr("class", "sidebar-text")
+            .text(() => "Breakdown: Where is the $ coming from?");
         elem.append(plot);
     }
 }
@@ -323,22 +602,40 @@ function makeBarChartY(data, id) {
         },
         x: { label: ""},
         marks: [
-          Plot.barY(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], fill: "blue", fillOpacity: 0.3})
+          Plot.barY(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], fill: "green", fillOpacity: 0.3}),
+          Plot.text(data, {x: Object.keys(data[0])[0], y: Object.keys(data[0])[1], text: (d) => '$' + thousands(d.amount), dy: -6, lineAnchor: "bottom"}),
         ],
         style: {
             fontSize: 30,
             marginLeft: 15,
-            overflow: "visible"
+            overflow: "visible",
+            height: "175px",
+            marginTop: "5px"
         }
       })
     let elem = document.getElementById(id);
+    let d3Elem = d3.select(`#${id}`);
     try {
-        elem.removeChild(elem.lastElementChild);
+        elem.innerHTML = "";
     } catch(e) {}
-    
+    let newDiv = d3Elem.append("div")
+        .attr("class", "sidebar-text")
+        .text(() => `In comparison, the median American 65+ has $${thousands(medianAmericanRetirementMonthly)} per month,
+                    and you need $${thousands(removeInflation(salaryAtRetirementAfterTaxes/12))} per month to maintain pre-retirement standard of living.`);
+    newDiv.append("span").text(" ? ").attr("class", "tooltip-logo")
+        .attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("id", "maintain-sol-tooltip").attr("data-bs-title",
+        "To maintain standard of living, retirement income should replace 70-80% of pre-retirement income. We use 80% in our estimate.");
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].filter(el => (el.id == "maintain-sol-tooltip"));
+    tooltipList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     elem.append(plot);
-}
 
+    // ugly but whatever
+    d3Elem.append("div")
+        .attr("class", "sidebar-text")
+        .html(`<br>Adjusted for inflation<br>
+        <strong>avg: $${thousands(afterInflationYearly(medianAmericanRetirementMonthly))}</strong>\n | <strong>maintain: $${thousands(salaryAtRetirementAfterTaxes/12)}</strong>\n | <strong>you: $${thousands(afterInflationYearly(getTotalMoney()))}</strong>`);
+}
 /*
     Get the total amount of money per month.
 */
@@ -374,11 +671,21 @@ function runCalculators(calculators, ids) {
                             .select(".form-check-input");
         if (checkbox.property("checked")) {
             let amount = calculators[i]();
-            header.attr("data-amount", amount);
+            header.attr("data-amount", removeInflation(amount));
             header.select(".header-amount")
-                .text("$" + d3.format(",.0f")(amount));
+                .text("$" + thousands(removeInflation(amount)))
+                .append("div")
+                .attr("class", "lump-sums")
+                .text(`
+                total before inflation: $${thousands(removeInflation(amount * yearsInRetirement * 12))}
+                and after inflation: $${thousands(amount * yearsInRetirement * 12)}`);
         }
     }
+    let salaryAtRetirement = salary;
+    for (let i = currentAge; i < ageOfRetirement; i++) {
+        salaryAtRetirement = salaryAtRetirement + salaryAtRetirement*annualSalaryIncrease;
+    }
+    salaryAtRetirementAfterTaxes = .8 *(salaryAtRetirement - taxesPerYear(salaryAtRetirement));
 }
 
 /*
@@ -399,52 +706,75 @@ function runCalculators(calculators, ids) {
 function makeComparisonDiv(configs) {
     // each account div is a container, the top level holder
     let id = "compare-accounts";
+    accountsDiv.append("br");
     let compDiv = accountsDiv.append("div")
-        .attr("class", "container accordion-item")
+        .attr("class", "accordion-item")
+        .style("width", "130%")
         .attr("id", "compare-accounts");
     // container holds div for panel header, which is always shown
     // panel header contains account name and toggle
     let header = compDiv.append("div")
-        .attr("class", "panel-header accordion-header")
+        .attr("class", "panel-header accordion-header orange-header")
         .attr("id", `compare-accounts-header`)
+        .style("width", "100%");
     makeCompHeader(header, "Compare Accounts", id);
     // container holds div for panel, which is shown if toggle is on
     let panel = compDiv.append("div")
-        .attr("class", "panel accordion-collapse collapse")
+        .attr("class", "accordion-collapse collapse")
         .attr("id", `${id}-panel`)
         .attr("aria-labelledby", `${id}-header`)
     // add carousel
     let carousel = panel.append("div")
-        .attr("class", "carousel slide")
+        .attr("class", "carousel carousel-dark slide")
         .attr("id", "compCarousel")
-        .attr("data-ride", "carousel")
-    let carouselInner = carousel.append("div");
+        .attr("data-bs-ride", "carousel")
+        .attr("data-bs-interval", false);
+
+    let carouselInner = carousel.append("div").attr("class", "carousel-inner");
     generateTable(carouselInner, configs);
-    //generateCompGraph(carouselInner, configs);
+    generateNumGraph(carouselInner);
+    generateAgeGraph(carouselInner)
+
+    let indicators = carousel.append("div").attr("class", "carousel-indicators");
+    indicators.append("button")
+        .attr("type", "button")
+        .attr("data-bs-target", "#compCarousel")
+        .attr("data-bs-slide-to", 0)
+        .attr("class", "active")
+        .attr("aria-current", "true")
+        .attr("aria-label", "Slide 1");
+    indicators.append("button")
+        .attr("type", "button")
+        .attr("data-bs-target", "#compCarousel")
+        .attr("data-bs-slide-to", 1)
+        .attr("aria-label", "Slide 2");
+    indicators.append("button")
+        .attr("type", "button")
+        .attr("data-bs-target", "#compCarousel")
+        .attr("data-bs-slide-to", 2)
+        .attr("aria-label", "Slide 3");
     // Left control
     let left = carousel.append("a")
         .attr("class", "carousel-control-prev")
-        .attr("href", "#compCarousel")
+        .attr("data-bs-target", "#compCarousel")
         .attr("role", "button")
-        .attr("data-slide", "prev");
+        .attr("data-bs-slide", "prev");
     left.append("span")
         .attr("class", "carousel-control-prev-icon")
         .attr("aria-hidden", "true");
     left.append("span")
-        .attr("class", "sr-only")
-        .text("Previous");
+        .attr("class", "sr-only");
     // Right control
     let right = carousel.append("a")
         .attr("class", "carousel-control-next")
-        .attr("href", "#compCarousel")
+        .attr("data-bs-target", "#compCarousel")
         .attr("role", "button")
-        .attr("data-slide", "next");
+        .attr("data-bs-slide", "next");
     right.append("span")
         .attr("class", "carousel-control-next-icon")
         .attr("aria-hidden", "true");
     right.append("span")
-        .attr("class", "sr-only")
-        .text("Next");
+        .attr("class", "sr-only");
     return compDiv;
 }
 
@@ -476,7 +806,7 @@ function generateIcon(attrib) {
 
 // new function to generate table
 function generateTable(div, configs) {
-    console.log(configs)
+    //console.log(configs)
     let item = div.append("div")
         .attr("class", "carousel-item active");
     let table = item.append("table");
@@ -493,7 +823,7 @@ function generateTable(div, configs) {
     
     for (let i = 0; i < configs.length; i++) {
         let accountDetails = configs[i].attribs;
-        console.log(accountDetails)
+        //console.log(accountDetails)
         let row = table.append("tr");
         row.append("td").text(accountDetails.name);
         row.append("td").text(generateIcon(accountDetails["Taxed Upon Contribution"].value)).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Taxed Upon Contribution"].tooltip);

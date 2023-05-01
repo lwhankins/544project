@@ -2,8 +2,8 @@
 // keeps rolling over year-over-year
 // Round to nearest year of retirement (probably unnecessary)
 let cdAPY = 0.045;
-let currentCDBalance = 1000;
-let portionOfSalaryToContributeCDs = .1; 
+let currentCDBalance = 0;
+let portionOfSalaryToContributeCDs = 0; 
 
 function calculateCD() {
     let total = currentCDBalance;
@@ -20,7 +20,7 @@ function calculateCD() {
 }
 
 function setCdAPY(apy) {
-    cdAPY = parseFloat(apy / 100);
+    cdAPY = parseFloat(apy);
 }
 
 function setCurrentCDBalance(currentBalance) {
@@ -28,5 +28,5 @@ function setCurrentCDBalance(currentBalance) {
 }
 
 function setCDSalaryPortionContibution(contribution) {
-    portionOfSalaryToContributeCDs = parseFloat(contribution / 100);
+    portionOfSalaryToContributeCDs = parseFloat(contribution);
 }
