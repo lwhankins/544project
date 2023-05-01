@@ -316,7 +316,7 @@ function makeUncertaintyDiv() {
         .on("click", function () {
             if (portionOfSalaryToContribute401k == 0 && portionOfSalaryToContributeRoth401k == 0
                 && rothIraAnnCont == 0 && tradIraAnnCont == 0) {
-                alert("Contributions to at least one growth account (401k or Roth IRA) must be > 0. Please ensure all accounts that you want to consider are checked");
+                alert("Contributions to at least one growth account (401k or IRA) must be > 0. Please ensure all accounts that you want to consider are checked.");
             }else if (assetIdx == null) {
                 alert("Please select an asset mix");
             }
