@@ -67,8 +67,8 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
                     .tickFormat(d3.format(format))
                     .tickPadding(-6)
                     .value(initial)
-                    .on("drag", (val) => {
-                        console.log(input.value, val)
+                    .on("onchange", (val) => {
+                        // console.log(input.value, val)
                         input.property("value", val);
                         //input.val(val)
                         setGlob(val);
@@ -480,7 +480,7 @@ function makeAccountDiv(title, paramConfigs, calculators) {
     Honk, honk. - Clownie
  */
 function makeSidebarDiv(top) {
-    let money = removeInflation(getTotalMoney());
+    let money = getTotalMoney();
     makeSidebarOpener(top);
     
     let div = top.append("div")
@@ -499,7 +499,7 @@ function makeSidebarDiv(top) {
     
     div.append("h3")
         .attr("class", "sidebar-money")
-        .text(() => `${moneyFormat.format(money)}`);
+        .text(() => `$${thousands(money)}`);
     
     div.append("h3")
         .attr("class", "sidebar-text")
@@ -544,10 +544,10 @@ function closeSidebar() {
 }
 
 function updateSidebar() {
-    let money = removeInflation(getTotalMoney());
+    let money = getTotalMoney();
     let div = d3.select("#sidebar");
     div.select(".sidebar-money")
-        .text(() => `${moneyFormat.format(money)}`);
+        .text(() => `$${thousands(money)}`);
 
     averageAmts = [{entity: "maintain", amount: removeInflation(salaryAtRetirementAfterTaxes/12)},
                     {entity: "you", amount: money},{entity: "avg",
@@ -634,7 +634,7 @@ function makeBarChartY(data, id) {
     d3Elem.append("div")
         .attr("class", "sidebar-text")
         .html(`<br>Adjusted for inflation<br>
-        <strong>avg: $${thousands(afterInflationYearly(medianAmericanRetirementMonthly))}</strong>\n | <strong>maintain: $${thousands(salaryAtRetirementAfterTaxes/12)}</strong>\n | <strong>you: $${thousands(getTotalMoney())}</strong>`);
+        <strong>avg: $${thousands(afterInflationYearly(medianAmericanRetirementMonthly))}</strong>\n | <strong>maintain: $${thousands(salaryAtRetirementAfterTaxes/12)}</strong>\n | <strong>you: $${thousands(afterInflationYearly(getTotalMoney()))}</strong>`);
 }
 /*
     Get the total amount of money per month.
@@ -671,9 +671,14 @@ function runCalculators(calculators, ids) {
                             .select(".form-check-input");
         if (checkbox.property("checked")) {
             let amount = calculators[i]();
-            header.attr("data-amount", amount);
+            header.attr("data-amount", removeInflation(amount));
             header.select(".header-amount")
-                .text("$" + d3.format(",.0f")(amount));
+                .text("$" + thousands(removeInflation(amount)))
+                .append("div")
+                .attr("class", "lump-sums")
+                .text(`
+                total before inflation: $${thousands(removeInflation(amount * yearsInRetirement * 12))}
+                and after inflation: $${thousands(amount * yearsInRetirement * 12)}`);
         }
     }
     let salaryAtRetirement = salary;
@@ -709,7 +714,7 @@ function makeComparisonDiv(configs) {
     // container holds div for panel header, which is always shown
     // panel header contains account name and toggle
     let header = compDiv.append("div")
-        .attr("class", "panel-header accordion-header")
+        .attr("class", "panel-header accordion-header orange-header")
         .attr("id", `compare-accounts-header`)
         .style("width", "100%");
     makeCompHeader(header, "Compare Accounts", id);

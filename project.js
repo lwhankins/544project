@@ -35,9 +35,6 @@ makeSidebarDiv(sidebarDiv);
 // Set up comparison div with comparison config
 makeComparisonDiv(comparativeConfig);
 
-// set up monte carlo div
-makeUncertaintyDiv();
-
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
