@@ -67,8 +67,8 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
                     .tickFormat(d3.format(format))
                     .tickPadding(-6)
                     .value(initial)
-                    .on("drag", (val) => {
-                        console.log(input.value, val)
+                    .on("onchange", (val) => {
+                        // console.log(input.value, val)
                         input.property("value", val);
                         //input.val(val)
                         setGlob(val);
