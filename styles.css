@@ -357,3 +357,17 @@ th, td {
 #openbtn {
     filter: invert(non)
 }
+
+/* monte carlo styling */
+#uncertainty-panel {
+    margin: 10px;
+}
+
+.asset-mix {
+    margin: 20px;
+}
+
+.asset-mix-button {
+    width: 120px;
+    box-shadow: none;
+}

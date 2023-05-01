@@ -23,6 +23,7 @@ let fidelityAssetData = {
     "Growth": {"mean": 9.05, "std": 13.03, "stock": .70},
     "Aggressive": {"mean": 9.77, "std": 15.70, "stock": .85}
 }
+let assetTypes = ["Conservative", "Moderate", "Balanced", "Growth", "Aggressive"];
 
 // let accountsList = ["Traditional 401K", "Roth 401K", "Traditional IRA", "Roth IRA",
 //                     "High-Yield Savings Account", "Certificates of Deposit", "S&P Index"];
@@ -68,6 +69,8 @@ function runMonteCarlo(mean, std, numSims=1000) {
         let sim = calculateGrowth(rors);
         simsData.push(sim);
     }
+
+    makeMCPlot(simsData);
 }
 
 function calculateGrowth(rors) {
@@ -86,6 +89,12 @@ function calculateGrowth(rors) {
     }
 }
 
+// make Monte Carlo plot
+function makeMCPlot(simsData){
+
+}
+
+// make div with header and panel for uncertainty analysis
 function makeUncertaintyDiv() {
     let id = "uncertainty";
     accountsDiv.append("br");
@@ -105,8 +114,29 @@ function makeUncertaintyDiv() {
         .attr("class", "accordion-collapse collapse")
         .attr("id", `${id}-panel`)
         .attr("aria-labelledby", `${id}-header`);
+
+    uncertaintyPanel.append("div")
+        .html(`For growth accounts (401ks and IRAs), the asset mix that you choose is essential. Simply, asset mix is the percentage of investment allocated to stocks and the percentage allocated to bonds/cash. Stocks are <em>high risk, high reward</em>, whereas bonds/cash are <em>low risk, low reward</em>. We recommend that individuals who are farther from retirement choose a more aggressive asset mix, as they tend to tolerate risk better.<br><br>Select an Asset Strategy: `)
+    addButtons();
 }
 
+// asset mix buttons
+function addButtons(){
+    let buttonsDiv = uncertaintyPanel.append("div")
+            .attr("class", "asset-mix");
+    let colorScale = d3.scaleSequential(d3.interpolatePiYG)
+                    .domain([0, assetTypes.length-1]);
+
+    for (let i=0; i < assetTypes.length; i++)
+        buttonsDiv.append("button")
+            .attr("class", "asset-mix-button")
+            .text(assetTypes[i])
+            .style("background-color", colorScale(i))
+            .style("color", () => i==0 || i==assetTypes.length-1 ? "white" : "black")
+            .style("opacity", "80%");
+}
+
+// make orange header with toggle for uncertainty analysis
 function makeUncertaintyHeader(header, title, id) {
     header.append("h4")
         .attr("class", "header-title")
@@ -124,7 +154,8 @@ function makeUncertaintyHeader(header, title, id) {
         .attr("aria-controls", `${id}-panel`);
 }
 
-
+// same as other calculator, except use randomly drawn rates of return
+// per year and return list of totals at each year
 function calculateTraditional401kSim(rors) {
     let total = current401kBalance;
     let totals = [total];
@@ -150,12 +181,14 @@ function calculateTraditional401kSim(rors) {
 
     let finalTotal = totals[totals.length-1];
     let retirementTaxAmount = taxesPerYear(finalTotal / yearsInRetirement);
-    finalTotal -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
+    finalTotal -= (retirementTaxAmount * yearsInRetirement);
     totals.push(finalTotal);
 
     return totals;
 }
 
+// same as other calculator, except use randomly drawn rates of return
+// per year and return list of totals at each year
 function calculateRoth401kSim(rors) {
     let total = currentRoth401kBalance;
     let totals = [total];
@@ -182,6 +215,8 @@ function calculateRoth401kSim(rors) {
     return totals;
 }
 
+// same as other calculator, except use randomly drawn rates of return
+// per year and return list of totals at each year
 function calculateIraHelperSim(curBal, annCont, rors, catchupCont) {
     let total = curBal;
     let totals = [total];
@@ -206,7 +241,7 @@ function calculateTraditionalIraSim(rors){
     let totals = calculateIraHelperSim(tradIraCurBal, tradIraAnnCont, rors, tradIraCatchupCont);
     let finalTotal = totals[totals.length-1];
     let retirementTaxAmount = taxesPerYear(finalTotal / yearsInRetirement);
-    finalTotal -= (retirementTaxAmount * yearsInRetirement); // could update to change by year
+    finalTotal -= (retirementTaxAmount * yearsInRetirement);
     totals.push(finalTotal);
     return totals;
 }
