@@ -9,8 +9,12 @@ Authors:
 Publication Date: 05/03/2023
 
 ## Overview
+This project is meant to assist with planning for retirement. Having used it ourselves, it's quite helpful, but we are interested in feedback! Raise an issue if you encounter any bugs or have questions.
+
+URL: https://lwhankins.github.io/544project/. Should work in all modern browsers (probably not Internet Explorer, update your computer sheesh).
 
 ## How to Use
+Clone the repo and run index.html in a browser or visit the url linked above. You can then mess around with the various features
 
 ## Included Files
 * /calculators - A folder containing all the calculators for the project
