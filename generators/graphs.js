@@ -16,7 +16,7 @@ function generateNumGraph(carouselInner) {
             labelAnchor: "center"
         },
         y: {
-            label: "Number of accounts of each type in 2021, according to the U.S. Survey of Income and Program Participation (SIPP)"
+            label: "Number of accounts of each type in 2021, according to the U.S. Survey of Income and Program Participation (SIPP) [15]"
         },
         marks: [
             Plot.barY(graphData, {x: "account", y: "num", fill: "#f2a750"})
@@ -50,7 +50,7 @@ function generateAgeGraph(carouselInner) {
                 legend: true
             },
             y: {
-               label: "Number of accounts by age and account type in 2021, according to the U.S. Survey of Income and Program Participation (SIPP)" 
+               label: "Number of accounts by age and account type in 2021, according to the U.S. Survey of Income and Program Participation (SIPP) [15]" 
             },
             style: {
                 overflow: "visible",
