@@ -1,5 +1,5 @@
 /*
-    File: monthlyAndInflation.js
+    File: inflation.js
     Purpose: Contains the calculator code for inflation.
 */
 

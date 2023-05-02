@@ -509,7 +509,7 @@ function makeSidebarDiv(top) {
     averageAmts = [{entity: "maintain", amount: removeInflation(salaryAtRetirementAfterTaxes/12)},
                     {entity: "you", amount: money},
                     {entity: "avg", amount: medianAmericanRetirementMonthly}];
-    makeBarChartY(averageAmts, "comparison");
+    makeBarChartTop(averageAmts, "comparison");
     openSidebar();
 }
 
@@ -557,8 +557,8 @@ function updateSidebar() {
     averageAmts = [{entity: "maintain", amount: removeInflation(salaryAtRetirementAfterTaxes/12)},
                     {entity: "you", amount: money},{entity: "avg",
                     amount: medianAmericanRetirementMonthly}];
-    makeBarChartY(averageAmts, "comparison");
-    makeBarChartX(contributions, "breakdown", money);
+    makeBarChartTop(averageAmts, "comparison");
+    makeBarChartBottom(contributions, "breakdown", money);
 }
 
 /*
