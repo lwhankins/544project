@@ -1,3 +1,9 @@
+/*
+    File: certificates.js
+    Purpose: Contains the calculator code for the CD account.
+*/
+
+
 // 4.5% for a 12-month CD
 // keeps rolling over year-over-year
 // Round to nearest year of retirement (probably unnecessary)
@@ -16,7 +22,7 @@ function calculateCD() {
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
     }
     
-    return total / (yearsInRetirement * 12); // add taxes?
+    return total / (yearsInRetirement * 12);
 }
 
 function setCdAPY(apy) {

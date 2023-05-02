@@ -1,135 +1,61 @@
-Group Project
-------------
+# Data Visualization Group Project: How much money will I have in retirement?
+-----------
 
 Authors:
 - Amy Paul [amypaul@arizona.edu](mailto:amypaul@arizona.edu)
-- Clownie Sun [conniesun@arizona.edu](mailto:conniesun@arizona.edu)
+- Connie Sun [conniesun@arizona.edu](mailto:conniesun@arizona.edu)
 - Luke Hankins [lwhankins@arizona.edu](mailto:lwhankins@arizona.edu)  
 
-Date: 04/01/2023
+Publication Date: 05/03/2023
 
+## Overview
 
-## Notes
+## How to Use
 
-Branch Naming convention: ClownName-feature
-Merge to dev
-PR to main eventually
-
-
-## TODO PO3 Milestone:
-* Update descriptions to be shorter, with dropdown for additional info -- Luke
-* Initial contributions to 0 and fix calculators -- Luke
-* Compare Accounts section -- Amy
-   * change header color
-   * resize table
-   * add graphs in carousel
-* Update visual design -- Connie
-  * Include visual indicator of average/suggested values on sliders
-  * Update sidebar
-      * how much money you need in retirement to maintain standard of living (70-80% of pre-retirement income)
-      * adjust this amount for inflation to put in perspective of today's money?
-      * make it smaller? change things to % width?
-* Speak with Fidelity advisor -- all, if available
-  * Thu., 4/20, 4 - 5 pm
-* Distribute beta version for feedback -- all, if available
-  * [website version](https://lwhankins.github.io/544project/)
-* adjust for inflation -- Connie, if there is time
-  * uncertainty values
-* Update citations and additional info -- Luke
-
-## Account Explanations
-* 401k
-* Roth 401k
-* CD
-* IRA
-* Savings
-* S&P
-* Taxes (?)
-
-## To-Do List for Visualizations
-### Left Side: deadline 3/25
-* ~~webpage title and motivation paragraph -- Luke~~
-* ~~basic information div (holds global variables) -- Luke, by 3/22~~
-  * ~~call `makeInputSlider()` for each global var~~
-* function for making divs, `makeAccountDiv()` -- Connie
-  * ~~title~~
-  * ~~$ amount per month from this account~~
-  * ~~sliders to construct inside the div~~
-  * ~~dropdown toggle to show div~~
-  * dropdown toggle to show additional info
-* ~~each retirement account div using `makeAccountDiv()` -- Connie~~
-  * ~~inputs: local variables for each retirement account~~
-* ~~function for making sliders~~
-  * ~~inputs: min, max, suggested~~
-* ~~placeholder div for citations and additional info~~
-
-### Right Side: deadline 3/28
-* ~~div for total $$$ cash money $$$ / month in retirement -- Amy, by 3/28~~
-* ~~div for breakdown bar chart -- whoever, make progress if possible~~
-* ~~div for comparison bar chart -- whoever, make progress if possible~~
-* ~~Calculate taxes at end -- add up annual amounts (not roths), then run taxesPerYear, then divide by months to get cash $$/month; Amy by 3/28~~
-
-### ~~Latex Milestone Project Update: deadline 3/29~~
-Meet 3/27 to divvy this up
-* ~~update introduction, background, related work~~
-* ~~preliminary results~~
-* ~~update research plan section~~
-* ~~update impacts section~~
-
-## ~~To-Do List for Calculations~~
-* 401K - Luke
-* Roth IRA - Connie
-* Roth 401K - Luke
-* Traditional IRA - Connie
-* S&P 500 - Luke
-* CD - Amy
-* High-yield savings - Amy
-
-global variables
-* current age: 12 - 80
-* age of retirement: 35 - 80, suggested 60
-* years in retirement: 5 - 40, suggested 18
-* current salary: $20,000 - $500,000
-* average salary raise per year: 0% - 8%, suggested 3%
-
-401K
-* percent salary contribution: 1 - 20%, suggested 10%
-* employer match: 0 - 100%, suggested 50%
-* employer max match: 0 - 10%, suggested 6%
-* annual rate of return: 1 - 15%, suggested 7%
-
-** Notes: need to cap the contribution to a max amount
-
-Roth IRA
-* yearly contribution: 0 - 6500, suggested $6500
-* annual rate of return: 1 - 15%, suggested 7%
-* catch-up contribution: 0 - 1000, suggested $1000
-
-** Notes: need to cap contribution based on salary
-
-Traditional IRA
-* same as Roth
-
-Other Notes
-* penalties for early withdrawals
-* Basic tax brackets based on income - Amy
-
-
-## CLOWN PATROL
-* Doinko - Savings calc (Done), CD calc (done), taxes
-* Clownie - IRA, div function, slider function
-* Loofie - SP 500, 401k
-
-
-## Included files
-
-* calculations.js   - 
-* d3.js             - D3 functionality needed to implement the project
-* index.html        - HTML document template. 
-* project.js        - 
-* README.md         - This file
-* styles.css        - Styling to augment our implementation
-* svg.js            - SVG functionality needed for our implementation
-
+## Included Files
+* /calculators - A folder containing all the calculators for the project
+    * 401k.js - The calculators for the 401k account types
+    * certificates.js - The calculator for the CD account type
+    * global.js - Functions and variables used by all account types
+    * inflation.js - Functions to apply inflation to a calculation
+    * ira.js - The calculators for the IRA account types
+    * monteCarlo.js - The functions and generator code for the Monte Carlo simulation
+    * savings.js - The calculator for the High-Yield Savings account type
+    * sp.js - The calculator for the S&P Index account type
+    * taxes.js - Code for calculating the amount of money to remove in taxes (uses 2023 data)
+* /data - A folder containing auxilliary data for the project
+    * sipp_data.csv - Cleaned and stripped data from the Survey of Income and Program Participation (Census Bureau). The full dataset is massive (4GB), but this file contains the columns we actually used.
+    * sipp.ipynb - A Jupiter Notebook containing the Python code to extract and format relevant SIPP data.
+    * sipp.js - The formatted data for the Compare Accounts charts, as a JSON object and as generated by sipp.ipynb
+* /dev - A folder containing information for the developers
+    * README.md - A separate README containing development timelines and information
+* /generators - Contains the configuration files and generators for the visualization itself
+    * accountsConfig.js - Account-specific configuration values
+    * globalConfig.js - Configuration values used by all account types
+    * graphs.js - Generator code for Compare Accounts charts
+    * utils.js - Generator code for the visualization itself (KEY FILE)
+* /images - Some supplimental images to provide visualization style
+    * down-arrow.png - Dropdown arrow image file
+    * right-arrow.png - Dropdown arrow image file
+* copy.js - Contains the written explanations for the project
+* d3.js - D3 functionality needed to implement the project
+* index.html - HTML template for the project
+* project.js - Scaffold code to build the project
+* styles.css - Styling to augment our implementation
 
 ## References
+* https://www.cnbc.com/select/high-yield-savings-account-risk - Risk for HYSA
+* https://www.experian.com/blogs/ask-experian/pros-cons-high-yield-savings-account - Learning more about HYSAs
+* https://www.fidelity.com/building-savings/learn-about-iras/what-is-an-ira - Info for IRAs
+* https://www.fidelity.com/retirement-ira/ira-comparison - Type-specific IRA explanations
+* https://www.fool.com/investing/how-to-invest/index-funds/average-return/#:~:text=Over%20the%20past%2030%20years,rate%20of%2010.7%25%20per%20year - S&P / general index fund return information
+* https://www.investopedia.com/terms/1/401kplan.asp - Info for 401Ks
+* https://www.investopedia.com/terms/c/certificateofdeposit.asp - Info for CDs
+* https://www.nerdwallet.com/article/investing/roth-401k-vs-401k - Type-specific 401K info
+* https://en.wikipedia.org/wiki/S%26P_500 - Early S&P500 info
+* https://www.investopedia.com/articles/younginvestors/08/generation-y.asp - Financial info for young investors
+* https://money.com/saving-retirement-harder/ - General retirement savings info
+* https://data.bls.gov/timeseries/CUUR0000SA0L1E?output_view=pct_12mths - 20-year inflation data
+* https://data.bls.gov/timeseries/CIU1010000000000A - 20-year salary increase data
+* https://www.fidelity.com/bin-public/060_www_fidelity_com/documents/wealth-planning_investment-strategy.pdf - Monte Carlo info
+* https://www.census.gov/programs-surveys/sipp/data/datasets/2021-data/2021.html - Download SIPP data here

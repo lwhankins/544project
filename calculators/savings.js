@@ -1,4 +1,9 @@
-// Varies widely depending on the bank -- I'll use 0.01% as a barometer since it's the baseline anyway
+/*
+    File: savings.js
+    Purpose: Contains the calculator code for High-Yield Savings accounts.
+        Also contains code to run low-yield savings accounts - not used in viz.
+*/
+
 let savingsAPY = 0.0001; // Ew
 let highYieldSavingsAPY = 0.03;
 let currentSavingsBalance = 0;
@@ -15,7 +20,7 @@ function calculateSavings() {
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
     }
     
-    return total / (yearsInRetirement * 12); // add taxes?
+    return total / (yearsInRetirement * 12);
 }
 
 function calculateHYSavings() {

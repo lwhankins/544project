@@ -1,4 +1,7 @@
-
+/*
+    File: 401k.js
+    Purpose: Contains the calculator code for the Traditional and Roth 401k accounts.
+*/
 
 /*
  * 401k-specific variables, will be taken from sliders/input. Set here for testing.

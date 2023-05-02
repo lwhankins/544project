@@ -1,4 +1,9 @@
 /*
+    File: monteCarlo.js
+    Purpose: Contains the code to generate and run the Monte Carlo simulation.
+*/
+
+/*
  * For growth accounts (401ks and IRAs)
  * User selects an asset mix type; we provide suggestion based on years until retirement
  *      Conservative, Balanced, Aggressive
@@ -40,8 +45,6 @@ let assetTypes = ["Conservative", "Moderate", "Balanced", "Growth", "Aggressive"
 let percent = d3.format(".0%");
 let spaced = d3.format("6.2f");
 
-// let accountsList = ["Traditional 401K", "Roth 401K", "Traditional IRA", "Roth IRA",
-//                     "High-Yield Savings Account", "Certificates of Deposit", "S&P Index"];
 let growthAccounts = ["Traditional 401K", "Roth 401K", "Traditional IRA", "Roth IRA"];
 let growthCalculators = [calculateTraditional401kSim, calculateRoth401kSim, 
                          calculateTraditionalIraSim, calculateRothIraSim];

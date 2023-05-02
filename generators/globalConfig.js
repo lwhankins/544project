@@ -1,3 +1,8 @@
+/*
+    File: globalConfig.js
+    Purpose: Contains config data that is used by all accounts.
+*/
+
 // name, min, max, suggested, step, format, setGlob
 globalsConfig = [
     {"name": "Age",

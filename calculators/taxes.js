@@ -1,3 +1,8 @@
+/*
+    File: taxes.js
+    Purpose: Contains the calculator code for taxes depending on filer status.
+*/
+
 let filerTypes = {
     Single: 0,
     MarriedSeparate: 1,

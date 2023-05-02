@@ -1,4 +1,9 @@
 /*
+    File: sp.js
+    Purpose: Contains the calculator code for the S&P 500 account.
+*/
+
+/*
  * S&P500-specific variables, will be taken from sliders/input. Set here for testing.
 */
 
@@ -20,7 +25,7 @@ function calculateSP() {
         total = total + amountInvestedThisYearByMe + returnOnTotal;
         currentSalary = currentSalary*(1 + annualSalaryIncrease);
     }
-    return total / (yearsInRetirement * 12); // add taxes?
+    return total / (yearsInRetirement * 12);
 }
 
 function setCurrentAmountInvestedSP(stonks) {

@@ -1,3 +1,9 @@
+/*
+    File: global.js
+    Purpose: Contains code to set global variables and format money strings properly.
+        Utility file used by other files.
+*/
+
 const moneyFormat = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD"
