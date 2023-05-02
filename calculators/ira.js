@@ -1,3 +1,8 @@
+/*
+    File: ira.js
+    Purpose: Contains the calculator code for the Traditional and Roth IRA accounts.
+*/
+
 const catchupAge = 50;
 let rothIraCurBal = 0;
 let rothIraAnnCont = 0;

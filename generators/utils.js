@@ -1,3 +1,8 @@
+/*
+    File: utils.js
+    Purpose: Contains the code to make most of the visualization, written as modularly as possible.
+*/
+
 let width = 500;
 let height = 50;
 
@@ -129,13 +134,11 @@ function makeInputSlider(parent, name, min, max, initial, suggested, step, forma
     });
 }
 
+// Makes radio buttons (for tax filer status)
 function makeRadio(parent, name, options, setGlob, calculators, ids) {
     let container = parent.append("div").attr("class", "param-radio");
     let top = container.append("h6")
                       .text(name);
-    /*container.append("div")
-                      .text(taxCopy);
-    container.append("br");*/
 
     // label holds a div with the buttons
     for (let i=0; i < options.length; i++) {
@@ -186,7 +189,7 @@ function togglePanel(checkbox, calculators, id){
  */
 function addParam(parentDiv, config, calculators, ids) {
     let g = parentDiv.append("g")
-        .attr("class", "param"); // add id as well?
+        .attr("class", "param");
 
     makeInputSlider(g, config.name, config.min, config.max, config.initial, config.suggested,
                     config.step, config.format, config.setGlob, config.tooltip, calculators, ids);
@@ -318,6 +321,9 @@ function makeCopyDropdown(title) {
     });
 }
 
+/*
+*   Add the top-level copy for each account type.
+*/
 function addSummaryCopy(title) {
     let id = getIdFromTitle(title);
     let copy = null;
@@ -464,18 +470,6 @@ function makeAccountDiv(title, paramConfigs, calculators) {
 /*
  * Create sidebar displaying total $ per month in retirement
  * 
- * Note for Doinko: You can retrieve the data amounts for each of
-    the account divs by iterating through all of the divs
-    and retrieving data-amount in the header. Code:
-
-        Object.keys(accountCalculators).forEach( key => {
-            let amount = d3.select(`#${getIdFromTitle(key)}`)
-                        .select(".panel-header")
-                        .attr("data-amount");
-            console.log(amount)
-        });
-    
-    Honk, honk. - Clownie
  */
 function makeSidebarDiv(top) {
     let money = getTotalMoney()
@@ -488,7 +482,6 @@ function makeSidebarDiv(top) {
         .attr("id", "closebtn")
         .attr("class", "btn-close")
         .on("click", closeSidebar)
-    //div.style("display", "none");
     div.property("hidden", true);
     let header = div.append("div")
         .append("h3")
@@ -512,10 +505,13 @@ function makeSidebarDiv(top) {
         .attr("class", "bar-chart");
 
     averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12},{entity: "you", amount: money},{entity: "avg", amount: (afterInflationYearly(averageAmericanTotal) / (20*12))}];
-    makeBarChartY(averageAmts, "comparison");
+    makeBarChartTop(averageAmts, "comparison");
     openSidebar();
 }
 
+/*
+* Create button to open sidebar
+*/
 function makeSidebarOpener(top) {
     top.append("div")
         .attr("id", "openbtn")
@@ -523,6 +519,9 @@ function makeSidebarOpener(top) {
         .on("click", openSidebar);
 }
 
+/*
+* Show sidebar when opened.
+*/
 function openSidebar() {
     let button = d3.select("#openbtn")
         .property("hidden", true);
@@ -531,6 +530,9 @@ function openSidebar() {
         .property("hidden", false);
 }
 
+/*
+* Hide sidebar when closed.
+*/
 function closeSidebar() {
     let button = d3.select("#openbtn")
         .property("hidden", false);
@@ -539,6 +541,9 @@ function closeSidebar() {
         .property("hidden", true);
 }
 
+/*
+* Update the bar charts in the sidebar to show new values.
+*/
 function updateSidebar() {
     let money = getTotalMoney();
     let div = d3.select("#sidebar");
@@ -546,11 +551,14 @@ function updateSidebar() {
         .text(() => `${moneyFormat.format(money)}`);
 
     averageAmts = [{entity: "maintain", amount: salaryAtRetirementAfterTaxes/12}, {entity: "you", amount: money},{entity: "avg", amount: (afterInflationYearly(averageAmericanTotal) / (20*12))}];
-    makeBarChartY(averageAmts, "comparison");
-    makeBarChartX(contributions, "breakdown", money);
+    makeBarChartTop(averageAmts, "comparison");
+    makeBarChartBottom(contributions, "breakdown", money);
 }
 
-function makeBarChartX(data, id, money) {
+/*
+* Create the Account Breakdown bar chart.
+*/
+function makeBarChartBottom(data, id, money) {
     let plot;
     if (money != 0) {
         plot = Plot.plot({
@@ -587,7 +595,10 @@ function makeBarChartX(data, id, money) {
     }
 }
 
-function makeBarChartY(data, id) {
+/*
+* Create the Comparison bar chart
+*/
+function makeBarChartTop(data, id) {
     let plot = Plot.plot({
         y: {
           label: ""
@@ -757,6 +768,9 @@ function makeComparisonDiv(configs) {
     return compDiv;
 }
 
+/*
+* Make header for special sections
+*/
 function makeCompHeader(header, title, id) {
     header.append("h4")
         .attr("class", "header-title")
@@ -772,20 +786,21 @@ function makeCompHeader(header, title, id) {
         .attr("data-bs-target", `#${id}-panel`)
         .attr("aria-expanded", "false")
         .attr("aria-controls", `${id}-panel`);
-    //checkbox.on("change", () => togglePanel(checkbox, [], "compare-accounts"));
 }
 
+/*
+* Generate an icon based on whether the given attribute is true or false.
+*/
 function generateIcon(attrib) {
     if (attrib) {
-        return "\u2705";
+        return "\u2705"; // Green checkmark
     }
 
-    return "\u274c"
+    return "\u274c" // Red x
 }
 
-// new function to generate table
+// Function to generate Compare Accounts table
 function generateTable(div, configs) {
-    //console.log(configs)
     let item = div.append("div")
         .attr("class", "carousel-item active");
     let table = item.append("table");
@@ -802,7 +817,6 @@ function generateTable(div, configs) {
     
     for (let i = 0; i < configs.length; i++) {
         let accountDetails = configs[i].attribs;
-        //console.log(accountDetails)
         let row = table.append("tr");
         row.append("td").text(accountDetails.name);
         row.append("td").text(generateIcon(accountDetails["Taxed Upon Contribution"].value)).attr("data-bs-toggle", "tooltip").attr("data-bs-placement", "top").attr("data-bs-title", accountDetails["Taxed Upon Contribution"].tooltip);

@@ -1,13 +1,13 @@
+/*
+    File: graphs.js
+    Purpose: Contains code to generate the comparison graphs under Compare Accounts.
+*/
+
 function generateNumGraph(carouselInner) {
     let graphData = data["account_nums"];
-    let item = carouselInner.append("div")
+    carouselInner.append("div")
         .attr("class", "carousel-item")
         .attr("id", "account-num-graph");
-
-    // let svg = item.append("svg")
-    //     .attr("height", "460px")
-    //     .attr("id", "account-num-graph")
-    //     .attr("width", "900px");
 
     let plot = Plot.plot({
         x: {
@@ -40,11 +40,9 @@ function generateAgeGraph(carouselInner) {
     let graphData = data["accounts_by_age"];
 
 
-    let item = carouselInner.append("div")
+    carouselInner.append("div")
         .attr("class", "carousel-item")
         .attr("id", "account-age-graph");
-
-    //dotplot.legend("color")
     
     dotplot = Plot.dot(graphData, {x: "age", y: "num", stroke: "account"}).plot(
         {
@@ -62,14 +60,6 @@ function generateAgeGraph(carouselInner) {
         }
     )
     
-    //dotplot.legend("color")
     let elem = document.getElementById("account-age-graph");
     elem.append(dotplot);
-
-    // Scatterplot -- age on x, number of accounts on y
-    // color differentiates account types - needs legend
 }
-
-function updatePoint(selection) {
-
-} 
