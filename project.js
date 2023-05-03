@@ -1,3 +1,8 @@
+/*
+    File: project.js
+    Purpose: Contains the code to scaffold the webpage.
+*/
+
 // set up basic info with global configs
 let basicInfoDiv = d3.select("#basic_info");
 let accountTitles = Object.keys(accountCalculators);
@@ -35,6 +40,7 @@ makeSidebarDiv(sidebarDiv);
 // Set up comparison div with comparison config
 makeComparisonDiv(comparativeConfig);
 
+// Activate tooltips
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 

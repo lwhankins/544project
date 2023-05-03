@@ -1,3 +1,8 @@
+/*
+    File: accountsConfig.js
+    Purpose: Contains config data for the different accounts.
+*/
+
 accountsConfig = {
     "Traditional 401K" : [
         {"name": "Current Balance",

@@ -1,3 +1,4 @@
+// data taken from Survey of Income and Program Participation (SIPP) (Census Bureau)
 let data = {
     "account_nums": [
         {

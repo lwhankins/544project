@@ -1,4 +1,9 @@
 /*
+    File: monteCarlo.js
+    Purpose: Contains the code to generate and run the Monte Carlo simulation.
+*/
+
+/*
  * For growth accounts (401ks and IRAs)
  * User selects an asset mix type; we provide suggestion based on years until retirement
  *      Conservative, Balanced, Aggressive
@@ -40,8 +45,6 @@ let assetTypes = ["Conservative", "Moderate", "Balanced", "Growth", "Aggressive"
 let percent = d3.format(".0%");
 let spaced = d3.format("6.2f");
 
-// let accountsList = ["Traditional 401K", "Roth 401K", "Traditional IRA", "Roth IRA",
-//                     "High-Yield Savings Account", "Certificates of Deposit", "S&P Index"];
 let growthAccounts = ["Traditional 401K", "Roth 401K", "Traditional IRA", "Roth IRA"];
 let growthCalculators = [calculateTraditional401kSim, calculateRoth401kSim, 
                          calculateTraditionalIraSim, calculateRothIraSim];
@@ -304,7 +307,7 @@ function makeUncertaintyDiv() {
 
     uncertaintyPanel.append("div")
         .attr("id", "uncertainty-info")
-        .html(`The future of any investment is uncertain, but stocks are especially volatile. For growth accounts (401ks and IRAs), the <strong>asset mix</strong> that you choose is essential. Asset mix is the percentage of your investment allocated to stocks versus the percentage allocated to bonds/cash. Stocks are <em>high risk, high reward</em>, whereas bonds/cash are <em>low risk, low reward</em>. We recommend that individuals who are farther from retirement choose a more aggressive asset mix, as they tend to tolerate risk better.<br><br>
+        .html(`The future of any investment is uncertain, but stocks are especially volatile. For growth accounts (401ks and IRAs), the <strong>asset mix</strong> that you choose is essential. Asset mix is the percentage of your investment allocated to stocks versus the percentage allocated to bonds/cash. Stocks are <em>high risk, high reward</em>, whereas bonds/cash are <em>low risk, low reward</em>. We recommend that individuals who are farther from retirement choose a more aggressive asset mix, as these individuals tend to tolerate risk better.<br><br>
         In this analysis, we run 1,000 <strong>Monte Carlo</strong> simulations. The rate of return each year is drawn from a normal distribution specified by the asset strategy you select below ("Return Rate" is the mean, "Volatility" is the standard deviation).<sup><a href="https://www.fidelity.com/bin-public/060_www_fidelity_com/documents/wealth-planning_investment-strategy.pdf">14</a></sup> Try adjusting the rate of return in the growth account dropdowns to match your chosen strategy's return rate. Then, compare the static amount (on the righthand side) with the Monte Carlo simulation results. Note: You will need to click "Run Monte Carlo" to re-run the simulations after changing any of the inputs from the above account dropdowns.
         <br><br>`);
     uncertaintyPanel.append("div")

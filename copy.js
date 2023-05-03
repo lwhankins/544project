@@ -1,3 +1,8 @@
+/*
+    File: copy.js
+    Purpose: Contains the explanations for accounts.
+*/
+
 var taxCopy = "Being married or having a family will both offer tax breaks, but these might not matter at all! Some investment accounts are not taxed upon withdrawal. We've made sure to note these accounts below.";
 
 
