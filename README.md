@@ -1,4 +1,4 @@
-# Data Visualization Group Project: How much money will I have when I retire?
+# How Much Money Will I Have When I Retire?
 -----------
 
 Authors:
@@ -8,8 +8,14 @@ Authors:
 
 Publication Date: 05/03/2023
 
+Final Project for CSC 544, Data Visualization, The University of Arizona
+
 ## Overview
-This project is meant to assist with planning for retirement. Having used it ourselves, it's quite helpful, but we are interested in feedback! Raise an issue if you encounter any bugs or have questions.
+We present a visualization tool used to help users answer the question: How much money will I have when I retire? We provide seven different retirement accounts for users to specify contributions to; the resulting amount per month that the user can expect in retirement (in today's dollars) is displayed on the righthand side. We provide a comparison barchart for the user to explore how much they need to contribute to be "on track" for retirement and a breakdown barchart so the user can see how much each individual account contributes to their overall total.
+
+In addition to the main calculator functionality, we include summative and detailed information for each account with dropdowns and tooltips. At-a-glance comparison visualization is provided in the "Compare Accounts" section. The "Uncertainty Analysis" section runs Monte Carlo simulations for growth accounts so users can explore the risk vs reward tradeoff of different asset allocation strategies.
+
+Raise an issue if you encounter any bugs or have questions.
 
 URL: https://lwhankins.github.io/544project/. Should work in all modern browsers (probably not Internet Explorer, update your computer sheesh).
 
