@@ -1,4 +1,4 @@
-# Data Visualization Group Project: How much money will I have when I retire?
+# How Much Money Will I Have When I Retire?
 -----------
 
 Authors:
@@ -8,7 +8,12 @@ Authors:
 
 Publication Date: 05/03/2023
 
+Final Project for CSC 544, Data Visualization, The University of Arizona
+
 ## Overview
+We present a visualization tool used to help users answer the question: How much money will I have when I retire? We provide seven different retirement accounts for users to specify contributions to; the resulting amount per month that the user will in retirement (in today's dollars) is displayed on the righthand side.
+
+In addition to the main calculator functionality, we include summative and detailed information for each account with dropdowns and tooltips. At-a-glance comparison visualization is provided in the "Compare Accounts" section. The "Uncertainty Analysis" section runs Monte Carlo simulations for growth accounts so users can explore the risk vs reward tradeoff of different asset allocation strategies.
 
 ## How to Use
 
