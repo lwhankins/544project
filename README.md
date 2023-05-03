@@ -1,4 +1,4 @@
-# Data Visualization Group Project: How much money will I have in retirement?
+# Data Visualization Group Project: How much money will I have when I retire?
 -----------
 
 Authors:
