@@ -11,7 +11,7 @@ Publication Date: 05/03/2023
 Final Project for CSC 544, Data Visualization, The University of Arizona
 
 ## Overview
-We present a visualization tool used to help users answer the question: How much money will I have when I retire? We provide seven different retirement accounts for users to specify contributions to; the resulting amount per month that the user will in retirement (in today's dollars) is displayed on the righthand side.
+We present a visualization tool used to help users answer the question: How much money will I have when I retire? We provide seven different retirement accounts for users to specify contributions to; the resulting amount per month that the user can expect in retirement (in today's dollars) is displayed on the righthand side. We provide a comparison barchart for the user to explore how much they need to contribute to be "on track" for retirement and a breakdown barchart so the user can see how much each individual account contributes to their overall total.
 
 In addition to the main calculator functionality, we include summative and detailed information for each account with dropdowns and tooltips. At-a-glance comparison visualization is provided in the "Compare Accounts" section. The "Uncertainty Analysis" section runs Monte Carlo simulations for growth accounts so users can explore the risk vs reward tradeoff of different asset allocation strategies.
 
