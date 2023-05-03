@@ -14,7 +14,18 @@ This project is meant to assist with planning for retirement. Having used it our
 URL: https://lwhankins.github.io/544project/. Should work in all modern browsers (probably not Internet Explorer, update your computer sheesh).
 
 ## How to Use
-Clone the repo and run index.html in a browser or visit the url linked above. You can then mess around with the various features
+Clone the repo and run index.html in a browser or visit the url linked above. You can then mess around with the various features.
+
+### Features
+**Sidebar with Breakdown:** 
+
+**Account Type Dropdowns:** 
+
+**Account Comparisons:** 
+
+**Monte Carlo Simulation:** 
+
+
 
 ## Included Files
 * /calculators - A folder containing all the calculators for the project
