@@ -14,18 +14,18 @@ This project is meant to assist with planning for retirement. Having used it our
 URL: https://lwhankins.github.io/544project/. Should work in all modern browsers (probably not Internet Explorer, update your computer sheesh).
 
 ## How to Use
-Clone the repo and run index.html in a browser or visit the url linked above. You can then mess around with the various features.
+Clone the repo and run index.html in a browser, or visit the url linked above. You can then mess around with the various features.
 
-### Features
-**Sidebar with Breakdown:** 
+### **Features**
+*Expert Advice:* We've incorporated advice from experts throughout the webpage. Read the account overviews or click Show Account Info to learn more. Tooltips (grey circles with question mark items) can be moused over to get explanations of different variables, and some accounts have a Show Specific Info dropdown that appears when activated and can tell you even more information.
 
-**Account Type Dropdowns:** 
+*Sidebar with Breakdown:* The sidebar tells you the answer to the overarching question (money per month in retirement), and provides charts both to compare your currently selected amount with that of the average American and show you how each selected account is contributing to your total money.
 
-**Account Comparisons:** 
+*Account Type Dropdowns:* Toggle on as many accounts as you like to activate them, and mess with the variables to see how much each type changes your total money in retirement (visible in the sidebar). Mousing over some of the sliders will also tell you what the suggested value for that variable is, based on the average for that type of account. You can also see the total amount each account will hold before and after inflation in the activated header, and can toggle off an account to remove it from your portfolio.
 
-**Monte Carlo Simulation:** 
+*Account Comparisons:* The Compare Accounts section holds several interesting tables and graphs to help you see differences between accounts. The first slide shows a table to compare all the different account types; mouse over each cell to learn more. The second slide contains a bar chart showing the number of accounts of each type held by Americans in 2021, as surveyed by the U.S. Census Bureau. The third slide uses the same data, but shows the number of accounts based on age, so you can compare the popularity of different accounts among different demographics.
 
-
+*Monte Carlo Simulation:* Some retirement accounts, notably investment accounts such as IRAs and 401Ks, carry risk. In order to help you decide what asset mix and risk amount is right for you, you can use the Uncertainty Analysis section of the website. Selecting different asset mixes will tell you what the average rate of return and "risk factor" (volatility) is for that mix.
 
 ## Included Files
 * /calculators - A folder containing all the calculators for the project
